@@ -1,0 +1,33 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: radarr-config
+provisioner: kubekrnetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: radarr-config-nfs
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "radarr-config"
+  nfs:
+    server: "192.168.1.4"
+    path: "/export/radarr/config"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-config
+  namespace: plex
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "radarr-config"
+  resources:
+    requests:
+      storage: 1Gi

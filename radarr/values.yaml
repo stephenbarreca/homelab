@@ -2,7 +2,7 @@
 replicaCount: 1
 
 image:
-  repository: linuxserver/sonarr
+  repository: linuxserver/radarr
   tag: latest
   pullPolicy: IfNotPresent
 
@@ -23,16 +23,16 @@ ingress:
     kubernetes.io/tls-acme: "true"
   path: /
   hosts:
-    - sonarr.bananaspliff.org
+    - radarr.bananaspliff.org
   tls:
-   - secretName: sonarr-bananaspliff-org
+   - secretName: radarr-bananaspliff-org
      hosts:
-       - sonarr.bananaspliff.org
+       - radarr.bananaspliff.org
 
 volumes:
   - name: config
     persistentVolumeClaim:
-      claimName: sonarr-config
+      claimName: radarr-config
   - name: downloads
     persistentVolumeClaim:
       claimName: transmission-downloads
@@ -48,8 +48,8 @@ volumeMounts:
     mountPath: "/downloads/transmission"
     subPath: ""
   - name: plex-data
-    mountPath: "/tv"
-    subPath: "tv/"
+    mountPath: "/movies"
+    subPath: "movies"
 
 resources:
   requests:
