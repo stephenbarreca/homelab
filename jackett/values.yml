@@ -1,0 +1,86 @@
+
+replicaCount: 1
+
+image:
+  repository: linuxserver/jackett
+  tag: latest
+  pullPolicy: IfNotPresent
+
+env:
+  - name: VPN_ENABLED
+    value: "yes" # Enable Jackett over VPN
+  - name: VPN_USERNAME
+    valueFrom:
+      secretKeyRef: # Reference to the secret | openvpn.username
+        name: "openvpn"
+        key: "username"
+  - name: VPN_PASSWORD
+    valueFrom:
+      secretKeyRef: # Reference to the secret | openvpn.password
+        name: "openvpn"
+        key: "password"
+  - name: LAN_NETWORK
+    value: "192.168.0.0/24"
+  - name: CREATE_TUN_DEVICE
+    value: "true" # Needed for VPN
+  - name: PUID
+    value: "1000"
+  - name: PGID
+    value: "1000"
+
+service:
+  type: LoadBalancer
+  port: 80
+
+ingress:
+  enabled: false
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    - jackett.bananaspliff.org
+  tls:
+   - secretName: jackett-bananaspliff-org
+     hosts:
+       - jackett.bananaspliff.org
+
+volumes:
+  - name: "config"
+    persistentVolumeClaim:
+      claimName: "jackett-config" # PersistentVolumeClaim created earlier
+  - name: "downloads"
+    persistentVolumeClaim:
+      claimName: "jackett-downloads" # PersistentVolumeClaim created earlier
+  - name: "dev-tun"  # Needed for VPN
+    hostPath:
+      path: "/dev/net/tun"
+
+volumeMounts:
+  - name: "config"
+    mountPath: "/config"
+    subPath: "" # Path /mnt/ssd/media/configs/jackett where jackett writes the configuration
+  - name: "downloads"
+    mountPath: "/downloads"
+    subPath: "" # Path /mnt/ssd/media/downloads/jackett ???
+
+
+resources:
+  requests:
+    memory: 128Mi
+    cpu: 0.1
+  limits:
+    memory: 256Mi
+    cpu: 0.5
+
+securityContext:
+  capabilities: # Needed for VPN
+    add:
+      - NET_ADMIN
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
