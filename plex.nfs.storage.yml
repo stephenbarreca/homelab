@@ -1,0 +1,101 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: plex-data
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: plex-transcode
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: plex-config
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-nfs-data
+spec:
+  capacity:
+    storage: 4Ti
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "plex-data"
+  nfs:
+    server: "192.168.1.4"
+    path: "/export/plex/videos"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-nfs-transcode
+spec:
+  capacity:
+    storage: 40Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "plex-transcode"
+  nfs:
+    server: "192.168.1.4"
+    path: "/export/plex/transcode"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-nfs-config
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "plex-config"
+  nfs:
+    server: "192.168.1.4"
+    path: "/export/plex/config"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: plex-nfs-data
+  namespace: plex
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "plex-data"
+  resources:
+    requests:
+      storage: 4Ti
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: plex-nfs-transcode
+  namespace: plex
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "plex-transcode"
+  resources:
+    requests:
+      storage: 40Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: plex-nfs-config
+  namespace: plex
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "plex-config"
+  resources:
+    requests:
+      storage: 50Gi
