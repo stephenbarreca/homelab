@@ -39,6 +39,18 @@ env:
     value: "47444"
   - name: TRANSMISSION_DOWNLOAD_DIR
     value: "/downloads/transmission"
+  - name: TRANSMISSION_DOWNLOAD_QUEUE_SIZE
+    value: "20"
+  - name: TRANSMISSION_RATIO_LIMIT
+    value: "1"
+  - name: TRANSMISSION_RATIO_LIMIT_ENABLED
+    value: "true"
+  - name: TRANSMISSION_PEER_LIMIT_PER_TORRENT
+    value: "200"
+  - name: TRANSMISSION_PEER_LIMIT_GLOBAL
+    value: "2000"
+  - name: TRANSMISSION_CACHE_SIZE_MB
+    value: "16"
   - name: PUID
     value: "1000"
   - name: PGID
