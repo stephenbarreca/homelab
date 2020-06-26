@@ -1,0 +1,33 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: magic-mirror-config
+provisioner: kubekrnetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: magic-mirror-config-nfs
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "magic-mirror-config"
+  nfs:
+    server: "192.168.1.4"
+    path: "/export/magic-mirror/config"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: magic-mirror-config
+  namespace: magic-mirror
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "magic-mirror-config"
+  resources:
+    requests:
+      storage: 1Gi

@@ -1,0 +1,39 @@
+replicaCount: 1
+image:
+  repository: bastilimbach/docker-magicmirror
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: latest
+
+persistence:
+  config:
+    enabled: true
+    claimName: magic-mirror-config
+  modules:
+    enabled: false
+  css:
+    enabled: false
+  localtime:
+    enabled: false
+
+service:
+  type: LoadBalancer
+  port: 80
+  loadBalancerIP: "192.168.1.211"
+
+resources:
+#   limits:
+#     cpu: 100m
+#     memory: 128Mi
+   requests:
+     cpu: 100m
+     memory: 128Mi
+
+autoscaling:
+  enabled: false
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
