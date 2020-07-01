@@ -1,2 +1,7 @@
 .idea
 *.xml
+.bashrc
+.cache/
+.sudo_as_admin_successful
+gitea/data/
+snap/
