@@ -31,3 +31,39 @@ spec:
   resources:
     requests:
       storage: 1Gi
+
+---
+
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: magic-mirror-modules
+provisioner: kubekrnetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: magic-mirror-modules-nfs
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "magic-mirror-modules"
+  nfs:
+    server: "192.168.1.4"
+    path: "/export/magic-mirror/modules"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: magic-mirror-modules
+  namespace: magic-mirror
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "magic-mirror-modules"
+  resources:
+    requests:
+      storage: 5Gi

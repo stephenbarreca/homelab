@@ -40,6 +40,9 @@ spec:
           volumeMounts:
           - name: config
             mountPath: /opt/magic_mirror/config
+          volumeMounts:
+          - name: modules
+            mountPath: /opt/magic_mirror/modules
 #          livenessProbe:
 #            httpGet:
 #              path: /
@@ -60,6 +63,13 @@ spec:
         persistentVolumeClaim:
         {{- if .Values.persistence.config.claimName }}
           claimName: "{{ .Values.persistence.config.claimName }}"
+        {{- end }}
+      {{- end }}
+      {{- if .Values.persistence.modules.enabled }}
+      - name: modules
+        persistentVolumeClaim:
+        {{- if .Values.persistence.modules.claimName }}
+          claimName: "{{ .Values.persistence.modules.claimName }}"
         {{- end }}
       {{- end }}
       {{- with .Values.affinity }}

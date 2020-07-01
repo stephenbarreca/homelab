@@ -10,7 +10,8 @@ persistence:
     enabled: true
     claimName: magic-mirror-config
   modules:
-    enabled: false
+    enabled: true
+    claimName: magic-mirror-modules
   css:
     enabled: false
   localtime:
