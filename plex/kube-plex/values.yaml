@@ -32,7 +32,7 @@ nodeSelector:
 
 persistence:
   transcode:
-    enabled: true
+    enabled: false
     claimName: "plex-nfs-transcode"
     storageClass: "plex-transcode"
     size: 40Gi
@@ -44,10 +44,10 @@ persistence:
     accessMode: ReadWriteMany
   extraData: []
   config:
-    claimName: "plex-nfs-config"
-    storageClass: "plex-config"
+    claimName: "plex-local-config"
+    storageClass: "plex-local-config"
     size: 50Gi
-    accessMode: ReadWriteMany
+    accessMode: ReadWriteOnce
 
 resources:
   limits:
