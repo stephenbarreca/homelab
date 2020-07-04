@@ -1,0 +1,69 @@
+# Default values for kube-plex
+# Override this with the plex claim token from plex.tv/claim
+claimToken: "claim-ayLynSaVr5kNvypzRxSK"
+
+image:
+  repository: plexinc/pms-docker
+  tag: latest
+  pullPolicy: Always
+
+kubePlex:
+  enabled: false
+
+
+# Set the timezone of the plex server
+timezone: America/New_York
+
+# Set the UID/GID of the plex user (For NFS deployments)
+plexUser: "1005"
+plexGroup: "8675309"
+
+
+service:
+  type: LoadBalancer
+  port: 32400
+  loadBalancerIP: 192.168.1.241
+
+rbac:
+  create: true
+
+nodeSelector:
+  beta.kubernetes.io/arch: amd64
+
+persistence:
+  transcode:
+    enabled: true
+    claimName: "plex-nfs-transcode"
+    storageClass: "plex-transcode"
+    size: 40Gi
+    accessMode: ReadWriteMany
+  data:
+    claimName: "plex-nfs-data"
+    storageClass: "plex-data"
+    size: 4Ti
+    accessMode: ReadWriteMany
+  extraData: []
+  config:
+    claimName: "plex-nfs-config"
+    storageClass: "plex-config"
+    size: 50Gi
+    accessMode: ReadWriteMany
+
+resources:
+  limits:
+    cpu: 6
+    memory: 4Gi
+  requests:
+    cpu: 2
+    memory: 2Gi
+
+podAnnotations: {}
+deploymentAnnotations: {}
+
+proxy: 
+  # This allows to set a proxy environment variable, which PMS uses to fetch the token and assets like movie cover
+  enable: false
+
+tolerations: []
+affinity: {}
+

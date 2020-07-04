@@ -40,7 +40,6 @@ spec:
           volumeMounts:
           - name: config
             mountPath: /opt/magic_mirror/config
-          volumeMounts:
           - name: modules
             mountPath: /opt/magic_mirror/modules
 #          livenessProbe:
