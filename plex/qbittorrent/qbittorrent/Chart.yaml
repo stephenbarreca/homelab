@@ -1,0 +1,11 @@
+apiVersion: v1
+appVersion: 4.1.9.99
+description: A Helm chart for qBittorentt with OpenVPN
+home: https://github.com/trankchung/qbittorrent.git
+maintainers:
+- email: chung.k.tran@gmail.com
+  name: Chung Tran
+name: qbittorrent
+sources:
+- https://hub.docker.com/r/markusmcnugen/qbittorrentvpn
+version: 1.0.1

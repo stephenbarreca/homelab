@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "qbittorrent.fullname" . }}-vpn-config
+  labels:
+    app: {{ template "qbittorrent.fullname" . }}
+    chart: {{ template "qbittorrent.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+data:
+  client.ovpn: |-
+  {{- if eq .Values.vpn.provider "nordvpn" }}
+    {{- .Files.Get "nordvpn.ovpn" | nindent 4 }}
+  {{- else if eq .Values.vpn.provider "pia" }}
+    {{- .Files.Get "pia.ovpn" | nindent 4 }}
+  {{- end }}

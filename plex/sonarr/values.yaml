@@ -1,4 +1,3 @@
-
 replicaCount: 1
 
 image:
@@ -16,26 +15,13 @@ service:
   type: ClusterIP
   port: 80
 
-ingress:
-  enabled: false
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    kubernetes.io/tls-acme: "true"
-  path: /
-  hosts:
-    - sonarr.bananaspliff.org
-  tls:
-   - secretName: sonarr-bananaspliff-org
-     hosts:
-       - sonarr.bananaspliff.org
-
 volumes:
   - name: config
     persistentVolumeClaim:
       claimName: sonarr-config
   - name: downloads
     persistentVolumeClaim:
-      claimName: transmission-downloads
+      claimName: qbittorrent-downloads
   - name: plex-data
     persistentVolumeClaim:
       claimName: plex-nfs-data
@@ -45,7 +31,7 @@ volumeMounts:
     mountPath: "/config"
     subPath: ""
   - name: downloads
-    mountPath: "/downloads/transmission"
+    mountPath: "/downloads"
     subPath: ""
   - name: plex-data
     mountPath: "/tv"

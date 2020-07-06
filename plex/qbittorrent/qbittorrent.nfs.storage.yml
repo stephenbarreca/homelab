@@ -1,0 +1,67 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: qbittorrent-config
+provisioner: kubekrnetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: qbittorrent-downloads
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: qbittorrent-config-nfs
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "qbittorrent-config"
+  nfs:
+    server: "192.168.1.4"
+    path: "/export/qbittorrent/config"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: qbittorrent-downloads-nfs
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "qbittorrent-downloads"
+  nfs:
+    server: "192.168.1.4"
+    path: "/export/qbittorrent/downloads"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: qbittorrent-config
+  namespace: plex
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "qbittorrent-config"
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: qbittorrent-downloads
+  namespace: plex
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "qbittorrent-downloads"
+  resources:
+    requests:
+      storage: 50Gi

@@ -35,7 +35,7 @@ volumes:
       claimName: radarr-config
   - name: downloads
     persistentVolumeClaim:
-      claimName: transmission-downloads
+      claimName: qbittorrent-downloads
   - name: plex-data
     persistentVolumeClaim:
       claimName: plex-nfs-data
@@ -45,7 +45,7 @@ volumeMounts:
     mountPath: "/config"
     subPath: ""
   - name: downloads
-    mountPath: "/downloads/transmission"
+    mountPath: "/downloads"
     subPath: ""
   - name: plex-data
     mountPath: "/movies"
