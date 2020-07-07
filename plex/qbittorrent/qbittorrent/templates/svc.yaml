@@ -28,6 +28,12 @@ spec:
       {{- if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort)))}}
       nodePort: {{ .Values.service.nodePort }}
       {{- end }}
+    - name: listen
+      port: {{ .Values.service.listenPort }}
+      targetPort: {{ .Values.listenPort }}
+      {{- if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.listenPort)))}}
+      nodePort: {{ .Values.service.nodePort }}
+      {{- end }}
   selector:
     app: "{{ template "qbittorrent.fullname" . }}"
 
