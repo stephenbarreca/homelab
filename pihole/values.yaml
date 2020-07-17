@@ -2,12 +2,12 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+replicaCount: 2
 
 image:
   repository: "pihole/pihole"
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 serviceTCP:
   type: LoadBalancer
@@ -33,19 +33,6 @@ virtualHost: pi.hole
 
 ingress:
   enabled: false
-  annotations: 
-    kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  path: /
-  hosts:
-    # virtualHost (default value is pi.hole) will be appended to the hosts
-    - pihole.local
-    - pi.hole
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #     #- virtualHost (default value is pi.hole) will be appended to the hosts
-  #      - chart-example.local
 
 # Probes configuration
 probes:
@@ -75,7 +62,7 @@ resources:
 
 persistentVolumeClaim:
   # set to true to use pvc
-  enabled: true
+  enabled: false
   # set to true to use you own pvc
   existingClaim: pihole-data
   # annotations: {}
@@ -95,7 +82,18 @@ nodeSelector: {}
 
 tolerations: []
 
-affinity: {}
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 100
+      podAffinityTerm:
+        labelSelector:
+          matchExpressions:
+          - key: security
+            operator: In
+            values:
+            - S2
+        topologyKey: "kubernetes.io/hostname"
 
 # Administrator password when not using an existing secret (see below)
 adminPassword: "7!Dn2#rxN%JUnQ"
