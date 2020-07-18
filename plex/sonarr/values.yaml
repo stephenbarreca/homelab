@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: linuxserver/sonarr
-  tag: latest
+  tag: preview
   pullPolicy: Always
 
 env:
