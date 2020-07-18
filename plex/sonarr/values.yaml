@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: linuxserver/sonarr
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 env:
   - name: PUID

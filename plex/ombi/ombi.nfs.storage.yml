@@ -1,0 +1,35 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ombi-config
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ombi-nfs-config
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+    - ReadWriteOnce
+  storageClassName: "ombi-config"
+  nfs:
+    server: "192.168.1.4"
+    path: "/export/ombi/config"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ombi-config
+  namespace: plex
+spec:
+  accessModes:
+    - ReadWriteMany
+    - ReadWriteOnce
+  storageClassName: "ombi-config"
+  resources:
+    requests:
+      storage: 1Gi

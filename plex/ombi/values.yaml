@@ -1,0 +1,95 @@
+# Default values for Ombi.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: linuxserver/ombi
+  tag: latest
+  pullPolicy: Always
+
+# upgrade strategy type (e.g. Recreate or RollingUpdate)
+strategyType: Recreate
+
+# Probes configuration
+probes:
+  liveness:
+    initialDelaySeconds: 60
+    failureThreshold: 5
+    timeoutSeconds: 10
+  readiness:
+    initialDelaySeconds: 60
+    failureThreshold: 5
+    timeoutSeconds: 10
+
+nameOverride: ""
+fullnameOverride: ""
+
+timezone: America/New_York
+puid: 1001
+pgid: 1001
+
+# Subfolder can optionally be defined as an env variable for reverse proxies. Keep
+# in mind that once this value is defined, the gui setting for base url no longer
+# works. To use the gui setting, remove this env variable.
+#
+# baseUrl: /ombi
+
+service:
+  type: LoadBalancer
+  port: 80
+  annotations: {}
+  labels: {}
+  loadBalancerIP: 192.168.1.204
+  # loadBalancerSourceRanges: []
+  externalTrafficPolicy: Local
+
+ingress:
+  enabled: false
+
+persistence:
+  config:
+    enabled: true
+    ## Ombi configuration data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+    ##
+    ## If you want to reuse an existing claim, you can pass the name of the PVC using
+    ## the existingClaim variable
+    existingClaim: ombi-config
+    accessMode: ReadWriteOnce
+    size: 1Gi
+
+    ## If subPath is set mount a sub folder of a volume instead of the root of the volume.
+    ## This is especially handy for volume plugins that don't natively support sub mounting (like glusterfs).
+    ##
+    subPath: ""
+    ## Do not delete the pvc upon helm uninstall
+    skipuninstall: false
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 300m
+    memory: 256Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+podAnnotations: {}
+
+deploymentAnnotations: {}
+
