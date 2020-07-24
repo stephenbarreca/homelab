@@ -134,7 +134,6 @@ dnsmasq:
   # The format should be like:
   # - address=/foo.bar/192.168.178.10
   # - address=/pi.hole/192.168.1.240
-  - address=/transmission.home.local/192.168.1.200
   - address=/jackett.home.local/192.168.1.201
   - address=/sonarr.home.local/192.168.1.202
   - address=/radarr.home.local/192.168.1.203
@@ -143,6 +142,9 @@ dnsmasq:
   - address=/prometheus.home.local/192.168.1.206
   - address=/git.home.local/192.168.1.210
   - address=/magic-mirror.home.local/192.168.1.211
+  - address=/qbittorrent.home.local/192.168.1.215
+  - address=/bittorrent.home.local/192.168.1.215
+  - address=/torrent.home.local/192.168.1.215
   - address=/plex.home.local/192.168.1.241
   - address=/tautulli.home.local/192.168.1.243
 
