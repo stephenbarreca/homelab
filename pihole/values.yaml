@@ -11,21 +11,17 @@ image:
 
 serviceTCP:
   type: LoadBalancer
-  # externalTrafficPolicy: Local
   loadBalancerIP: "192.168.1.240"
     # a fixed LoadBalancer IP
-  annotations: 
-    # metallb.universe.tf/address-pool: network-services
+  annotations:
     metallb.universe.tf/allow-shared-ip: pihole-svc
   externalTrafficPolicy: Local
 
 serviceUDP:
   type: LoadBalancer
-  # externalTrafficPolicy: Local
   loadBalancerIP: "192.168.1.240"
     # a fixed LoadBalancer IP
-  annotations: 
-    # metallb.universe.tf/address-pool: network-services
+  annotations:
     metallb.universe.tf/allow-shared-ip: pihole-svc
   externalTrafficPolicy: Local
 
