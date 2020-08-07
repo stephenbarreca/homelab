@@ -131,23 +131,33 @@ dnsmasq:
   # Here you can add custom dns entries to override the
   # dns resolution with. All lines will be added to the
   # pihole dnsmasq configuration.
-  # The format should be like:
-  # - address=/foo.bar/192.168.178.10
-  # - address=/pi.hole/192.168.1.240
+  # Hiemdall
   - address=/home.local/192.168.1.216
+  - address=/heimdall.home.local/192.168.1.216
+  # Jackett
   - address=/jackett.home.local/192.168.1.201
+  # Sonarr
   - address=/sonarr.home.local/192.168.1.202
+  # Radarr
   - address=/radarr.home.local/192.168.1.203
+  # Ombi
   - address=/ombi.home.local/192.168.1.204
+  # Grafana
   - address=/grafana.home.local/192.168.1.205
+  # Prometheus
   - address=/prometheus.home.local/192.168.1.206
+  # Gitea
   - address=/git.home.local/192.168.1.210
+  - address=/gitea.home.local/192.168.1.210
+  # Magic-Mirror
   - address=/magic-mirror.home.local/192.168.1.211
+  # Qbittorrent
   - address=/qbittorrent.home.local/192.168.1.215
   - address=/bittorrent.home.local/192.168.1.215
   - address=/torrent.home.local/192.168.1.215
-  - address=/heimdall.home.local/192.168.1.216
+  # Plex
   - address=/plex.home.local/192.168.1.241
+  # Tautulli
   - address=/tautulli.home.local/192.168.1.243
 
   additionalHostsEntries:
