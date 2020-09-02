@@ -47,6 +47,10 @@ spec:
               path: /
               {{- end }}
               port: http
+            initialDelaySeconds: 120
+            timeoutSeconds: 5
+            failureThreshold: 12
+            periodSeconds: 10
           readinessProbe:
             httpGet:
               {{- if .Values.apiKey }}
@@ -55,6 +59,9 @@ spec:
               path: /
               {{- end }}
               port: http
+            timeoutSeconds: 5
+            failureThreshold: 3
+            periodSeconds: 10
           volumeMounts:
             {{ toYaml .Values.volumeMounts | nindent 12 }}
           resources:
