@@ -43,7 +43,7 @@ spec:
       targetPort: http
 {{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort))) }}
       nodePort: {{.Values.service.nodePort}}
+{{ end }}
   selector:
     app.kubernetes.io/name: {{ include "jackett.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
-
