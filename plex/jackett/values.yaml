@@ -9,16 +9,16 @@ image:
 env:
   - name: VPN_ENABLED
     value: "yes" # Enable Jackett over VPN
-  - name: VPN_USERNAME
-    valueFrom:
-      secretKeyRef: # Reference to the secret | openvpn.username
-        name: "openvpn"
-        key: "username"
-  - name: VPN_PASSWORD
-    valueFrom:
-      secretKeyRef: # Reference to the secret | openvpn.password
-        name: "openvpn"
-        key: "password"
+#  - name: VPN_USERNAME
+#    valueFrom:
+#      secretKeyRef: # Reference to the secret | openvpn.username
+#        name: "openvpn"
+#        key: "username"
+#  - name: VPN_PASSWORD
+#    valueFrom:
+#      secretKeyRef: # Reference to the secret | openvpn.password
+#        name: "openvpn"
+#        key: "password"
   - name: LAN_NETWORK
     value: "192.168.0.0/24"
   - name: CREATE_TUN_DEVICE
@@ -47,10 +47,10 @@ volumes:
 volumeMounts:
   - name: "config"
     mountPath: "/config"
-    subPath: "" # Path /mnt/ssd/media/configs/jackett where jackett writes the configuration
+    subPath: "" # Path  where jackett writes the configuration
   - name: "downloads"
     mountPath: "/downloads"
-    subPath: "" # Path /mnt/ssd/media/downloads/jackett ???
+    subPath: "" # Path ???
 
 
 resources:
