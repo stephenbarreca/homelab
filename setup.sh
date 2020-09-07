@@ -68,7 +68,7 @@ microk8s.kubectl apply -f $SONARR/radarr.svc.yml
 echo "[plex] configuring tautulli nfs storage"
 microk8s.kubectl apply -f $TAUTULLI/tautulli.nfs.storage.yml
 echo "[plex] installing tautulli helmchart"
-microk8s.helm3 install -n plex --values $TAUTULLI/values.yaml sonarr $TAUTULLI/tautulli-2.2.0.tgz
+microk8s.helm3 install -n plex --values $TAUTULLI/values.yaml tautulli $TAUTULLI/tautulli-2.2.0.tgz
 #----------------
 
 #----------------
