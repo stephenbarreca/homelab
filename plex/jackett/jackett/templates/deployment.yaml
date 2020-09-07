@@ -3,21 +3,16 @@ kind: Deployment
 metadata:
   name: {{ template "jackett.fullname" . }}
   labels:
-    app: {{ template "jackett.name" . }}
-    chart: {{ template "jackett.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "jackett.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "jackett.name" . }}
-      release: {{ .Release.Name }}
+      {{- include "jackett.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: {{ template "jackett.name" . }}
-        release: {{ .Release.Name }}
+        {{- include "jackett.selectorLabels" . | nindent 8 }}
     spec:
       volumes:
 {{ toYaml .Values.volumes | indent 6 }}
