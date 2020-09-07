@@ -45,5 +45,4 @@ spec:
       nodePort: {{.Values.service.nodePort}}
 {{ end }}
   selector:
-    app.kubernetes.io/name: {{ include "jackett.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    {{- include "jackett.selectorLabels" . | nindent 4 }}

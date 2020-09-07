@@ -30,3 +30,24 @@ Create chart name and version as used by the chart label.
 {{- define "jackett.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{/*
+Common labels
+*/}}
+{{- define "jackett.labels" -}}
+app.kubernetes.io/name: {{ include "jackett.name" . }}
+helm.sh/chart: {{ include "jackett.chart" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{ include "jackett.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
+{{- define "jackett.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "jackett.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}

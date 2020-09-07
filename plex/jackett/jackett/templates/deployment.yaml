@@ -3,10 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "jackett.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "jackett.name" . }}
-    helm.sh/chart: {{ include "jackett.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    {{- include "jackett.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
 {{- if .Values.strategy }}
