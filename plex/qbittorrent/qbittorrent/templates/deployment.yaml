@@ -45,9 +45,9 @@ spec:
         - name: LAN_NETWORK
           value: {{ default "10.0.0.0/8" .Values.vpn.lanNetwork | quote }}
         - name: WEBUI_PORT_ENV
-          value: {{ .Values.uiPort }}
+          value: {{ .Values.uiPort | quote}}
         - name: WEBUI_PORT
-          value: {{ .Values.uiPort }}
+          value: {{ .Values.uiPort | quote}}
         {{- range $key, $value := .Values.extraEnvVars }}
         - name: {{ $key }}
           value: {{ $value | quote }}

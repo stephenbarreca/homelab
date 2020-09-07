@@ -44,7 +44,7 @@ vpn:
 # Port qBittorrent UI listens on
 # ref: https://github.com/trankchung/qbittorrent/tree/master/docker#environment-variables
 # For WEBUI_PORT_ENV environment variable
-uiPort: 8080
+uiPort: 80
 
 # Kubernetes configuration
 # For minikube, set this to NodePort, elsewhere use LoadBalancer
