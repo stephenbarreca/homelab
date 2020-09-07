@@ -52,6 +52,9 @@ spec:
         - containerPort: {{ .Values.uiPort }}
           name: http
           protocol: TCP
+        - containerPort: {{ .Values.service.listenPort }}
+          name: listen
+          protocol: TCP
         - containerPort: 8999
           name: transport-tcp
           protocol: TCP

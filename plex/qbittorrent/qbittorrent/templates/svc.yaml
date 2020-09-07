@@ -25,6 +25,12 @@ spec:
       {{- if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort)))}}
       nodePort: {{ .Values.service.nodePort }}
       {{- end }}
+    - name: listen
+      port: {{ .Values.service.listenPort }}
+      targetPort: listen
+      {{- if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.listenPort)))}}
+      nodePort: {{ .Values.service.nodePort }}
+      {{- end }}
   selector:
     {{- include "qbittorrent.selectorLabels" . | nindent 4 }}
 
