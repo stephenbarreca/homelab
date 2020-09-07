@@ -3,10 +3,7 @@ kind: Service
 metadata:
   name: {{ template "qbittorrent.fullname" . }}
   labels:
-    app: {{ template "qbittorrent.fullname" . }}
-    chart: {{ template "qbittorrent.chart" . }}
-    release: {{ .Release.Name | quote }}
-    heritage: {{ .Release.Service | quote }}
+    {{- include "qbittorrent.labels" . | nindent 4 }}
   {{- if .Values.service.annotations }}
   annotations:
     {{- range $key, $value := .Values.service.annotations }}
@@ -35,5 +32,5 @@ spec:
       nodePort: {{ .Values.service.nodePort }}
       {{- end }}
   selector:
-    app: "{{ template "qbittorrent.fullname" . }}"
+    {{- include "qbittorrent.selectorLabels" . | nindent 4 }}
 

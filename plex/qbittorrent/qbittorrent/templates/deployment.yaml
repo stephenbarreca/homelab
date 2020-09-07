@@ -3,16 +3,12 @@ kind: Deployment
 metadata:
   name: {{ template "qbittorrent.fullname" . }}
   labels:
-    app: {{ template "qbittorrent.fullname" . }}
-    chart: {{ template "qbittorrent.chart" . }}
-    release: {{ .Release.Name | quote }}
-    heritage: {{ .Release.Service | quote }}
+    {{- include "qbittorrent.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ template "qbittorrent.fullname" . }}
-      release: {{ .Release.Name | quote }}
+      {{- include "qbittorrent.selectorLabels" . | nindent 6 }}
   {{- with .Values.strategy }}
   strategy:
     {{- toYaml . | nindent 4 }}
@@ -20,9 +16,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "qbittorrent.fullname" . }}
-        chart: {{ template "qbittorrent.chart" . }}
-        release: {{ .Release.Name | quote }}
+        {{- include "qbittorrent.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.securityContext }}
       securityContext:

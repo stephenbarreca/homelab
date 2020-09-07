@@ -4,10 +4,7 @@ kind: Ingress
 metadata:
   name: {{ template "qbittorrent.fullname" . }}
   labels:
-    app: {{ template "qbittorrent.fullname" . }}
-    chart: {{ template "qbittorrent.chart" . }}
-    release: {{ .Release.Name | quote }}
-    heritage: {{ .Release.Service | quote }}
+    {{- include "qbittorrent.labels" . | nindent 4 }}
   {{- if .Values.ingress.annotations }}
   annotations:
     {{- range $key, $value := .Values.ingress.annotations }}

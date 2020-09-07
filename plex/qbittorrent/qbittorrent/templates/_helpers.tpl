@@ -84,3 +84,25 @@ Return the appropriate apiVersion for deployment.
 {{- print "apps/v1" -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Common labels
+*/}}
+{{- define "qbittorrent.labels" -}}
+app.kubernetes.io/name: {{ include "qbittorrent.name" . }}
+helm.sh/chart: {{ include "qbittorrent.chart" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{ include "qbittorrent.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+{{- end }}
+
+{{/*
+Selector labels
+*/}}
+{{- define "qbittorrent.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "qbittorrent.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
