@@ -1,86 +1,51 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "jackett.fullname" . }}
+  name: {{ template "jackett.fullname" . }}
   labels:
-    {{- include "jackett.labels" . | nindent 4 }}
+    app: {{ template "jackett.name" . }}
+    chart: {{ template "jackett.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
-{{- if .Values.strategy }}
-  strategy:
-{{ toYaml .Values.strategy | indent 4 }}
-{{ if eq .Values.strategy.type "Recreate" }}
-    rollingUpdate: null
-{{- end }}
-{{- end }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "jackett.name" . }}
-      app.kubernetes.io/instance: {{ .Release.Name }}
+      app: {{ template "jackett.name" . }}
+      release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "jackett.name" . }}
-        app.kubernetes.io/instance: {{ .Release.Name }}
+        app: {{ template "jackett.name" . }}
+        release: {{ .Release.Name }}
     spec:
+      volumes:
+{{ toYaml .Values.volumes | indent 6 }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ tpl .Values.image.tag . }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: PGID
-              value: {{ .Values.jackett.gid | quote }}
-            - name: PUID
-              value: {{ .Values.jackett.uid | quote }}
-            - name: TZ
-              value: {{ .Values.jackett.tz | quote }}
-            - name: RUN_OPTS
-              value: {{ .Values.jackett.run_opts | quote }}
+{{ toYaml .Values.env | indent 12 }}
           ports:
             - name: http
               containerPort: 9117
               protocol: TCP
-          livenessProbe:
-            initialDelaySeconds: 15
-            periodSeconds: 5
-            tcpSocket:
-              port: http
-          readinessProbe:
-            initialDelaySeconds: 15
-            periodSeconds: 5
-            tcpSocket:
-              port: http
           volumeMounts:
-          - name: jackett-config
-            mountPath: /config
-          - name: jackett-data
-            mountPath: /data
-          - name: etc-timezone
-            mountPath: /etc/timezone
+{{ toYaml .Values.volumeMounts | indent 12 }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      volumes:
-      - name: etc-timezone
-        hostPath:
-          path: /etc/localtime
-      - name: jackett-config
-      {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ template "jackett.fullname" . }}-config
-      {{- else }}
-        emptyDir: {}
-      {{- end }}
-      - name: jackett-data
-        emptyDir: {}
-      {{- with .Values.nodeSelector }}
+{{ toYaml .Values.resources | indent 12 }}
+          securityContext:
+{{ toYaml .Values.securityContext | indent 12 }}
+    {{- with .Values.nodeSelector }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+{{ toYaml . | indent 8 }}
+    {{- end }}
     {{- with .Values.affinity }}
       affinity:
-        {{- toYaml . | nindent 8 }}
+{{ toYaml . | indent 8 }}
     {{- end }}
     {{- with .Values.tolerations }}
       tolerations:
-        {{- toYaml . | nindent 8 }}
+{{ toYaml . | indent 8 }}
     {{- end }}
