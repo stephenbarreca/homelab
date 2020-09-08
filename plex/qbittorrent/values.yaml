@@ -18,7 +18,7 @@
 image:
   registry: docker.io
   repository: tranchung/qbittorrent
-  tag: v1.0.0
+  tag: latest
   # Specify a imagePullPolicy
   # Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   # ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -44,7 +44,7 @@ vpn:
 # Port qBittorrent UI listens on
 # ref: https://github.com/trankchung/qbittorrent/tree/master/docker#environment-variables
 # For WEBUI_PORT_ENV environment variable
-uiPort: 80
+uiPort: 8080
 
 # Kubernetes configuration
 # For minikube, set this to NodePort, elsewhere use LoadBalancer
@@ -63,7 +63,7 @@ service:
   # Enable client source IP preservation
   # ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
   #
-  externalTrafficPolicy: Local
+  externalTrafficPolicy: Cluster
   # Service annotations done as key:value pairs
   annotations: {}
 
