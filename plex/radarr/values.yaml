@@ -1,4 +1,3 @@
-
 replicaCount: 1
 
 image:
@@ -35,7 +34,7 @@ volumes:
       claimName: radarr-config
   - name: downloads
     persistentVolumeClaim:
-      claimName: qbittorrent-downloads
+      claimName: transmission-downloads
   - name: plex-data
     persistentVolumeClaim:
       claimName: plex-nfs-data
@@ -45,7 +44,7 @@ volumeMounts:
     mountPath: "/config"
     subPath: ""
   - name: downloads
-    mountPath: "/downloads"
+    mountPath: "/downloads/transmission"
     subPath: ""
   - name: plex-data
     mountPath: "/movies"

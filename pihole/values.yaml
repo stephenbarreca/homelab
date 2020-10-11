@@ -157,6 +157,8 @@ dnsmasq:
   - address=/plex.home.local/192.168.1.241
   # Tautulli
   - address=/tautulli.home.local/192.168.1.243
+  # Transmission
+  - address=/transmission.home.local/192.168.1.245
 
   additionalHostsEntries:
   # Dnsmasq reads the /etc/hosts file to resolve ips. You can add additional entries if you like
@@ -216,6 +218,7 @@ adlists:
 whitelist:
   # If you want to provide whitelisted domains, add them here.
   - api.vsee.com
+  - services.gfe.nvidia.com
   - 0.client-channel.google.com
   - 1drv.com
   - 2.android.pool.ntp.org

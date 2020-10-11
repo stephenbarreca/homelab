@@ -1,0 +1,95 @@
+# Optimized for airvpn.
+
+replicaCount: 1
+
+image:
+  repository: haugene/transmission-openvpn
+  tag: latest
+  pullPolicy: IfNotPresent
+
+dnsPolicy: "None"
+
+dnsConfig:
+  nameservers:
+    - 8.8.8.8
+    - 8.8.4.4
+
+env:
+  - name: OPENVPN_PROVIDER
+    value: "NORDVPN"
+  - name: OPENVPN_USERNAME
+    value: "Q5aderPMaykfq98VY9ffbvQV"
+  - name: OPENVPN_PASSWORD
+    value: "1zjQcHrogmyFCNT3G9GAjJtQ"
+  - name: NORDVPN_PROTOCOL
+    value: "TCP"
+  - name: NORDVPN_COUNTRY
+    value: "US" # Country where we want to download over VPN
+  - name: NORDVPN_CATEGORY
+    value: "P2P" # VPN Type
+  - name: LOCAL_NETWORK
+    value: "192.168.1.0/24,10.0.0.0/8"
+  - name: TRANSMISSION_PEER_PORT
+    value: "51324"
+  - name: TRANSMISSION_DOWNLOAD_DIR
+    value: "/downloads/transmission"
+  - name: TRANSMISSION_DOWNLOAD_QUEUE_SIZE
+    value: "200"
+  - name: TRANSMISSION_RATIO_LIMIT
+    value: "1"
+  - name: TRANSMISSION_RATIO_LIMIT_ENABLED
+    value: "true"
+  - name: TRANSMISSION_PEER_LIMIT_PER_TORRENT
+    value: "200"
+  - name: TRANSMISSION_PEER_LIMIT_GLOBAL
+    value: "2000"
+  - name: TRANSMISSION_CACHE_SIZE_MB
+    value: "16"
+  - name: LOG_TO_STDOUT
+    value: "true"
+  - name: PUID
+    value: "1000"
+  - name: PGID
+    value: "1000"
+  - name: TRANSMISSION_WEB_UI
+    value: "transmission-web-control"
+service:
+  type: ClusterIP
+  port: 80
+
+volumes:
+  - name: "config"
+    persistentVolumeClaim:
+      claimName: "transmission-config" # PersistentVolumeClaim created earlier
+  - name: "downloads"
+    persistentVolumeClaim:
+      claimName: "transmission-downloads" # PersistentVolumeClaim created earlier
+  - name: "dev-tun" # Needed for VPN
+    hostPath:
+      path: "/dev/net/tun"
+
+volumeMounts:
+  - name: "config"
+    mountPath: "/data"
+    subPath: "" # Path /mnt/ssd/media/configs/transmission-data where transmission writes the configuration
+  - name: "downloads"
+    mountPath: "/downloads/transmission"
+    subPath: "" # Path /mnt/ssd/media/downloads/transmission where transmission downloads Torrents
+  - name: "dev-tun"
+    mountPath: "/dev/net/tun" # Needed for VPN
+# Security context for container
+securityContext:
+  capabilities:
+    add:
+      - NET_ADMIN
+
+podSecurityContext: {}
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+

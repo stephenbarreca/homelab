@@ -1,0 +1,68 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: transmission-config
+provisioner: kubekrnetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: transmission-downloads
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: transmission-config-nfs
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "transmission-config"
+  nfs:
+    server: "192.168.1.4"
+    path: "/export/transmission-openvpn/config"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: transmission-downloads-nfs
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "transmission-downloads"
+  nfs:
+    server: "192.168.1.4"
+    path: "/export/transmission-openvpn/downloads"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: transmission-config
+  namespace: plex
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "transmission-config"
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: transmission-downloads
+  namespace: plex
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "transmission-downloads"
+  resources:
+    requests:
+      storage: 10Gi
+
