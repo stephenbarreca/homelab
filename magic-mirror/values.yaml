@@ -34,7 +34,7 @@ autoscaling:
   enabled: false
 
 nodeSelector:
-  magicmirror: true
+  magicmirror: "true"
 
 tolerations:
   - key: "rpi"
