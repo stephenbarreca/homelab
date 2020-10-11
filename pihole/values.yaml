@@ -35,7 +35,7 @@ probes:
   # probes.liveness -- Configure the healthcheck for the ingress controller
   liveness:
     enabled: true
-    initialDelaySeconds: 60
+    initialDelaySeconds: 300
     failureThreshold: 10
     timeoutSeconds: 5
   readiness:
