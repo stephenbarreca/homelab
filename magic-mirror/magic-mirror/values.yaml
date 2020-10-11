@@ -14,17 +14,114 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+# set a custom config
+config:
+  persistentVolumeClaim: ""
+  # Address to listen on, can be:
+  #   - "localhost", "127.0.0.1", "::1" to listen on loopback interface
+  #   - another specific IPv4/6 to listen on a specific interface
+  #   - "0.0.0.0", "::" to listen on any interface
+  #   Default, when address config is left out or empty, is "localhost"
+  address: "0.0.0.0"
+  port: 8080
+  # IP Whitelist
+  #   Set [] to allow all IP addresses
+  #   or add a specific IPv4 of 192.168.1.5:
+  #   ["127.0.0.1", "::ffff:127.0.0.1", "::1", "::ffff:192.168.1.5"],
+  #   or IPv4 range of 192.168.3.0 --> 192.168.3.15 use CIDR format:
+  #   ["127.0.0.1", "::ffff:127.0.0.1", "::1", "::ffff:192.168.3.0/28"],
+  ipWhitelist: []
+  # - "127.0.0.1"
+  # - "::ffff:127.0.0.1"
+  # - "::1"
+  # - "192.168.1.0/24"
+  # - "10.0.0.0/8"
+
+  # The language of the interface. (Note: Not all elements will be localized.)
+  #   Possible values are en, nl, ru, fr, etc.
+  #   default value is en.
+  language: en
+
+  # This allows to scale the mirror contents with a given zoom factor.
+  zoom: 1.0
+
+  #The form of time notation that will be used.
+  # Possible values are 12 or 24.
+  timeFormat: 24
+
+  units: "metric"
+  #  local for armv6l processors, default
+  #  starts serveronly and then starts chrome browser
+  #  false, default for all  NON-armv6l devices
+  #  true, force serveronly mode, because you want to.. no UI on this device
+  serverOnly: true
+
+  # define module configurations
+  modules:
+  - module: alert
+  - module: updatenotification
+    position: top_bar
+  - module: clock
+    position: top_left
+  - module: calendar
+    header: US Holidays
+    position: top_right
+    config:
+      calendars:
+      - symbol: calendar-check
+        url: "webcal://www.calendarlabs.com/ical-calendar/ics/76/US_Holidays.ics"
+  - module: compliments
+    position: lower_third
+  - module: currentweather
+    postion: top_right
+    config:
+      location: New York
+      locationId: 5128581
+      appid: "YOUR_OPENWEATHER_API_KEY"
+  - module: weatherforcast
+    postion: top_right
+    header: Weather Forcast
+    config:
+      location: New York
+      locationId: 5128581
+      appid: "YOUR_OPENWEATHER_API_KEY"
+  - module: newsfeed
+    position: bottom_bar
+    config:
+      feeds:
+      - title: New York Times
+        url: "http://www.nytimes.com/services/xml/rss/nyt/HomePage.xml"
+      showSourceTitle: true
+      showPublishDate: true
+      broadcastNewsFeeds: true
+      broadcastNewsUpdates: true
+
 persistence:
-  config:
-    enabled: false
   modules:
     enabled: false
+    # claimName: magic-mirror-modules
   css:
     enabled: false
-  localtime:
-    enabled: false
+    # claimName: magic-mirror-modules
 
-config:
+# synchronize the time of the host with the docker container.
+localtime: true
+
+# Probes configuration
+probes:
+  # probes.liveness -- Configure the healthcheck for the ingress controller
+  liveness:
+    enabled: false
+    initialDelaySeconds: 60
+    failureThreshold: 10
+    timeoutSeconds: 5
+  readiness:
+    enabled: false
+    initialDelaySeconds: 60
+    failureThreshold: 3
+    timeoutSeconds: 5
+
+
 
 serviceAccount:
   # Specifies whether a service account should be created

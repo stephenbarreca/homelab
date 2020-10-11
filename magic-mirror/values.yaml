@@ -5,17 +5,35 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
 
+config:
+  persistentVolumeClaim: ""
+  #Address to listen on, can be:
+  # - "localhost", "127.0.0.1", "::1" to listen on loopback interface
+  # - another specific IPv4/6 to listen on a specific interface
+  # - "0.0.0.0", "::" to listen on any interface
+  # Default, when address config is left out or empty, is "localhost"
+  address: "0.0.0.0"
+  port: 8080
+  # Set [] to allow all IP addresses
+  # or add a specific IPv4 of 192.168.1.5:
+  # ["127.0.0.1", "::ffff:127.0.0.1", "::1", "::ffff:192.168.1.5"],
+  # or IPv4 range of 192.168.3.0 --> 192.168.3.15 use CIDR format:
+  # ["127.0.0.1", "::ffff:127.0.0.1", "::1", "::ffff:192.168.3.0/28"],
+  ipWhitelist:
+  - "127.0.0.1"
+  - "::ffff:127.0.0.1"
+  - "::1"
+  - "192.168.1.0/24"
+  - "10.0.0.0/8"
+
 persistence:
-  config:
-    enabled: true
-    claimName: magic-mirror-config
   modules:
     enabled: true
     claimName: magic-mirror-modules
   css:
     enabled: false
-  localtime:
-    enabled: false
+
+localtime: true
 
 service:
   type: LoadBalancer
@@ -29,6 +47,7 @@ resources:
    requests:
      cpu: 100m
      memory: 128Mi
+
 
 autoscaling:
   enabled: false

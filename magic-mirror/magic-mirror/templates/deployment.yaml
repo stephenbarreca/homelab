@@ -40,16 +40,36 @@ spec:
           volumeMounts:
           - name: config
             mountPath: /opt/magic_mirror/config
+          {{- if .Values.persistence.modules.enabled }}
           - name: modules
             mountPath: /opt/magic_mirror/modules
-#          livenessProbe:
-#            httpGet:
-#              path: /
-#              port: http
-#          readinessProbe:
-#            httpGet:
-#              path: /
-#              port: http
+          {{- end }}
+          {{- if .Values.persistence.css.enabled }}
+          - name: css
+            mountPath: /opt/magic_mirror/css
+          {{- end }}
+          {{- if .Values.localtime }}
+          - name: localtime
+            mountPath: /etc/localtime
+          {{- end }}
+          {{- if .Values.probes.liveness.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
+            failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
+            timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds }}
+          {{- end }}
+          {{- if .Values.probes.readiness.enabled }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
+            failureThreshold: {{ .Values.probes.readiness.failureThreshold }}
+            timeoutSeconds: {{ .Values.probes.readiness.timeoutSeconds }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -57,19 +77,35 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-      {{- if .Values.persistence.config.enabled }}
       - name: config
+        {{- if .Values.config.persistentVolumeClaim }}
         persistentVolumeClaim:
-        {{- if .Values.persistence.config.claimName }}
-          claimName: "{{ .Values.persistence.config.claimName }}"
+          claimName: {{ .Values.persistence.config.claimName | quote}}
+        {{- else }}
+        configMap:
+            name: magic-mirror-config
+            items:
+              - key: config.js
+                path: config.js
         {{- end }}
-      {{- end }}
       {{- if .Values.persistence.modules.enabled }}
       - name: modules
-        persistentVolumeClaim:
         {{- if .Values.persistence.modules.claimName }}
-          claimName: "{{ .Values.persistence.modules.claimName }}"
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.modules.claimName | quote}}
         {{- end }}
+      {{- end }}
+      {{- if .Values.persistence.css.enabled }}
+      - name: css
+        {{- if .Values.persistence.css.claimName }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.css.claimName | quote}}
+        {{- end }}
+      {{- end }}
+      {{- if .Values.localtime }}
+      - name: localtime
+        hostPath:
+          path: "/etc/localtime"
       {{- end }}
       {{- with .Values.affinity }}
       affinity:

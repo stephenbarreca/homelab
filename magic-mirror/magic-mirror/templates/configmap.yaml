@@ -1,0 +1,28 @@
+{{- if not .Values.config.persistentVolumeClaim }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: magic-mirror-config
+data:
+  config.js : |
+    var config = {
+            address: {{ .Values.config.address | quote }},
+            port: {{.Values.config.port}},
+            ipWhitelist: {{ .Values.config.ipWhitelist | toJson }},
+
+            useHttps: false,                // Support HTTPS or not, default "false" will use HTTP
+            httpsPrivateKey: "",    // HTTPS private key path, only require when useHttps is true
+            httpsCertificate: "",   // HTTPS Certificate path, only require when useHttps is true
+
+            zoom: {{ .Values.config.zoom }},
+            language: {{ .Values.config.language | quote }},
+            timeFormat: {{ .Values.config.timeFormat }},
+            units: {{ .Values.config.units | quote }},
+            serverOnly:  {{ .Values.config.serverOnly }},
+
+            modules: {{ .Values.config.modules | toPrettyJson | nindent 14}}
+    };
+
+    /*************** DO NOT EDIT THE LINE BELOW ***************/
+    if (typeof module !== "undefined") {module.exports = config;}
+{{- end }}
