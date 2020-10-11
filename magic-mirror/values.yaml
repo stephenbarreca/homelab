@@ -33,7 +33,8 @@ resources:
 autoscaling:
   enabled: false
 
-nodeSelector: {}
+nodeSelector:
+  magicmirror: true
 
 tolerations:
   - key: "rpi"
