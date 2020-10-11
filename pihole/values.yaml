@@ -76,7 +76,11 @@ persistentVolumeClaim:
 
 nodeSelector: {}
 
-tolerations: []
+tolerations:
+  - key: "rpi"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
 
 affinity:
   podAntiAffinity:
@@ -85,10 +89,10 @@ affinity:
       podAffinityTerm:
         labelSelector:
           matchExpressions:
-          - key: security
+          - key: app
             operator: In
             values:
-            - S2
+            - pihole
         topologyKey: "kubernetes.io/hostname"
 
 # Administrator password when not using an existing secret (see below)
