@@ -41,6 +41,8 @@ echo "[plex] configuring transmission nfs storage"
 microk8s.kubectl apply -f $TRANSMISSION/transmission.nfs.storage.yml
 echo "[plex] installing transmission helmchart"
 microk8s.helm3 install -n plex --values $TRANSMISSION/values.yaml transmission $QBITTORRENT/transmission-openvpn-0.1.0.tgz
+echo "[plex] creating transmission loadbalancer"
+microk8s.kubectl apply -f $TRANSMISSION/transmission.svc.yml
 
 echo "[plex] configuring ombi nfs storage"
 microk8s.kubectl apply -f $OMBI/ombi.nfs.storage.yml
