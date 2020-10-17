@@ -8,6 +8,7 @@ SONARR="${PLEX_CORE}/sonarr"
 JACKETT="${PLEX_CORE}/jackett"
 OMBI="${PLEX_CORE}/ombi"
 QBITTORRENT="${PLEX_CORE}/qbittorrent"
+TRANSMISSION="${PLEX_CORE}/transmission-openvpn"
 TAUTULLI="${PLEX_CORE}/tautulli"
 GITEA="${CORE}/gitea"
 HEIMDALL="${CORE}/heimdall"
@@ -36,10 +37,10 @@ microk8s.kubectl apply -f $PLEX/plex.nfs.storage.yml
 echo "[plex] installing plex helmchart"
 microk8s.helm3 install -n plex --values $PLEX/values.yaml plex $PLEX/kube-plex-0.2.7.tgz
 
-echo "[plex] configuring qbittorrent nfs storage"
-microk8s.kubectl apply -f $QBITTORRENT/qbittorrent.nfs.storage.yml
-echo "[plex] installing qbittorrent helmchart"
-microk8s.helm3 install -n plex --values $QBITTORRENT/values.yaml qbittorrent $QBITTORRENT/qbittorrent/
+echo "[plex] configuring transmission nfs storage"
+microk8s.kubectl apply -f $TRANSMISSION/transmission.nfs.storage.yml
+echo "[plex] installing transmission helmchart"
+microk8s.helm3 install -n plex --values $TRANSMISSION/values.yaml transmission $QBITTORRENT/transmission-openvpn-0.1.0.tgz
 
 echo "[plex] configuring ombi nfs storage"
 microk8s.kubectl apply -f $OMBI/ombi.nfs.storage.yml
