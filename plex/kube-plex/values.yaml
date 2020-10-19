@@ -30,6 +30,8 @@ rbac:
 nodeSelector:
   beta.kubernetes.io/arch: amd64
 
+nvidia_driver_capabilities: all
+
 persistence:
   transcode:
     enabled: false
@@ -53,6 +55,7 @@ resources:
   limits:
     cpu: 6
     memory: 4Gi
+    nvidia.com/gpu: 1
   requests:
     cpu: 2
     memory: 2Gi
