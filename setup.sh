@@ -52,7 +52,7 @@ microk8s.helm3 install -n plex --values $OMBI/values.yaml ombi $OMBI/ombi-2.2.1.
 echo "[plex] configuring jackett nfs storage"
 microk8s.kubectl apply -f $JACKETT/jackett.nfs.storage.yml
 echo "[plex] installing jackett helmchart"
-microk8s.helm3 install -n plex --values $JACKETT/values.yaml jackett $JACKETT/jackett-0.1.0.tgz
+microk8s.helm3 install -n plex --values $JACKETT/values.yaml jackett $JACKETT/jackett/
 
 echo "[plex] configuring radarr nfs storage"
 microk8s.kubectl apply -f $RADARR/radarr.nfs.storage.yml
