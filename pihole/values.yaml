@@ -163,6 +163,9 @@ dnsmasq:
   - address=/tautulli.home.local/192.168.1.243
   # Transmission
   - address=/transmission.home.local/192.168.1.245
+  # Minecraft
+  - address=/minecraft.home.local/192.168.1.220
+  - address=/rcon.home.local/192.168.1.221
 
   additionalHostsEntries:
   # Dnsmasq reads the /etc/hosts file to resolve ips. You can add additional entries if you like
