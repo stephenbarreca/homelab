@@ -166,6 +166,8 @@ dnsmasq:
   # Minecraft
   - address=/minecraft.home.local/192.168.1.220
   - address=/rcon.home.local/192.168.1.221
+  # pihole
+  - address=/pihole.home.local/192.168.1.240
 
   additionalHostsEntries:
   # Dnsmasq reads the /etc/hosts file to resolve ips. You can add additional entries if you like
@@ -226,6 +228,8 @@ whitelist:
   # If you want to provide whitelisted domains, add them here.
   - api.vsee.com
   - services.gfe.nvidia.com
+  - gfs.nvidia.com
+  - sendgrid.net
   - 0.client-channel.google.com
   - 1drv.com
   - 2.android.pool.ntp.org

@@ -1,6 +1,6 @@
 # ref: https://hub.docker.com/r/itzg/minecraft-server/
 image: itzg/minecraft-server
-imageTag: latest
+imageTag: adopt14
 imagePullSecret: ""
 
 ## Configure resource requests and limits
@@ -8,11 +8,11 @@ imagePullSecret: ""
 ##
 resources:
   requests:
-    memory: 6Gi
-    cpu: 1
+    memory: 9Gi
+    cpu: 0.2
   limits:
-    memory: 6Gi
-    cpu: 4
+    memory: 11Gi
+    cpu: 2
 
 # upgrade strategy type (e.g. Recreate or RollingUpdate)
 strategyType: Recreate
@@ -125,7 +125,7 @@ minecraftServer:
   # Check accounts against Minecraft account service.
   onlineMode: true
   # If you adjust this, you may need to adjust resources.requests above to match.
-  memory: 3G
+  memory: 9G
   # General JVM options to be passed to the Minecraft server invocation
   jvmOpts: ""
   # Options like -X that need to proceed general JVM options
