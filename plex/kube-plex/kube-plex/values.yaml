@@ -33,6 +33,7 @@ persistence:
     accessMode: ReadWriteMany
     size: 20Gi
     storageClass: ""
+transcodeToMemory: false
 plexGroup: "8675309"
 plexUser: "1005"
 podAnnotations: {}

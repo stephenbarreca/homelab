@@ -197,6 +197,9 @@ spec:
 {{- else }}
           claimName: "{{ template "fullname" . }}-transcode"
 {{- end }}
+{{- else if .Values.tanscodeToMemory }}
+        emptyDir: 
+          medium: Memory
 {{- else }}
         emptyDir: {}
 {{- end }}

@@ -51,15 +51,15 @@ persistence:
     storageClass: "plex-local-config"
     size: 50Gi
     accessMode: ReadWriteOnce
-
+tanscodeToMemory: true
 resources:
   limits:
     cpu: 6
-    memory: 4Gi
+    memory: 6Gi
     nvidia.com/gpu: 1
   requests:
-    cpu: 2
-    memory: 2Gi
+    cpu: 0.5
+    memory: 1Gi
 
 podAnnotations: {}
 deploymentAnnotations: {}
