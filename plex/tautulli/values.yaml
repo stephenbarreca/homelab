@@ -4,8 +4,8 @@
 
 image:
   repository: linuxserver/tautulli
-  tag: v2.1.44-ls34
-  pullPolicy: IfNotPresent
+  tag: latest
+  pullPolicy: Always
 
 # upgrade strategy type (e.g. Recreate or RollingUpdate)
 strategyType: Recreate

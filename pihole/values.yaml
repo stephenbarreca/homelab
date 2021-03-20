@@ -35,12 +35,12 @@ probes:
   # probes.liveness -- Configure the healthcheck for the ingress controller
   liveness:
     enabled: true
-    initialDelaySeconds: 300
+    initialDelaySeconds: 900
     failureThreshold: 10
     timeoutSeconds: 5
   readiness:
     enabled: true
-    initialDelaySeconds: 60
+    initialDelaySeconds: 120
     failureThreshold: 3
     timeoutSeconds: 5
 
@@ -226,6 +226,7 @@ adlists:
   - https://raw.githubusercontent.com/HorusTeknoloji/TR-PhishingList/master/url-lists.txt
 whitelist:
   # If you want to provide whitelisted domains, add them here.
+  - thepiratebay.org
   - api.vsee.com
   - services.gfe.nvidia.com
   - gfs.nvidia.com
