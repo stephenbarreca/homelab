@@ -54,12 +54,12 @@ persistence:
 tanscodeToMemory: true
 resources:
   limits:
-    cpu: 6
-    memory: 6Gi
+    cpu: 1
+    memory: 4Gi
     nvidia.com/gpu: 1
   requests:
     cpu: 0.5
-    memory: 1Gi
+    memory: 2Gi
 
 podAnnotations: {}
 deploymentAnnotations: {}

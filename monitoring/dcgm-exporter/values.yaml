@@ -54,13 +54,13 @@ service:
   # Annotations to add to the service
   annotations: {}
 
-resources: {}
-  #  limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+resources:
+  limits:
+    cpu: 300m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
 serviceMonitor:
   enabled: true
   interval: 15s

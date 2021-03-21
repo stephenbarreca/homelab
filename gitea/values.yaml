@@ -70,21 +70,24 @@ resources:
   gitea:
     requests:
       memory: 500Mi
-      cpu: 1000m
+      cpu: 20m
     limits:
       memory: 2Gi
-      cpu: 1
+      cpu: 100m
   postgres:
     requests:
       memory: 200Mi
-      cpu: 200m
+      cpu: 20m
     limits:
-      memory: 2Gi
-      cpu: 1
+      memory: 500Mi
+      cpu: 100m
   memcached:
     requests:
+      memory: 16Mi
+      cpu: 10m
+    limits:
       memory: 64Mi
-      cpu: 50m
+      cpu: 50m  
 
 
 ## Enable persistence using Persistent Volume Claims
