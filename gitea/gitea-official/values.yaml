@@ -50,10 +50,10 @@ ingress:
 resources:
   requests:
     memory: 500Mi
-    cpu: 20m
+    cpu: 100m
   limits:
     memory: 2Gi
-    cpu: 100m
+    cpu: 500m
 
 nodeSelector: {}
 
@@ -216,6 +216,13 @@ gitea:
 memcached:
   service:
     port: 11211
+  resources:
+    limits: 
+      cpu: 400m
+      memory: 512Mi
+    requests:
+      memory: 256Mi
+      cpu: 200m
 
 postgresql:
   global:
@@ -228,7 +235,13 @@ postgresql:
     enabled: true
     existingClaim: gitea-postgres
     size: 10Gi
-
+  resources: 
+    limits: 
+      memory: 256Mi
+      cpu: 250m
+    requests:
+      memory: 256Mi
+      cpu: 250m
 #mysql:
 #  root:
 #    password: gitea
