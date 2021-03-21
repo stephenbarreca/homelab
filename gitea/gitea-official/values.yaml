@@ -103,10 +103,10 @@ initPreScript: ""
 
 
 gitea:
-  admin:
-    username: fishfu
-    password: "N!K)L$t3sl4123"
-    email: "fishfu@gmail.com"
+#  admin:
+#    username: fishfu
+#    password: "N!K)L$t3sl4123"
+#    email: "fishfu@gmail.com"
 
   metrics:
     enabled: true
