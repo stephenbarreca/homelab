@@ -142,7 +142,9 @@ gitea:
     #customProfileUrl:
     #customEmailUrl:
 
-  config: {}
+  config:
+    server:
+      DOMAIN: git.home.local
   #  APP_NAME: "Gitea: Git with a cup of tea"
   #  RUN_MODE: dev
   #
