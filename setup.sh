@@ -16,6 +16,13 @@ MONITORING="${CORE}/monitoring"
 #----------------
 
 #----------------
+echo "enable microk8s features"
+microk8s enable dns gpu helm3 metallb metrics-server
+echo "disable microk8s ha-cluster"
+microk8s disable ha-cluster
+#----------------
+
+#----------------
 # PIHOLE
 echo "[pihole] creating namespace pihole"
 microk8s.kubectl create namespace pihole
@@ -83,7 +90,7 @@ microk8s.kubectl apply -f $GITEA/gitea.nfs.storage.yml
 echo "[gitea] configuring postgres nfs storage"
 microk8s.kubectl apply -f $GITEA/postgres-gitea.nfs.storage.yml
 echo "[gitea] installing gitea helmchart"
-microk8s.helm3 install -n gitea --values $GITEA/values.yaml gitea $GITEA/gitea-1.11.5.tgz
+microk8s.helm3 install -n gitea --values $GITEA/values.yaml gitea $GITEA/gitea-official/gitea-2.2.2.tgz
 #----------------
 
 #----------------
@@ -102,8 +109,12 @@ echo "[monitoring] creating namespace monitoring"
 microk8s.kubectl create namespace monitoring
 echo "[monitoring] configuring grafana nfs storage"
 microk8s.kubectl apply -f $MONITORING/grafana.nfs.storage.yml
+echo "[monitoring] configuring prometheus nfs storage"
+microk8s.kubectl apply -f $MONITORING/prometheus.nfs.storage
 echo "[monitoring] installing prometheus-operator helmchart"
 microk8s.helm3 install -n monitoring --values $MONITORING/prometheus-operator/values.yaml prometheus-operator $MONITORING/prometheus-operator/prometheus-operator-8.15.6.tgz
+echo "[monitoring] installing dcgm-exporter helmchart"
+microk8s.helm3 install -n monitoring --values $MONITORING/dcgm-exporter/values.yaml dcgm-exporter $MONITORING/dcgm-exporter/dcgm-exporter-2.3.1.tgz
 #----------------
 echo "Kubernetes setup complete"
 
