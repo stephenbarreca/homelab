@@ -35,9 +35,9 @@ volumes:
   - name: downloads
     persistentVolumeClaim:
       claimName: transmission-downloads
-  - name: plex-data
+  - name: plex-movies
     persistentVolumeClaim:
-      claimName: plex-nfs-data
+      claimName: pvc-plex-movies
 
 volumeMounts:
   - name: config
@@ -46,9 +46,8 @@ volumeMounts:
   - name: downloads
     mountPath: "/downloads/transmission"
     subPath: ""
-  - name: plex-data
+  - name: plex-movies
     mountPath: "/movies"
-    subPath: "movies"
 
 resources:
   requests:
