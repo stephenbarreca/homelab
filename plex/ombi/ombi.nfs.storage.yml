@@ -18,7 +18,7 @@ spec:
   storageClassName: "ombi-config"
   nfs:
     server: "192.168.1.4"
-    path: "/export/ombi/config"
+    path: "/mnt/user/ombi-config"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

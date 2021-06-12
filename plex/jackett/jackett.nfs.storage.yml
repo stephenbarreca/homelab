@@ -24,7 +24,7 @@ spec:
   storageClassName: "jackett-config"
   nfs:
     server: "192.168.1.4"
-    path: "/export/jackett/config"
+    path: "/mnt/user/jackett-config"
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -38,7 +38,7 @@ spec:
   storageClassName: "jackett-downloads"
   nfs:
     server: "192.168.1.4"
-    path: "/export/jackett/downloads"
+    path: "/mnt/user/jackett-downloads"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

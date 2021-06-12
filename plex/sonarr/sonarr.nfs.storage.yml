@@ -17,7 +17,7 @@ spec:
   storageClassName: "sonarr-config"
   nfs:
     server: "192.168.1.4"
-    path: "/export/sonarr/config"
+    path: "/mnt/user/sonarr-config"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

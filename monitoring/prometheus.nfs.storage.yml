@@ -3,7 +3,7 @@ apiVersion: storage.k8s.io/v1
 metadata:
   name: prometheus-data
 provisioner: kubernetes.io/no-provisioner
-volumeBindingMode: WaitForFirstConsumer
+volumeBindingMode: Immediate
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -18,7 +18,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: prometheus-data
   local:
-    path: /export/prometheus
+    path: /home/stephen/data/prometheus
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -26,4 +26,4 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - snowhite
+          - k8s-main

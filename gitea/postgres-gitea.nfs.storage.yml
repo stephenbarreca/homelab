@@ -17,7 +17,7 @@ spec:
   storageClassName: "gitea-postgres"
   nfs:
     server: "192.168.1.4"
-    path: "/export/gitea/postgres"
+    path: "/mnt/user/gitea-postgres"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

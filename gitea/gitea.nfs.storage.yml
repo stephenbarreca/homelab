@@ -17,7 +17,7 @@ spec:
   storageClassName: "gitea-data"
   nfs:
     server: "192.168.1.4"
-    path: "/export/gitea/data"
+    path: "/mnt/user/gitea-data"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

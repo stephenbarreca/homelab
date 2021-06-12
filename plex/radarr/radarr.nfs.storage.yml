@@ -17,7 +17,7 @@ spec:
   storageClassName: "radarr-config"
   nfs:
     server: "192.168.1.4"
-    path: "/export/radarr/config"
+    path: "/mnt/user/radarr-config"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

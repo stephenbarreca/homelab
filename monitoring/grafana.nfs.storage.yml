@@ -17,7 +17,7 @@ spec:
   storageClassName: "grafana-config"
   nfs:
     server: "192.168.1.4"
-    path: "/export/grafana/config"
+    path: "/mnt/user/grafana-config"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

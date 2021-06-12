@@ -24,7 +24,7 @@ spec:
   storageClassName: "transmission-config"
   nfs:
     server: "192.168.1.4"
-    path: "/export/transmission-openvpn/config"
+    path: "/mnt/user/torrent-config"
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -38,7 +38,7 @@ spec:
   storageClassName: "transmission-downloads"
   nfs:
     server: "192.168.1.4"
-    path: "/export/transmission-openvpn/downloads"
+    path: "/mnt/user/torrent-downloads"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

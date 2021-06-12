@@ -17,7 +17,7 @@ spec:
   storageClassName: "minecraft-data"
   nfs:
     server: "192.168.1.4"
-    path: "/export/minecraft/data"
+    path: "/mnt/minecraft-data"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
