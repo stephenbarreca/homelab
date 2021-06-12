@@ -27,7 +27,7 @@ volumes:
       claimName: transmission-downloads
   - name: plex-data
     persistentVolumeClaim:
-      claimName: plex-nfs-data
+      claimName: pvc-plex-tv
 volumeMounts:
   - name: config
     mountPath: "/config"

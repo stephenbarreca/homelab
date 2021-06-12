@@ -84,14 +84,9 @@ helm install -n "$svc" --values "$PLEX"/values.yaml plex "$PLEX"/kube-plex-0.2.7
 echo "[$svc] configuring transmission nfs storage"
 kubectl apply -f "$TRANSMISSION"/transmission.nfs.storage.yml
 echo "[$svc] installing transmission helmchart"
-helm install -n "$svc" --values "$TRANSMISSION"/values.yaml transmaission "$QBITTORRENT"/transmission-openvpn-0.1.0.tgz
+helm install -n "$svc" --values "$TRANSMISSION"/values.yaml transmaission "$TRANSMISSION"/transmission-openvpn-0.1.0.tgz
 echo "[$svc] creating transmission loadbalancer"
-kubectl apply -f "$TRANSMISSION"/transmission.svc.yml
-
-echo "[$svc] configuring ombi nfs storage"
-kubectl apply -f "$OMBI"/ombi.nfs.storage.yml
-echo "[$svc] installing ombi helmchart"
-helm install -n "$svc" --values "$OMBI"/values.yaml ombi "$OMBI"/ombi-2.2.1.tgz
+kubectl apply -f "$TRANSMISSION"/transmission.svc.yaml
 
 echo "[$svc] configuring jackett nfs storage"
 kubectl apply -f "$JACKETT"/jackett.nfs.storage.yml
@@ -110,16 +105,18 @@ kubectl apply -f "$SONARR"/sonarr.nfs.storage.yml
 echo "[$svc] installing sonarr helmchart"
 helm install -n "$svc" --values "$SONARR"/values.yaml sonarr "$SONARR"/sonarr/
 echo "[$svc] creating sonarr loadbalancer"
-kubectl apply -f "$SONARR"/radarr.svc.yml
+kubectl apply -f "$SONARR"/sonarr.svc.yml
 
 echo "[$svc] configuring tautulli nfs storage"
 kubectl apply -f "$TAUTULLI"/tautulli.nfs.storage.yml
 echo "[$svc] installing tautulli helmchart"
 helm install -n "$svc" --values "$TAUTULLI"/values.yaml tautulli "$TAUTULLI"/tautulli-2.2.0.tgz
+
+echo "[$svc] configuring ombi nfs storage"
+kubectl apply -f "$OMBI"/ombi.nfs.storage.yml
+echo "[$svc] installing ombi helmchart"
+helm install -n "$svc" --values "$OMBI"/values.yaml ombi "$OMBI"/ombi-2.2.1.tgz
 #----------------
-
-
-
 #----------------
 # GITEA
 svc=gitea
@@ -133,7 +130,6 @@ kubectl apply -f "$GITEA"/postgres-gitea.nfs.storage.yml
 echo "[gitea] installing gitea helmchart"
 helm install -n "$svc" --values "$GITEA"/gitea-official/values.yaml gitea gitea-charts/gitea
 #----------------
-
 #----------------
 # HEIMDALL
 echo "[heimdall] creating namespace heimdall"
@@ -143,7 +139,6 @@ kubectl apply -f "$HEIMDALL"/heimdall.nfs.storage.yml
 echo "[heimdall] installing heimdall helmchart"
 helm install -n "$svc" --values "$HEIMDALL"/values.yaml heimdall "$HEIMDALL"/heimdall-1.0.1.tgz
 #----------------
-
 
 echo "Kubernetes setup complete"
 
