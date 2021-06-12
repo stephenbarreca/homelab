@@ -1,14 +1,14 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-  name: plex-local-config
+  name: sc-plex-config
 provisioner: kubernetes.io/no-provisioner
-volumeBindingMode: WaitForFirstConsumer
+volumeBindingMode: Immediate
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: plex-local-pv
+  name: pv-plex-config
 spec:
   capacity:
     storage: 50Gi
@@ -16,9 +16,9 @@ spec:
   accessModes:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: plex-local-config
+  storageClassName: sc-plex-config
   local:
-    path: /export/plex/config
+    path: /home/stephen/data/plex/config
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -26,17 +26,17 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - snowhite
+          - k8s-main
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: plex-local-config
+  name: pvc-plex-config
   namespace: plex
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: "plex-local-config"
+  storageClassName: sc-plex-config
   resources:
     requests:
       storage: 50Gi

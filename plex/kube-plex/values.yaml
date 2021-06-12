@@ -36,19 +36,22 @@ nvidia_driver_capabilities: all
 persistence:
   transcode:
     enabled: false
-    claimName: "plex-nfs-transcode"
-    storageClass: "plex-transcode"
-    size: 40Gi
-    accessMode: ReadWriteMany
   data:
-    claimName: "plex-nfs-data"
-    storageClass: "plex-data"
-    size: 4Ti
+    claimName: "pvc-plex-movies"
+    storageClass: "sc-plex-movies"
+    mountPath: "/data/movies"
+    size: 7Ti
     accessMode: ReadWriteMany
-  extraData: []
+  extraData:
+    - name: tv
+      claimName: "pvc-plex-tv"
+      storageClass: "sc-plex-tv"
+      mountPath: "/data/tv"
+      size: 7Ti
+      accessMode: ReadWriteMany
   config:
-    claimName: "plex-local-config"
-    storageClass: "plex-local-config"
+    claimName: "pvc-plex-config"
+    storageClass: "sc-plex-config"
     size: 50Gi
     accessMode: ReadWriteOnce
 tanscodeToMemory: true

@@ -1,0 +1,20 @@
+#  --version=v1.7.0 \
+#  --set toolkit.version=1.5.0-ubuntu18.04 \
+#  --set operator.defaultRuntime=containerd \
+#  --set driver.enabled=false \
+#  --set toolkit.env[0].name=CONTAINERD_CONFIG \
+#  --set toolkit.env[0].value=$CONFIG \
+#  --set toolkit.env[1].name=CONTAINERD_SOCKET \
+#  --set toolkit.env[1].value=$SOCKET
+
+toolkit:
+  version: 1.5.0-ubuntu18.04
+  env:
+    - name: CONTAINERD_CONFIG
+      value: /var/snap/microk8s/current/args/containerd-template.toml
+    - name: CONTAINERD_SOCKET
+      value: /var/snap/microk8s/common/run/containerd.sock
+driver:
+  enabled: true
+operator:
+  defaultRuntime: containerd

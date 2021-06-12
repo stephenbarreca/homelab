@@ -148,7 +148,7 @@ spec:
 {{- end }}
         volumeMounts:
         - name: data
-          mountPath: /data
+          mountPath: {{ .Values.persistence.data.mountPath }}
         {{- if .Values.persistence.data.subPath }}
           subPath: {{ .Values.persistence.data.subPath }}
         {{ end }}
@@ -163,7 +163,7 @@ spec:
           subPath: {{ .Values.persistence.transcode.subPath }}
         {{ end }}
         {{-  range .Values.persistence.extraData }}
-        - mountPath: "/data-{{ .name }}"
+        - mountPath: {{ .mountPath}}
           name: "extradata-{{ .name }}"
         {{- end }}
         - name: shared

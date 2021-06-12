@@ -1,101 +1,69 @@
+---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: plex-data
+  name: sc-plex-movies
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: Immediate
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: plex-transcode
-provisioner: kubernetes.io/no-provisioner
-volumeBindingMode: Immediate
----
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: plex-config
+  name: sc-plex-tv
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: Immediate
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: plex-nfs-data
+  name: pv-plex-movies
 spec:
   capacity:
-    storage: 4Ti
+    storage: 7Ti
   accessModes:
     - ReadWriteMany
-  storageClassName: "plex-data"
+  storageClassName: plex-movies
   nfs:
     server: "192.168.1.4"
-    path: "/export/plex/videos"
+    path: "/mnt/user/movies"
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: plex-nfs-transcode
+  name: pv-plex-tv
 spec:
   capacity:
-    storage: 40Gi
+    storage: 7Ti
   accessModes:
     - ReadWriteMany
-  storageClassName: "plex-transcode"
+  storageClassName: plex-tv
   nfs:
     server: "192.168.1.4"
-    path: "/export/plex/transcode"
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: plex-nfs-config
-spec:
-  capacity:
-    storage: 50Gi
-  accessModes:
-    - ReadWriteMany
-  storageClassName: "plex-config"
-  nfs:
-    server: "192.168.1.4"
-    path: "/export/plex/config"
+    path: "/mnt/user/tv"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: plex-nfs-data
+  name: pvc-plex-movies
   namespace: plex
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: "plex-data"
+  storageClassName: plex-movies
   resources:
     requests:
-      storage: 4Ti
+      storage: 7Ti
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: plex-nfs-transcode
+  name: pvc-plex-tv
   namespace: plex
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: "plex-transcode"
+  storageClassName: plex-tv
   resources:
     requests:
-      storage: 40Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: plex-nfs-config
-  namespace: plex
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: "plex-config"
-  resources:
-    requests:
-      storage: 50Gi
+      storage: 7Ti
+
