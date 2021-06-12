@@ -163,7 +163,7 @@ spec:
           subPath: {{ .Values.persistence.transcode.subPath }}
         {{ end }}
         {{-  range .Values.persistence.extraData }}
-        - mountPath: {{ .mountPath}}
+        - mountPath: {{ .mountPath }}
           name: "extradata-{{ .name }}"
         {{- end }}
         - name: shared
