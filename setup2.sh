@@ -56,8 +56,8 @@ echo "[monitoring] configuring prometheus nfs storage"
 kubectl apply -f "$MONITORING"/prometheus.nfs.storage.yml
 echo "[monitoring] installing prometheus-operator helmchart"
 helm install -n "$svc" --values "$MONITORING"/prometheus-community/kube-prometheus-stack/values.yaml prometheus-operator prometheus-community/kube-prometheus-stack
-echo "[monitoring] installing dcgm-exporter helmchart"
-helm install -n "$svc" --values "$MONITORING"/dcgm-exporter/values.yaml dcgm-exporter "$MONITORING"/dcgm-exporter/dcgm-exporter-2.3.1.tgz
+#echo "[monitoring] installing dcgm-exporter helmchart"
+#helm install -n "$svc" --values "$MONITORING"/dcgm-exporter/values.yaml dcgm-exporter "$MONITORING"/dcgm-exporter/dcgm-exporter-2.3.1.tgz
 #----------------
 #----------------
 # GPU
@@ -123,6 +123,7 @@ svc=gitea
 helm repo add gitea-charts https://dl.gitea.io/charts/
 echo "[gitea] creating namespace gitea"
 kubectl create namespace gitea
+kubectl apply -f secret.yaml
 echo "[gitea] configuring gitea nfs storage"
 kubectl apply -f "$GITEA"/gitea.nfs.storage.yml
 echo "[gitea] configuring postgres nfs storage"

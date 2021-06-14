@@ -40,3 +40,90 @@ spec:
   resources:
     requests:
       storage: 50Gi
+---
+
+
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sc-plex-movies
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sc-plex-tv
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-plex-movies
+spec:
+  capacity:
+    storage: 7Ti
+  accessModes:
+    - ReadWriteMany
+  storageClassName: plex-movies
+  local:
+    path: /mnt/movies
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-main
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-plex-tv
+spec:
+  capacity:
+    storage: 7Ti
+  accessModes:
+    - ReadWriteMany
+  storageClassName: plex-tv
+  local:
+    path: /mnt/tv
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-main
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-plex-movies
+  namespace: plex
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: plex-movies
+  resources:
+    requests:
+      storage: 7Ti
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-plex-tv
+  namespace: plex
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: plex-tv
+  resources:
+    requests:
+      storage: 7Ti
+

@@ -1,34 +1,41 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: gitea-postgres
+  name: gitea-data
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: Immediate
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: gitea-postgres-nfs
+  name: gitea-data
 spec:
   capacity:
-    storage: 5Gi
+    storage: 10Gi
   accessModes:
     - ReadWriteMany
-  storageClassName: "gitea-postgres"
-  nfs:
-    server: "192.168.1.4"
-    path: "/mnt/user/gitea-postgres"
+  storageClassName: "gitea-data"
+  local:
+    path: /mnt/gitea-data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-main
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: gitea-postgres
+  name: gitea-data
   namespace: gitea
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: "gitea-postgres"
+  storageClassName: "gitea-data"
   resources:
     requests:
-      storage: 5Gi
+      storage: 10Gi
  
