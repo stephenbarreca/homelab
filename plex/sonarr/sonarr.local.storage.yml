@@ -1,33 +1,40 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: radarr-config
+  name: sonarr-config
 provisioner: kubekrnetes.io/no-provisioner
 volumeBindingMode: Immediate
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: radarr-config-nfs
+  name: sonarr-config-nfs
 spec:
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteMany
-  storageClassName: "radarr-config"
-  nfs:
-    server: "192.168.1.4"
-    path: "/mnt/user/radarr-config"
+  storageClassName: sonarr-config
+  local:
+    path: /home/stephen/data/sonarr/config
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-main
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: radarr-config
+  name: sonarr-config
   namespace: plex
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: "radarr-config"
+  storageClassName: "sonarr-config"
   resources:
     requests:
       storage: 1Gi

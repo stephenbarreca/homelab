@@ -1,44 +1,58 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: transmission-config
+  name: torrent-config
 provisioner: kubekrnetes.io/no-provisioner
 volumeBindingMode: Immediate
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: transmission-downloads
+  name: torrent-downloads
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: Immediate
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: transmission-config-nfs
+  name: transmission-config
 spec:
   capacity:
     storage: 5Gi
   accessModes:
     - ReadWriteMany
-  storageClassName: "transmission-config"
-  nfs:
-    server: "192.168.1.4"
-    path: "/mnt/user/torrent-config"
+  storageClassName: torrent-config
+  local:
+    path: /mnt/torrent-config
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-main
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: transmission-downloads-nfs
+  name: transmission-downloads
 spec:
   capacity:
     storage: 10Gi
   accessModes:
     - ReadWriteMany
-  storageClassName: "transmission-downloads"
-  nfs:
-    server: "192.168.1.4"
-    path: "/mnt/user/torrent-downloads"
+  storageClassName: torrent-downloads
+  local:
+    path: /mnt/torrent-downloads
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-main
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -48,7 +62,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: "transmission-config"
+  storageClassName: torrent-config
   resources:
     requests:
       storage: 5Gi
@@ -61,7 +75,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: "transmission-downloads"
+  storageClassName: torrent-downloads
   resources:
     requests:
       storage: 10Gi

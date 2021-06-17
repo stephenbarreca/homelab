@@ -1717,11 +1717,11 @@ prometheus:
 
     ## Loadbalancer IP
     ## Only use if service.type is "LoadBalancer"
-    loadBalancerIP: ""
+    loadBalancerIP: 192.168.1.206
     loadBalancerSourceRanges: []
     ## Service type
     ##
-    type: ClusterIP
+    type: LoadBalancer
 
     sessionAffinity: ""
 

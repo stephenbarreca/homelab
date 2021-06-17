@@ -37,7 +37,7 @@ volumeMounts:
     subPath: ""
   - name: plex-data
     mountPath: "/tv"
-    subPath: "tv/"
+    subPath: ""
 
 resources:
   requests:

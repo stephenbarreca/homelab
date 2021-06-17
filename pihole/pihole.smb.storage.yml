@@ -15,9 +15,14 @@ spec:
   accessModes:
     - ReadWriteMany
   storageClassName: "pihole-data"
-  nfs:
-    server: "192.168.1.4"
-    path: "/export/pihole"
+  flexVolume:
+    driver: juliohm/cifs
+    options:
+      opts: sec=ntlm,uid=1000
+      server: 192.168.1.4
+      share: /mnt/user/pihole
+    secretRef:
+      name: unraid-secret
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

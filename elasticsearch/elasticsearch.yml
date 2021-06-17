@@ -1,0 +1,26 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch
+  namespace: monitoring
+spec:
+  version: 7.13.2
+  http:
+    service:
+      metadata:
+        annotations:
+          co.elastic.monitor/type: http
+          co.elastic.monitor/hosts: "https://elasticsearch-es-http.monitoring.svc:9200/_cat/health"
+          co.elastic.monitor/username: "elastic"
+          co.elastic.monitor/password: "g8fj58E1E18Q6l4khp7btZy7"
+          co.elastic.monitor/schedule: "@every 10s"
+          co.elastic.monitor/ssl.verification_mode: "none"
+          co.elastic.monitor/name: "Elasticsearch Service"
+      spec:
+        type: ClusterIP
+        # loadBalancerIP: 192.168.1.230
+  nodeSets:
+  - name: main
+    count: 1
+    config:
+      node.store.allow_mmap: false

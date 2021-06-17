@@ -14,7 +14,11 @@ env:
 service:
   type: ClusterIP
   port: 80
-
+    co.elastic.monitor/type: http
+    co.elastic.monitor/urls: "https://192.168.1.241:32400/web"
+    co.elastic.monitor/schedule: "@every 10s"
+    co.elastic.monitor/ssl.verification_mode: "none"
+    co.elastic.monitor/name: "Plex Service"
 ingress:
   enabled: false
   annotations:
