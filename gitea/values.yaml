@@ -27,7 +27,7 @@ service:
       co.elastic.monitor/type: http
       co.elastic.monitor/urls: "http://192.168.1.210:3000/"
       co.elastic.monitor/schedule: "@every 10s"
-      co.elastic.monitor/name: "Heimdall Service HTTP"
+      co.elastic.monitor/name: "Gitea Service HTTP"
   ssh:
     type: LoadBalancer
     port: 22
@@ -41,7 +41,7 @@ service:
       co.elastic.monitor/type: tcp
       co.elastic.monitor/hosts: "192.168.1.210:22"
       co.elastic.monitor/schedule: "@every 10s"
-      co.elastic.monitor/name: "Heimdall Service SSH"
+      co.elastic.monitor/name: "Gitea Service SSH"
 
 ingress:
   enabled: false
