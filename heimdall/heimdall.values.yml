@@ -1,0 +1,87 @@
+# Chart: k8s-at-home/heimdall
+#
+# IMPORTANT NOTE
+#
+# This chart inherits from our common library chart. You can check the default values/options here:
+# https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common/values.yaml
+#
+
+image:
+  # -- image repository
+  repository: linuxserver/heimdall
+  # -- image tag
+  # tag: version-2.2.2
+  tag: latest
+  # -- image pull policy
+  # pullPolicy: IfNotPresent
+  pullPolicy: Always
+
+# -- environment variables. See more environment variables in the [heimdall documentation](https://github.com/linuxserver/docker-heimdall#parameters).
+# @default -- See below
+env:
+  # -- Set the container timezone
+  TZ: UTC
+  # -- Set the container user id
+  PUID: "1000"
+  # -- Set the container group id
+  PGID: "1000"
+
+# -- Configures service settings for the chart.
+# @default -- See values.yaml
+service:
+  main:
+    annotations:
+      co.elastic.monitor/type: http
+      co.elastic.monitor/urls: "http://192.168.1.216/"
+      co.elastic.monitor/schedule: "@every 10s"
+      co.elastic.monitor/name: "Heimdall Service"
+    ports:
+      http:
+        port: 80
+    type: LoadBalancer
+    loadBalancerIP: 192.168.1.216
+probes:
+  liveness:
+    enabled: true
+    ## Set this to true if you wish to specify your own livenessProbe
+    custom: true
+    ## The spec field contains the values for the default livenessProbe.
+    ## If you selected custom: true, this field holds the definition of the livenessProbe.
+    spec:
+      tcpSocket:
+        port: http
+      failureThreshold: 5
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 10
+  readiness:
+    enabled: true
+    ## Set this to true if you wish to specify your own livenessProbe
+    custom: true
+    ## The spec field contains the values for the default livenessProbe.
+    ## If you selected custom: true, this field holds the definition of the livenessProbe.
+    spec:
+      tcpSocket:
+        port: http
+      failureThreshold: 3
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 10
+  startup:
+    enabled: false
+ingress:
+  # -- Enable and configure ingress settings for the chart under this key.
+  # @default -- See values.yaml
+  main:
+    enabled: false
+
+# -- Configure persistence settings for the chart under this key.
+# @default -- See values.yaml
+persistence:
+  config:
+    enabled: true
+    type: pvc
+    existingClaim: heimdall-config
+    mountPath: /config
