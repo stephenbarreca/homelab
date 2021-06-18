@@ -15,9 +15,16 @@ spec:
   accessModes:
     - ReadWriteMany
   storageClassName: "heimdall-config"
-  nfs:
-    server: "192.168.1.4"
-    path: "/mnt/heimdall-config"
+  local:
+    path: /mnt/heimdall-config
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-main
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

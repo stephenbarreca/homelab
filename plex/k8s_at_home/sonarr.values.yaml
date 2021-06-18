@@ -10,10 +10,11 @@ image:
   # -- image repository
   repository: ghcr.io/k8s-at-home/sonarr
   # -- image tag
-  #tag: v3.2.2.5080
+  # tag: v3.2.2.5080
   tag: latest
   # -- image pull policy
-  pullPolicy: IfNotPresent
+  # pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 # -- environmelnt variables.
 # @default -- See below
@@ -30,7 +31,7 @@ service:
       co.elastic.monitor/urls: "http://192.168.1.202/sonarr/"
       co.elastic.monitor/schedule: "@every 10s"
       co.elastic.monitor/name: "Sonarr Service"
-      co.elastic.monitor/check.response.status: "200"
+#      co.elastic.monitor/check.response.status: "200"
     ports:
       http:
         port: 80
@@ -55,11 +56,10 @@ probes:
     spec:
       exec:
         command:
-        - /usr/bin/env
-        - bash
-        - -c
-        - curl --fail localhost:8989/api/v3/system/status?apiKey=`IFS=\> && while
-          read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
+          - /usr/bin/env
+          - bash
+          - -c
+          - curl --fail localhost:8989/sonarr/
       failureThreshold: 5
       initialDelaySeconds: 60
       periodSeconds: 10
@@ -72,10 +72,14 @@ probes:
     ## The spec field contains the values for the default livenessProbe.
     ## If you selected custom: true, this field holds the definition of the livenessProbe.
     spec:
-      tcpSocket:
-        port: 8989
-      failureThreshold: 5
-      initialDelaySeconds: 60
+      exec:
+        command:
+        - /usr/bin/env
+        - bash
+        - -c
+        - curl --fail localhost:8989/sonarr/
+      failureThreshold: 3
+      initialDelaySeconds: 10
       periodSeconds: 10
       successThreshold: 1
       timeoutSeconds: 10

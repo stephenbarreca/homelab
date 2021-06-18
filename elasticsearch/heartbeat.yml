@@ -9,53 +9,52 @@ spec:
   elasticsearchRef:
     name: elasticsearch
   config:
-    heartbeat.autodiscover:
-      providers:
-        # Autodiscover pods
-        - type: kubernetes
-          resource: pod
-          scope: cluster
-          node: ${NODE_NAME}
-          hints:
-            enabled: true
+    heartbeat:
+      autodiscover:
+        providers:
+          # Autodiscover pods
+          - type: kubernetes
+            resource: pod
+            scope: cluster
+            node: ${NODE_NAME}
+            hints:
+              enabled: true
 
 
-        # Autodiscover services
-        - type: kubernetes
-          resource: service
-          scope: cluster
-          node: ${NODE_NAME}
-          include_annotations: ["monitor"]
-          templates:
-            - condition:
-                contains:
-                  kubernetes.annotations.monitor: "true"
-              config:
-                - type: http
-                  hosts:
-                    - "http://${data.host}:${data.port}"
-                  ports:
-                    - ${data.port}
-                  schedule: "@every 10s"
-                  timeout: 5s
+          # Autodiscover services
+          - type: kubernetes
+            resource: service
+            scope: cluster
+            node: ${NODE_NAME}
+            include_annotations: ["monitor" ]
+            hints:
+              enabled: true
 
-        # Autodiscover nodes
-        - type: kubernetes
-          resource: node
-          node: ${NODE_NAME}
-          scope: cluster
-          templates:
-            # Example, check SSH port of all cluster nodes:
-            - config:
-                - hosts:
-                    - ${data.host}:22
-                  name: ${data.kubernetes.node.name}
-                  schedule: '@every 10s'
-                  timeout: 5s
-                  type: tcp
+          # Autodiscover nodes
+          - type: kubernetes
+            resource: node
+            node: ${NODE_NAME}
+            scope: cluster
+            templates:
+              # Example, check SSH port of all cluster nodes:
+              - config:
+                  - hosts:
+                      - ${data.host}:22
+                    name: ${data.kubernetes.node.name}
+                    schedule: '@every 10s'
+                    timeout: 5s
+                    type: tcp
+
+      instrumentation:
+        enabled: true
+        environment: production
+        hosts:
+          - "http://apm-server-apm-http.monitoring.svc:8200"
+        api_key: 0N41Syn50c6iEDWBY886O9wo
+
     processors:
-      - add_host_metadata: ~
-      - add_kubernetes_metadata: ~
+      - add_host_metadata: {}
+      - add_kubernetes_metadata: {}
 
   deployment:
     replicas: 1

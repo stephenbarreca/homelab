@@ -1,6 +1,7 @@
 grafana-config      /mnt/grafana-config     9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
 gitea-data          /mnt/gitea-data         9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
 gitea-postgres      /mnt/gitea-postgres     9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
+heimdall-config     /mnt/heimdall-config    9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
 jackett-config      /mnt/jackett-config     9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
 jackett-downloads   /mnt/jackett-downloads  9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
 radarr-config       /mnt/radarr-config      9p trans=virtio,version=9p2000.L,_netdev,rw 0 0

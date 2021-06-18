@@ -15,6 +15,16 @@ serviceTCP:
     # a fixed LoadBalancer IP
   annotations:
     metallb.universe.tf/allow-shared-ip: pihole-svc
+    co.elastic.monitor/type: http
+    co.elastic.monitor/urls: "http://192.168.1.240/"
+    co.elastic.monitor/schedule: "@every 10s"
+    co.elastic.monitor/name: "PiHole Service"
+    co.elastic.monitor/check.response.status: "200"
+    co.elastic.monitor/1.type: tcp
+    co.elastic.monitor/1.hosts: "192.168.1.240"
+    co.elastic.monitor/1.ports: [80, 443, 53]
+    co.elastic.monitor/1.schedule: "@every 10s"
+    co.elastic.monitor/1.name: "PiHole Service"
   externalTrafficPolicy: Local
 
 serviceUDP:
@@ -168,6 +178,8 @@ dnsmasq:
   - address=/rcon.home.local/192.168.1.221
   # pihole
   - address=/pihole.home.local/192.168.1.240
+  # elasticsearch
+  - address=/kibana.home.local/192.168.1.235
 
   additionalHostsEntries:
   # Dnsmasq reads the /etc/hosts file to resolve ips. You can add additional entries if you like
