@@ -32,7 +32,7 @@ service:
   main:
     annotations:
       co.elastic.monitor/type: http
-      co.elastic.monitor/urls: "http://home.local/"
+      co.elastic.monitor/urls: "http://192.168.1.216/"
       co.elastic.monitor/schedule: "@every 10s"
       co.elastic.monitor/name: "Heimdall Service"
     ports:
