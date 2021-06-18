@@ -56,11 +56,10 @@ probes:
     spec:
       exec:
         command:
-          - /usr/bin/env
-          - bash
-          - -c
-          - curl --fail localhost:8989/sonarr/
-      failureThreshold: 5
+          - curl
+          - --fail
+          - localhost:8989/sonarr/
+      failureThreshold: 10
       initialDelaySeconds: 60
       periodSeconds: 10
       successThreshold: 1
@@ -74,10 +73,9 @@ probes:
     spec:
       exec:
         command:
-        - /usr/bin/env
-        - bash
-        - -c
-        - curl --fail localhost:8989/sonarr/
+          - curl
+          - --fail
+          - localhost:8989/sonarr/
       failureThreshold: 3
       initialDelaySeconds: 10
       periodSeconds: 10
@@ -113,29 +111,29 @@ prometheus:
   # See also the notes under `additionalContainers`.
   # @default -- See values.yaml
   podMonitor:
-    enabled: true
+    enabled: false
     interval: 3m
     scrapeTimeout: 1m
     additionalLabels: {}
 
-# When using the prometheus.podMonitor the following
-# container is required
-additionalContainers:
-  - name: exportarr
-    image: ghcr.io/onedr0p/exportarr:v0.6.0
-    imagePullPolicy: IfNotPresent
-    args: [ "exportarr", "sonarr" ]
-    env:
-      - name: PORT
-        value: "32123"
-      - name: URL
-        value: "http://localhost"
-      - name: CONFIG
-        value: "/config/config.xml"
-    ports:
-      - name: exportarr
-        containerPort: 32123
-    volumeMounts:
-      - name: config
-        mountPath: /config
-        readOnly: true
+## When using the prometheus.podMonitor the following
+## container is required
+#additionalContainers:
+#  - name: exportarr
+#    image: ghcr.io/onedr0p/exportarr:v0.6.0
+#    imagePullPolicy: IfNotPresent
+#    args: [ "exportarr", "sonarr" ]
+#    env:
+#      - name: PORT
+#        value: "32123"
+#      - name: URL
+#        value: "http://localhost"
+#      - name: CONFIG
+#        value: "/config/config.xml"
+#    ports:
+#      - name: exportarr
+#        containerPort: 32123
+#    volumeMounts:
+#      - name: config
+#        mountPath: /config
+#        readOnly: true
