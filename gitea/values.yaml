@@ -1,180 +1,270 @@
-## Gitea image
-## ref: https://hub.docker.com/r/gitea/gitea/tags/
-##
+# Default values for gitea.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
 
-images:
-  gitea: "gitea/gitea:1.11.5"
-  postgres: "postgres:11"
-  memcached: "memcached:1.5.19-alpine"
-  imagePullPolicy: Always
-  ## Specify imagePullSecrets
-  ## ref: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
-  ##
-  # imagePullSecrets: myregistrykey
+replicaCount: 1
 
-## cache settings
-memcached:
-  maxItemMemory: 64
-  verbosity: v
-  extendedOptions: modern
+clusterDomain: cluster.local
 
-## ingress settings - Optional
-ingress:
-  enabled: false
-  ## sets .ini PROTOCOL value
-  # protocol: https
-  ## annotations used by the ingress - ex for k8s nginx ingress controller:
-  #ingress_annotations:
-  #  kubernetes.io/ingress.class: nginx
-  #  nginx.ingress.kubernetes.io/proxy-body-size: "0"
-  #  nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-  #  nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+image:
+  repository: gitea/gitea
+  tag: 1.13.2
+  pullPolicy: Always
 
-  ##tls support for the ingress
-  #tls:
-  #  - secretName: <TLS_SECRET>
-  #    hosts:
-  #      - 'git.example.com'
+imagePullSecrets: []
 
-## chart defaults to using an ingress for http, but change to LoadBalancer if using you cluster supports it
+securityContext: {}
+
 service:
   http:
-    serviceType: LoadBalancer
+    type: LoadBalancer
     port: 3000
-    #nodePort: 30280
-    # sometimes if is necesary to access through an external port i.e. http(s)://<dns-name>:<external-port>
-    #externalPort: 8280
-    externalHost: git.home.local
-    # some parts of gitea like the api use a redirect needs config if using non standard ports
-    #httpAPIPort: 8280
-    ## if serviceType is LoadBalancer
+    # clusterIP: None
     loadBalancerIP: "192.168.1.210"
-    svc_annotations:
-      metallb.universe.tf/allow-shared-ip: gitea-svc      
+    #nodePort:
+    annotations:
+      metallb.universe.tf/allow-shared-ip: gitea-svc
   ssh:
-    serviceType: LoadBalancer
+    type: LoadBalancer
     port: 22
-    #nodePort: 30222
-    ## if serving on a different external port used for determining the ssh url in the gui
-    #externalPort: 8022
-    externalHost: git.home.local
-    ## if serviceType is LoadBalancer
+    #clusterIP: None
     loadBalancerIP: "192.168.1.210"
-    svc_annotations:
-      metallb.universe.tf/allow-shared-ip: gitea-svc      
+    #nodePort:
+    #externalIPs:
+    loadBalancerSourceRanges: []
+    annotations:
+      metallb.universe.tf/allow-shared-ip: gitea-svc
 
-## Configure resource requests and limits
-## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-##
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - git.example.com
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - git.example.com
+
 resources:
-  gitea:
-    requests:
-      memory: 500Mi
-      cpu: 20m
-    limits:
-      memory: 2Gi
-      cpu: 100m
-  postgres:
-    requests:
-      memory: 200Mi
-      cpu: 20m
-    limits:
-      memory: 500Mi
-      cpu: 100m
-  memcached:
-    requests:
-      memory: 16Mi
-      cpu: 10m
-    limits:
-      memory: 64Mi
-      cpu: 50m  
+  requests:
+    memory: 500Mi
+    cpu: 100m
+  limits:
+    memory: 2Gi
+    cpu: 500m
 
-
-## Enable persistence using Persistent Volume Claims
-## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
-## ref:
-##
-persistence:
-  enabled: true
-  existingGiteaClaim: gitea-data
-  existingPostgresClaim: gitea-postgres
-  giteaSize: 10Gi
-  postgresSize: 5Gi
-  #storageClass: glusterfs
-  accessMode: ReadWriteMany
-## addtional annotations for hte pvcs  uncommenting below will prevent helm from deleting the pvc when hte chart is deleted
-#  annotations:
-#    "helm.sh/resource-policy": keep
-
-# valid types: postgres, mysql, mssql, sqllite
-dbType: "postgres"
-useInPodPostgres: true
-
-inPodPostgres:
-    secret: postgresecrets
-    subPath: "postgresql-db"
-    dataMountPath: /var/lib/postgresql/data/pgdata
-
-    ## Create a database user
-    ## Default: postgres
-    # postgresUser:
-    ## Default: random 10 character string
-    # postgresPassword:
-
-    ## Inject postgresPassword via a volume mount instead of environment variable
-    usePasswordFile: false
-
-    ## Use Existing secret instead of creating one
-    ## It must have a postgres-password key containing the desired password
-    # existingSecret: 'secret'
-
-    ## Create a database
-    ## Default: the postgres user
-    postgresDatabase: gitea
-
-    ## Specify initdb arguments, e.g. --data-checksums
-    ## ref: https://github.com/docker-library/docs/blob/master/postgres/content.md#postgres_initdb_args
-    ## ref: https://www.postgresql.org/docs/current/static/app-initdb.html
-    # postgresInitdbArgs:
-
-    ## Specify runtime config parameters as a dict, using camelCase, e.g.
-    ## {"sharedBuffers": "500MB"}
-    ## ref: https://www.postgresql.org/docs/current/static/runtime-config.html
-    # postgresConfig:
-
-
-## Node labels and tolerations for pod assignment
 nodeSelector: {}
+
 tolerations: []
+
 affinity: {}
 
-## Annotations for the deployment and nodes.
-deploymentAnnotations: {}
-podAnnotations: {}
+statefulset:
+  env: []
+    # - name: VARIABLE
+    #   value: my-value
+  terminationGracePeriodSeconds: 60
+  labels: {}
 
-## In order to disable initial install screen you must have secretKey and disableInstaller=true
-config:
-#  secretKey: define_your_secret
-  disableInstaller: false
-  offlineMode: false
-  requireSignin: false
-  disableRegistration: false
-  openidSignin: true
-  notifyMail: false
-  mailer:
-    enabled: false
-    host: smtp.gmail.com
-    port: 587
-    tls: false
-    from: ""
-    user: ""
-    passwd: ""
+persistence:
+  enabled: true
+  existingClaim: gitea-data
+  size: 10Gi
+  accessModes:
+    - ReadWriteMany
+  labels: {}
+  annotations: {}
+
+# additional volumes to add to the Gitea statefulset.
+extraVolumes:
+# - name: postgres-ssl-vol
+#   secret:
+#     secretName: gitea-postgres-ssl
+
+
+# additional volumes to mount, both to the init container and to the main
+# container. As an example, can be used to mount a client cert when connecting
+# to an external Postgres server.
+extraVolumeMounts:
+# - name: postgres-ssl-vol
+#   readOnly: true
+#   mountPath: "/pg-ssl"
+
+# bash shell script copied verbatim to the start of the init-container.
+initPreScript: ""
+#
+# initPreScript: |
+#   mkdir -p /data/git/.postgresql
+#   cp /pg-ssl/* /data/git/.postgresql/
+#   chown -R git:git /data/git/.postgresql/
+#   chmod 400 /data/git/.postgresql/postgresql.key
+
+
+gitea:
+#  admin:
+#    username: fishfu
+#    password: "N!K)L$t3sl4123"
+#    email: "fishfu@gmail.com"
+
   metrics:
-    enabled: false
-    token: ""
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      # prometheusSelector: default
 
-## Here you can set extra settings from https://docs.gitea.io/en-us/config-cheat-sheet/
-## The following is just an example
-# extra_config: |-
-#   [service]
-#   ENABLE_USER_HEATMAP=false
+  ldap:
+    enabled: false
+    #name:
+    #securityProtocol:
+    #host:
+    #port:
+    #userSearchBase:
+    #userFilter:
+    #adminFilter:
+    #emailAttribute:
+    #bindDn:
+    #bindPassword:
+    #usernameAttribute:
+    #sshPublicKeyAttribute:
+
+  oauth:
+    enabled: false
+    #name:
+    #provider:
+    #key:
+    #secret:
+    #autoDiscoverUrl:
+    #useCustomUrls:
+    #customAuthUrl:
+    #customTokenUrl:
+    #customProfileUrl:
+    #customEmailUrl:
+
+  config:
+    server:
+      DOMAIN: git.home.local
+  #  APP_NAME: "Gitea: Git with a cup of tea"
+  #  RUN_MODE: dev
+  #
+  #  server:
+  #    SSH_PORT: 22
+  #
+  #  security:
+  #    PASSWORD_COMPLEXITY: spec
+
+  podAnnotations: {}
+
+  database:
+    builtIn:
+      postgresql:
+        enabled: true
+      mysql:
+        enabled: false
+      mariadb:
+        enabled: false
+
+  cache:
+    builtIn:
+      enabled: true
+
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 200
+    timeoutSeconds: 1
+    periodSeconds: 10
+    successThreshold: 1
+    failureThreshold: 10
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 5
+    timeoutSeconds: 1
+    periodSeconds: 10
+    successThreshold: 1
+    failureThreshold: 3
+  startupProbe:
+    enabled: false
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    successThreshold: 1
+    failureThreshold: 10
+
+  # customLivenessProbe:
+  #   httpGet:
+  #     path: /user/login
+  #     port: http
+  #   initialDelaySeconds: 60
+  #   periodSeconds: 10
+  #   successThreshold: 1
+  #   failureThreshold: 10
+  # customReadinessProbe:
+  #   httpGet:
+  #     path: /user/login
+  #     port: http
+  #   initialDelaySeconds: 5
+  #   periodSeconds: 10
+  #   successThreshold: 1
+  #   failureThreshold: 3
+  # customStartupProbe:
+  #   httpGet:
+  #     path: /user/login
+  #     port: http
+  #   initialDelaySeconds: 60
+  #   periodSeconds: 10
+  #   successThreshold: 1
+  #   failureThreshold: 10
+
+memcached:
+  service:
+    port: 11211
+  resources:
+    limits: 
+      cpu: 400m
+      memory: 512Mi
+    requests:
+      memory: 256Mi
+      cpu: 200m
+
+postgresql:
+  global:
+    postgresql:
+      postgresqlDatabase: gitea
+      postgresqlUsername: gitea
+      postgresqlPassword: gitea
+      servicePort: 5432
+  persistence:
+    enabled: true
+    existingClaim: gitea-postgres
+    size: 10Gi
+  resources: 
+    limits: 
+      memory: 256Mi
+      cpu: 250m
+    requests:
+      memory: 256Mi
+      cpu: 250m
+#mysql:
+#  root:
+#    password: gitea
+#  db:
+#    user: gitea
+#    password: gitea
+#    name: gitea
+#  service:
+#    port: 3306
+#  persistence:
+#    size: 10Gi
+#
+#mariadb:
+#  auth:
+#    database: gitea
+#    username: gitea
+#    password: gitea
+#    rootPassword: gitea
+#  primary:
+#    service:
+#      port: 3306
+#    persistence:
+#      size: 10Gi
+

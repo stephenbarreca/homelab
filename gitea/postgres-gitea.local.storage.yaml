@@ -16,7 +16,7 @@ spec:
     - ReadWriteMany
   storageClassName: "gitea-postgres"
   local:
-    path: /mnt/gitea-postgres
+    path: /home/stephen/data/gitea-postgres
   nodeAffinity:
     required:
       nodeSelectorTerms:

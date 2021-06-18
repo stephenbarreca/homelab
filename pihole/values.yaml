@@ -18,12 +18,12 @@ serviceTCP:
     co.elastic.monitor/0.type: http
     co.elastic.monitor/0.urls: "http://192.168.1.240/"
     co.elastic.monitor/0.schedule: "@every 10s"
-    co.elastic.monitor/0.name: "PiHole Service Web"
+    co.elastic.monitor/0.name: "PiHole Web"
     co.elastic.monitor/0.check.response.status: "200"
     co.elastic.monitor/1.type: tcp
     co.elastic.monitor/1.hosts: "192.168.1.240:80"
     co.elastic.monitor/1.schedule: "@every 10s"
-    co.elastic.monitor/1.name: "PiHole Service DNS"
+    co.elastic.monitor/1.name: "PiHole DNS"
   externalTrafficPolicy: Local
 
 serviceUDP:
