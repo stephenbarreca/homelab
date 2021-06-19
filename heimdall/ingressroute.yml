@@ -1,0 +1,14 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: heimdall
+  namespace: heimdall
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`home.local`) && (PathPrefix(`/`) || PathPrefix(`/heimdall`))
+      kind: Rule
+      services:
+        - name: heimdall
