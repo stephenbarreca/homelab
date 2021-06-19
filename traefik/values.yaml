@@ -92,7 +92,7 @@ experimental:
 # Create an IngressRoute for the dashboard
 ingressRoute:
   dashboard:
-    enabled: true
+    enabled: false
     # Additional ingressRoute annotations (e.g. for kubernetes.io/ingress.class)
     annotations: {}
     # Additional ingressRoute labels (e.g. for filtering IngressRoute by custom labels)
@@ -154,10 +154,10 @@ logs:
     # also ask for the json format in the format option
     # format: json
     # By default, the level is set to ERROR. Alternative logging levels are DEBUG, PANIC, FATAL, ERROR, WARN, and INFO.
-    level: ERROR
+    level: INFO
   access:
     # To enable access logs
-    enabled: false
+    enabled: true
     # By default, logs are written using the Common Log Format (CLF).
     # To write logs in JSON, use json in the format option.
     # If the given format is unsupported, the default (CLF) is used instead.
@@ -190,13 +190,13 @@ logs:
 globalArguments:
   - "--global.checknewversion"
   - "--global.sendanonymoususage"
-
 #
 # Configure Traefik static configuration
 # Additional arguments to be passed at Traefik's binary
 # All available options available on https://docs.traefik.io/reference/static-configuration/cli/
 ## Use curly braces to pass values: `helm install --set="additionalArguments={--providers.kubernetesingress.ingressclass=traefik-internal,--log.level=DEBUG}"`
-additionalArguments: []
+additionalArguments:
+  - --serversTransport.insecureSkipVerify=true
 #  - "--providers.kubernetesingress.ingressclass=traefik-internal"
 #  - "--log.level=DEBUG"
 
@@ -238,7 +238,7 @@ ports:
 
     # Override the liveness/readiness port. This is useful to integrate traefik
     # with an external Load Balancer that performs healthchecks.
-    # healthchecksPort: 9000
+    healthchecksPort: 9000
 
     # Defines whether the port is exposed if service.type is LoadBalancer or
     # NodePort.
@@ -305,14 +305,18 @@ service:
   enabled: true
   type: LoadBalancer
   # Additional annotations (e.g. for cloud provider specific config)
-  annotations: {}
+  annotations:
+    co.elastic.monitor/type: http
+    co.elastic.monitor/urls: "http://192.168.1.200/dashboard/"
+    co.elastic.monitor/schedule: "@every 10s"
+    co.elastic.monitor/name: "Traefik"
   # Additional service labels (e.g. for filtering Service by custom labels)
   labels: {}
   # Additional entries here will be added to the service spec. Cannot contains
   # type, selector or ports entries.
-  spec: {}
-    # externalTrafficPolicy: Cluster
-    # loadBalancerIP: "1.2.3.4"
+  spec: 
+    externalTrafficPolicy: Local
+    loadBalancerIP: "192.168.1.200"
     # clusterIP: "2.3.4.5"
   loadBalancerSourceRanges: []
     # - 192.168.0.1/32
@@ -419,4 +423,5 @@ securityContext:
 
 podSecurityContext:
   fsGroup: 65532
+
 
