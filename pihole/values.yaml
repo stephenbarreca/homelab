@@ -167,7 +167,7 @@ dnsmasq:
     - address=/bittorrent.home.local/192.168.1.215
     - address=/torrent.home.local/192.168.1.215
   # Plex
-  - rebind-domain-ok=/plex.direct/
+    - rebind-domain-ok=/plex.direct/
     - address=/plex.home.local/192.168.1.241
   # Tautulli
     - address=/tautulli.home.local/192.168.1.243

@@ -12,3 +12,5 @@ spec:
       kind: Rule
       services:
         - name: heimdall
+          namespace: heimdall
+          port: 80
