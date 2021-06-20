@@ -135,6 +135,12 @@ spec:
           - /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
         period: 30s
         add_metadata: true
+      instrumentation:
+        enabled: true
+        environment: production
+        hosts:
+          - "https://apm-server-apm-http.monitoring.svc:8200"
+        secret_token: NmRoeEtub0JSdVRuN01UNldNWUE6dXhpLWFkTUxTUTZ3bXhkemxvUzZRdw==
     processors:
     - add_host_metadata: {}
     - add_kubernetes_metadata: {}
