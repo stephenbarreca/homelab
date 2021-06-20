@@ -34,11 +34,7 @@ service:
   # externalTrafficPolicy: Cluster
 
 ingress:
-  enabled: true
-  ingressClassName: traefik
-  path: /
-  hosts:
-    - jackett.local
+  enabled: false
 
 volumes:
   - name: myvolume
