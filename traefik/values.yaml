@@ -325,7 +325,7 @@ service:
   # Additional annotations (e.g. for cloud provider specific config)
   annotations:
     co.elastic.monitor/type: http
-    co.elastic.monitor/urls: "http://192.168.1.200/dashboard/"
+    co.elastic.monitor/urls: "http://traefik.traefik.svc/dashboard/"
     co.elastic.monitor/schedule: "@every 10s"
     co.elastic.monitor/name: "Traefik"
   # Additional service labels (e.g. for filtering Service by custom labels)
