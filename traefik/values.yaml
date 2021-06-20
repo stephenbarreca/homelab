@@ -26,10 +26,15 @@ deployment:
   podAnnotations:
     co.elastic.metrics/module: prometheus
     co.elastic.metrics/metricsets: collector
-    co.elastic.metrics/hosts: ${data.host}:9000
+    co.elastic.metrics/hosts: ${data.host}:${data.ports.traefik}
     co.elastic.metrics/use_types: "true"
     co.elastic.logs/enabled: "true"
     co.elastic.logs/module: traefik
+    co.elastic.monitor/type: http
+    co.elastic.monitor/urls: "http://${data.host}:${data.ports.traefik}/ping"
+    co.elastic.monitor/schedule: "@every 10s"
+    co.elastic.monitor/name: "Traefik"
+    co.elastic.monitor/service.name: traefik
     # co.elastic.metrics/metrics_path: /metrics
   # Additional Pod labels (e.g. for filtering Pod by custom labels)
   podLabels: {}
@@ -444,6 +449,7 @@ securityContext:
 
 podSecurityContext:
   fsGroup: 65532
+
 
 
 

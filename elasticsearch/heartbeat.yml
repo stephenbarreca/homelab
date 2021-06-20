@@ -49,8 +49,8 @@ spec:
         enabled: true
         environment: production
         hosts:
-          - "http://apm-server-apm-http.monitoring.svc:8200"
-        api_key: 0N41Syn50c6iEDWBY886O9wo
+          - "https://apm-server-apm-http.monitoring.svc:8200"
+        secret_token: 0N41Syn50c6iEDWBY886O9wo
 
     processors:
       - add_host_metadata: {}
@@ -70,3 +70,5 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
+            - name: ELASTIC_APM_VERIFY_SERVER_CERT
+              value: "false"

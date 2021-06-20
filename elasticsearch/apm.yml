@@ -12,3 +12,12 @@ spec:
   kibanaRef:
     name: kibana
     namespace: monitoring
+  http:
+    service:
+      metadata:
+        annotations:
+          co.elastic.monitor/type: http
+          co.elastic.monitor/hosts: "https://apm-server-apm-http.monitoring.svc:8200/"
+          co.elastic.monitor/schedule: "@every 10s"
+          co.elastic.monitor/ssl.verification_mode: "none"
+          co.elastic.monitor/name: "APM Server"
