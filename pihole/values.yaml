@@ -141,6 +141,7 @@ dnsmasq:
   # dns resolution with. All lines will be added to the
   # pihole dnsmasq configuration.
   # Default
+    - address=/local/192.168.1.200
     - address=/home.local/192.168.1.200
     - address=/www.home.local/192.168.1.200
   # Hiemdall
