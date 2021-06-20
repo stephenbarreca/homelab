@@ -75,7 +75,15 @@ ingress:
   # -- Enable and configure ingress settings for the chart under this key.
   # @default -- See values.yaml
   main:
-    enabled: false
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - host: "home.local"
+        paths:
+          - path: "/"
+            backend:
+              serviceName: "heimdall"
+              servicePort: 80
 
 # -- Configure persistence settings for the chart under this key.
 # @default -- See values.yaml
