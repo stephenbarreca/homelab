@@ -217,7 +217,12 @@ additionalArguments:
   - --metrics.prometheus.addEntryPointsLabels=true
   - --metrics.prometheus.addServicesLabels=true
   - --metrics.prometheus.entryPoint=web
-#  - "--providers.kubernetesingress.ingressclass=traefik-internal"
+  - --certificatesresolvers.myresolver.acme.tlschallenge
+  - --certificatesresolvers.myresolver.acme.email=fishfu@gmail.com
+  - --certificatesresolvers.myresolver.acme.storage=acme.json
+  # Please note that this is the staging Let's Encrypt server.
+  # Once you get things working, you should remove that whole line altogether.
+  - --certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
 #  - "--log.level=DEBUG"
 
 # Environment variables to be passed to Traefik's binary
@@ -301,7 +306,7 @@ ports:
       enabled: false
       # this is the name of a TLSOption definition
       options: ""
-      certResolver: ""
+      certResolver: "letsencrypt"
       domains: []
       # - main: example.com
       #   sans:
