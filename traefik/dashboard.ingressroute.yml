@@ -5,8 +5,7 @@ metadata:
   namespace: traefik
 spec:
   entryPoints:
-    - web
-    - websecure
+    - local
     - traefik
   routes:
     - match: Host(`traefik.local`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))

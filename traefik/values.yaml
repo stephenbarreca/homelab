@@ -217,18 +217,22 @@ additionalArguments:
   - --metrics.prometheus.addEntryPointsLabels=true
   - --metrics.prometheus.addServicesLabels=true
   - --metrics.prometheus.entryPoint=web
-  - --certificatesresolvers.local.acme.tlschallenge
-  - --certificatesresolvers.local.acme.email=fishfu@gmail.com
-  - --certificatesresolvers.local.acme.storage=acme.json
-  # Please note that this is the staging Let's Encrypt server.
-  # Once you get things working, you should remove that whole line altogether.
+  - --certificatesresolvers.letsencrypt.acme.dnschallenge=true"
+  - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=dynu"
+  - --certificatesresolvers.letsencrypt.acme.email=fishfu@gmail.com
+  - --certificatesresolvers.letsencrypt.acme.storage=acme.json
+  # Let's Encrypt staging server.
   - --certificatesresolvers.local.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+  # Let's Encrypt production server.
+  # - --certificatesresolvers.local.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
 #  - "--log.level=DEBUG"
 
 # Environment variables to be passed to Traefik's binary
 env:
   - name: ELASTIC_APM_VERIFY_SERVER_CERT
     value: "false"
+  - name: DYNU_API_KEY
+    value: TcUgX43V544We64c3633e6UaYV6b3dZ5
 # - name: SOME_VAR
 #   value: some-var-value
 # - name: SOME_VAR_FROM_CONFIG_MAP
@@ -278,11 +282,16 @@ ports:
     exposedPort: 9000
     # The port protocol (TCP/UDP)
     protocol: TCP
+  local:
+    port: 7000
+    expose: true
+    exposedPort: 80
+    protocol: TCP
   web:
     port: 8000
     # hostPort: 8000
     expose: true
-    exposedPort: 80
+    exposedPort: 8080
     # The port protocol (TCP/UDP)
     protocol: TCP
     # Use nodeport if set. This is useful if you have configured Traefik in a
@@ -291,12 +300,12 @@ ports:
     # Port Redirections
     # Added in 2.2, you can make permanent redirects via entrypoints.
     # https://docs.traefik.io/routing/entrypoints/#redirection
-    # redirectTo: websecure
+    redirectTo: websecure
   websecure:
     port: 8443
     # hostPort: 8443
     expose: true
-    exposedPort: 443
+    exposedPort: 8443
     # The port protocol (TCP/UDP)
     protocol: TCP
     # nodePort: 32443
@@ -306,11 +315,11 @@ ports:
       enabled: true
       # this is the name of a TLSOption definition
       options: ""
-      certResolver: "local"
+      certResolver: "letsencrypt"
       domains:
-        - main: "*.local"
+        - main: "stephenbarreca.ca"
           sans:
-            - "*.svc"
+            - "*.stephenbarreca.ca"
 
 # TLS Options are created as TLSOption CRDs
 # https://doc.traefik.io/traefik/https/tls/#tls-options
@@ -453,6 +462,7 @@ securityContext:
 
 podSecurityContext:
   fsGroup: 65532
+
 
 
 
