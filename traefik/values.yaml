@@ -217,12 +217,12 @@ additionalArguments:
   - --metrics.prometheus.addEntryPointsLabels=true
   - --metrics.prometheus.addServicesLabels=true
   - --metrics.prometheus.entryPoint=web
-  - --certificatesresolvers.myresolver.acme.tlschallenge
-  - --certificatesresolvers.myresolver.acme.email=fishfu@gmail.com
-  - --certificatesresolvers.myresolver.acme.storage=acme.json
+  - --certificatesresolvers.local.acme.tlschallenge
+  - --certificatesresolvers.local.acme.email=fishfu@gmail.com
+  - --certificatesresolvers.local.acme.storage=acme.json
   # Please note that this is the staging Let's Encrypt server.
   # Once you get things working, you should remove that whole line altogether.
-  - --certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+  - --certificatesresolvers.local.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
 #  - "--log.level=DEBUG"
 
 # Environment variables to be passed to Traefik's binary
@@ -303,15 +303,14 @@ ports:
     # Set TLS at the entrypoint
     # https://doc.traefik.io/traefik/routing/entrypoints/#tls
     tls:
-      enabled: false
+      enabled: true
       # this is the name of a TLSOption definition
       options: ""
-      certResolver: "letsencrypt"
-      domains: []
-      # - main: example.com
-      #   sans:
-      #     - foo.example.com
-      #     - bar.example.com
+      certResolver: "local"
+      domains:
+        - main: "*.local"
+          sans:
+            - "*.svc"
 
 # TLS Options are created as TLSOption CRDs
 # https://doc.traefik.io/traefik/https/tls/#tls-options
