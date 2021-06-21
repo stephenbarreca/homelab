@@ -217,14 +217,14 @@ additionalArguments:
   - --metrics.prometheus.addEntryPointsLabels=true
   - --metrics.prometheus.addServicesLabels=true
   - --metrics.prometheus.entryPoint=web
-  - --certificatesresolvers.letsencrypt.acme.dnschallenge=true"
-  - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=dynu"
+  - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
+  - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=dynu
   - --certificatesresolvers.letsencrypt.acme.email=fishfu@gmail.com
-  - --certificatesresolvers.letsencrypt.acme.storage=acme.json
+  - --certificatesresolvers.letsencrypt.acme.storage=/data/acme.json
   # Let's Encrypt staging server.
-  - --certificatesresolvers.local.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+  # - --certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
   # Let's Encrypt production server.
-  # - --certificatesresolvers.local.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
+  # - --certificatesresolvers.letsencrypt.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
 #  - "--log.level=DEBUG"
 
 # Environment variables to be passed to Traefik's binary
@@ -305,7 +305,7 @@ ports:
     port: 8443
     # hostPort: 8443
     expose: true
-    exposedPort: 8443
+    exposedPort: 443
     # The port protocol (TCP/UDP)
     protocol: TCP
     # nodePort: 32443
@@ -317,9 +317,9 @@ ports:
       options: ""
       certResolver: "letsencrypt"
       domains:
-        - main: "stephenbarreca.ca"
+        - main: "stephenbarre.ca"
           sans:
-            - "*.stephenbarreca.ca"
+            - "*.stephenbarre.ca"
 
 # TLS Options are created as TLSOption CRDs
 # https://doc.traefik.io/traefik/https/tls/#tls-options

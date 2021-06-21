@@ -8,12 +8,7 @@ spec:
     - local
     - traefik
   routes:
-    - match: Host(`traefik.local`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
-      kind: Rule
-      services:
-        - name: api@internal
-          kind: TraefikService
-    - match: (Host(`traefik.traefik.svc`) || Host(`192.168.1.200`)) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
+    - match: (Host(`traefik.traefik.svc`) || Host(`traefik.local`) || Host(`192.168.1.200`)) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
       kind: Rule
       services:
         - name: api@internal
