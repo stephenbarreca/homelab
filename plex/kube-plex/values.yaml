@@ -26,10 +26,21 @@ service:
   externalTrafficPolicy: Local
   annotations:
     co.elastic.monitor/type: http
-    co.elastic.monitor/urls: "https://192.168.1.241:32400/web"
+    co.elastic.monitor/urls: "http://${data.host}:{$data.port}/web"
     co.elastic.monitor/schedule: "@every 10s"
     co.elastic.monitor/ssl.verification_mode: "none"
     co.elastic.monitor/name: "Plex Service"
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure,local
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
+    traefik.ingress.kubernetes.io/router.tls.domains.0.main: "plex.stephenbarre.ca"
+  hosts: 
+    - "plex.stephenbarre.ca"
 
 rbac:
   create: true
@@ -37,7 +48,7 @@ rbac:
 nodeSelector:
   beta.kubernetes.io/arch: amd64
 
-nvidia_driver_capabilities: all
+# nvidia_driver_capabilities: all
 
 persistence:
   transcode:
@@ -65,7 +76,7 @@ resources:
   limits:
     cpu: 1
     memory: 4Gi
-    nvidia.com/gpu: 1
+    # nvidia.com/gpu: 1
   requests:
     cpu: 0.5
     memory: 2Gi

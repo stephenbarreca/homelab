@@ -192,7 +192,7 @@ logs:
           # Examples:
           # ClientUsername: drop
       headers:
-        defaultmode: drop
+        defaultmode: keep
         names: {}
           # Examples:
           # User-Agent: redact
@@ -219,10 +219,12 @@ additionalArguments:
   - --metrics.prometheus.entryPoint=web
   - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
   - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=dynu
-  - --certificatesresolvers.letsencrypt.acme.email=fishfu@gmail.com
+  - --certificatesresolvers.letsencrypt.acme.email=stephenbarreca@gmail.com
   - --certificatesresolvers.letsencrypt.acme.storage=/data/acme.json
+  - --entryPoints.web.forwardedHeaders.insecure
+  - --entryPoints.websecure.forwardedHeaders.insecure
   # Let's Encrypt staging server.
-  # - --certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+  - --certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
   # Let's Encrypt production server.
   # - --certificatesresolvers.letsencrypt.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
 #  - "--log.level=DEBUG"

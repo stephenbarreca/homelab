@@ -21,6 +21,14 @@ spec:
             type: container
             paths:
               - /var/log/containers/*-${data.container.id}.log
+          templates:
+            - condition:
+                equals:
+                  kubernetes.container.image: "plex"
+              config:
+                - type: filestream
+                  paths:
+                    - /var/log/plex/**/*.log
     processors:
     - add_host_metadata: {}
     - add_kubernetes_metadata:
@@ -49,6 +57,8 @@ spec:
             mountPath: /var/log/pods
           - name: varlibdockercontainers
             mountPath: /var/log/docker/containers
+          - name: plexlogs
+            mountPath: /var/log/plex
           env:
             - name: NODE_NAME
               valueFrom:
@@ -64,6 +74,10 @@ spec:
         - name: varlibdockercontainers
           hostPath:
             path: /var/log/docker/containers
+        - name: plexlogs
+          hostPath:
+            path: /home/stephen/data/plex/config/Library
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -100,4 +114,5 @@ roleRef:
   kind: ClusterRole
   name: filebeat
   apiGroup: rbac.authorization.k8s.io
+
 
