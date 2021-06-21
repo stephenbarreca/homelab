@@ -1,22 +1,23 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: radarr-config
-provisioner: kubekrnetes.io/no-provisioner
+  name: ombi-config
+provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: Immediate
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: radarr-config-nfs
+  name: ombi-config
 spec:
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteMany
-  storageClassName: radarr-config
+    - ReadWriteOnce
+  storageClassName: "ombi-config"
   local:
-    path: /home/stephen/data/radarr/config
+    path: /mnt/ombi-config
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -29,12 +30,13 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: radarr-config
+  name: ombi-config
   namespace: plex
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: radarr-config
+    - ReadWriteOnce
+  storageClassName: "ombi-config"
   resources:
     requests:
       storage: 1Gi
