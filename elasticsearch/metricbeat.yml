@@ -175,6 +175,8 @@ spec:
               secretKeyRef:
                 key: elastic
                 name: elasticsearch-es-elastic-user
+          - name: ELASTIC_APM_VERIFY_SERVER_CERT
+            value: "false"
         dnsPolicy: ClusterFirstWithHostNet
         hostNetwork: true # Allows to provide richer host metadata
         securityContext:
