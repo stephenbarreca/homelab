@@ -1,0 +1,81 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: jackett-config
+provisioner: kubekrnetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: jackett-downloads
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jackett-config-nfs
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: jackett-config
+  local:
+    path: /mnt/jackett-config
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-main
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jackett-downloads-nfs
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: jackett-downloads
+  local:
+    path: /mnt/jackett-downloads
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-main
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jackett-config
+  namespace: plex
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "jackett-config"
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jackett-downloads
+  namespace: plex
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "jackett-downloads"
+  resources:
+    requests:
+      storage: 10Gi

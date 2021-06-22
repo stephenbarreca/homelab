@@ -28,24 +28,24 @@ timezone: "America/New York"
 puid: 1000
 pgid: 1000
 
-service:
-  type: LoadBalancer
-  port: 80
-  annotations: {}
-  labels: {}
-  loadBalancerIP: 192.168.1.243
+#service:
+#  type: LoadBalancer
+#  port: 80
+#  annotations: {}
+#  labels: {}
+#  loadBalancerIP: 192.168.1.243
 
 ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
-    traefik.ingress.kubernetes.io/router.tls: "true"
-    traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
-    traefik.ingress.kubernetes.io/router.tls.domains.0.main: tautulli.stephenbarre.ca
+    #traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    #traefik.ingress.kubernetes.io/router.tls: "true"
+    #traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
+    #traefik.ingress.kubernetes.io/router.tls.domains.0.main: tautulli.stephenbarre.ca
   path: /
   hosts:
-    - tautulli.stephenbarre.ca
+    - tautulli.local
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -76,6 +76,11 @@ affinity: {}
 
 podAnnotations: {}
 
-deploymentAnnotations: {}
+deploymentAnnotations:
+  co.elastic.monitor/type: http
+  co.elastic.monitor/urls: "http://${data.host}:{$data.port}/"
+  co.elastic.monitor/schedule: "@every 10s"
+  co.elastic.monitor/name: "Tautulli"
+
 
 

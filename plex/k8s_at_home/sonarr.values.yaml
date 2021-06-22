@@ -22,21 +22,20 @@ env:
   # -- Set the container timezone
   TZ: UTC
 
+podAnnotations:
+  co.elastic.monitor/type: http
+  co.elastic.monitor/urls: "http://${data.host}:{$data.port}/sonarr"
+  co.elastic.monitor/schedule: "@every 10s"
+  co.elastic.monitor/name: "Sonarr"
+
 # -- Configures service settings for the chart.
 # @default -- See values.yaml
 service:
   main:
-    annotations:
-      co.elastic.monitor/type: http
-      co.elastic.monitor/urls: "http://192.168.1.202/sonarr/"
-      co.elastic.monitor/schedule: "@every 10s"
-      co.elastic.monitor/name: "Sonarr Service"
-#      co.elastic.monitor/check.response.status: "200"
     ports:
       http:
         port: 80
         targetPort: 8989
-    type: LoadBalancer
     # loadBalancerIP: 192.168.1.202
 
 ingress:
@@ -112,7 +111,7 @@ persistence:
   plex-tv:
     enabled: true
     type: pvc
-    existingClaim: pvc-plex-tv
+    existingClaim: plex-tv
     mountPath: /tv
 
 prometheus:

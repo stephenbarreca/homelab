@@ -43,7 +43,7 @@ service:
   main:
     primary: true
     type: LoadBalancer
-    loadBalancerIP: 192.168.1.241
+    # loadBalancerIP: 192.168.1.241
     externalTrafficPolicy: Local
     annotations:
       co.elastic.monitor/type: http
@@ -55,10 +55,6 @@ service:
       http:
         enabled: true
         port: 80
-        targetPort: 32400
-      pms:
-        enabled: true
-        port: 32400
         targetPort: 32400
   dnla-tcp:
     enabled: false
@@ -86,7 +82,7 @@ ingress:
               serviceName: "plex"
 
 # -- Enable devices to be discoverable
-hostNetwork: false
+hostNetwork: true
 
 probes:
   liveness:
@@ -128,18 +124,18 @@ persistence:
   config:
     enabled: true
     type: pvc
-    existingClaim: pvc-plex-config
+    existingClaim: plex-config
     mountPath: /config
   movies:
     enabled: true
-    claimexisting: "pvc-plex-movies"
-    mountPath: "/data/movies"
+    existingClaim: plex-movies
+    mountPath: /data/movies
     accessMode: ReadWriteMany
     size: 7Ti
   tv:
     enabled: true
-    claimexisting: "pvc-plex-tv"
-    mountPath: "/data/tv"
+    existingClaim: plex-tv
+    mountPath: /data/tv
     accessMode: ReadWriteMany
     size: 7Ti
   transcode:
@@ -151,8 +147,9 @@ persistence:
 
 # -- Configure the Security Context for the Pod
 podSecurityContext:
-  runAsUser: 1005
-  runAsGroup: 8675309
+  runAsUser: 0
+  #runAsUser: 1005
+  #runAsGroup: 8675309
   # fsGroup: 568
   # # Hardware acceleration using an Intel iGPU w/ QuickSync
   # # These IDs below should be matched to your `video` and `render` group on the host

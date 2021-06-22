@@ -1,0 +1,129 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: plex-config
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-config
+spec:
+  capacity:
+    storage: 50Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: plex-config
+  local:
+    path: /home/stephen/data/plex/config
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-main
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: plex-config
+  namespace: plex
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: plex-config
+  resources:
+    requests:
+      storage: 50Gi
+---
+
+
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: plex-movies
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: plex-tv
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-movies
+spec:
+  capacity:
+    storage: 7Ti
+  accessModes:
+    - ReadWriteMany
+  storageClassName: plex-movies
+  local:
+    path: /mnt/movies
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-main
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-tv
+spec:
+  capacity:
+    storage: 7Ti
+  accessModes:
+    - ReadWriteMany
+  storageClassName: plex-tv
+  local:
+    path: /mnt/tv
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-main
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: plex-movies
+  namespace: plex
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: plex-movies
+  resources:
+    requests:
+      storage: 7Ti
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: plex-tv
+  namespace: plex
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: plex-tv
+  resources:
+    requests:
+      storage: 7Ti
+

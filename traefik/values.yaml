@@ -388,15 +388,15 @@ autoscaling:
 # - "--certificatesresolvers.le.acme.storage=/data/acme.json"
 # It will persist TLS certificates.
 persistence:
-  enabled: false
+persistence:
+  enabled: true
   name: data
-#  existingClaim: ""
+  # existingClaim: ""
   accessMode: ReadWriteOnce
   size: 128Mi
-  # storageClass: ""
+  storageClass: "microk8s-hostpath"
   path: /data
   annotations: {}
-  # subPath: "" # only mount a subpath of the Volume into the pod
 
 # If hostNetwork is true, runs traefik in the host network namespace
 # To prevent unschedulabel pods due to port collisions, if hostNetwork=true

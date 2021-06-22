@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tls-ombi.stephenbarre.ca
+  namespace: plex
+spec:
+  commonName: "ombi.stephenbarre.ca"
+  dnsNames:
+    - "ombi.stephenbarre.ca"
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+  secretName: tls-ombi
