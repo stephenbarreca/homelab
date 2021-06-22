@@ -46,8 +46,9 @@ config: |
   protocol=cloudflare
   ssl=yes
   ttl=1
-  login=fishfu@gmail.com
+  login=token
   password=18jqSND8wGcwhr7Tz5CMeK3jcx0LjrRe0-5Gfjwb
   zone=stephenbarre.ca
-  stephen.barre.ca
-
+  *.stephenbarre.ca
+  plex.stephenbarre.ca
+  ombi.stephenbarre.ca
