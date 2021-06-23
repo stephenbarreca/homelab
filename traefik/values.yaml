@@ -212,7 +212,7 @@ additionalArguments:
   - --tracing.elastic=true
   - --tracing.elastic.serverurl=https://apm-server-apm-http.monitoring.svc:8200/
   - --tracing.elastic.serviceenvironment=production
-  - --tracing.elastic.secrettoken=0N41Syn50c6iEDWBY886O9wo
+  - --tracing.elastic.secrettoken=5tIBfaAv6833791IgWej42GC
   - --metrics.prometheus=true
   - --metrics.prometheus.addEntryPointsLabels=true
   - --metrics.prometheus.addServicesLabels=true

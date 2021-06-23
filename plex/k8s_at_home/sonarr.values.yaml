@@ -23,8 +23,10 @@ env:
   TZ: UTC
 
 podAnnotations:
-  co.elastic.monitor/type: http
-  co.elastic.monitor/urls: "http://${data.host}:{$data.port}/sonarr"
+  co.elastic.monitor/type: tcp
+  # co.elastic.monitor/type: http
+  # co.elastic.monitor/urls: "http://${data.host}:{$data.port}/sonarr"
+  co.elastic.monitor/hosts: "${data.host}:8989"
   co.elastic.monitor/schedule: "@every 10s"
   co.elastic.monitor/name: "Sonarr"
 

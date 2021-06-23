@@ -46,10 +46,14 @@ service:
     # loadBalancerIP: 192.168.1.241
     externalTrafficPolicy: Local
     annotations:
-      co.elastic.monitor/type: http
-      co.elastic.monitor/urls: "http://${data.host}:{$data.port}/web"
-      co.elastic.monitor/schedule: "@every 10s"
-      co.elastic.monitor/name: "Plex"
+      co.elastic.monitor/0.type: http
+      co.elastic.monitor/0.urls: "http://${data.host}:${data.port}/web"
+      co.elastic.monitor/0.schedule: "@every 10s"
+      co.elastic.monitor/0.name: "Plex"
+      co.elastic.monitor/1.type: http
+      co.elastic.monitor/1.urls: "https://plex.stephenbarre.ca:443/web"
+      co.elastic.monitor/1.schedule: "@every 10s"
+      co.elastic.monitor/1.name: "plex.stephenbarre.ca"
       # co.elastic.monitor/check.response.status: "200"
     ports:
       http:

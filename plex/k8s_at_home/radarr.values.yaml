@@ -24,7 +24,7 @@ env:
 
 podAnnotations:
   co.elastic.monitor/type: http
-  co.elastic.monitor/urls: "http://${data.host}:{$data.port}/radarr"
+  co.elastic.monitor/urls: "http://${data.host}:${data.port}/radarr"
   co.elastic.monitor/schedule: "@every 10s"
   co.elastic.monitor/name: "Radarr"
 
