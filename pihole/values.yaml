@@ -233,8 +233,11 @@ adlists:
   - https://urlhaus.abuse.ch/downloads/hostfile/
   - https://v.firebog.net/hosts/Prigent-Malware.txt
   - https://raw.githubusercontent.com/HorusTeknoloji/TR-PhishingList/master/url-lists.txt
+
 whitelist:
   # If you want to provide whitelisted domains, add them here.
+  - nanorep.co
+  - nanorep.com
   - thepiratebay.org
   - api.vsee.com
   - services.gfe.nvidia.com

@@ -1,0 +1,125 @@
+# Chart: k8s-at-home/qbittorrent
+#
+# IMPORTANT NOTE
+#
+# This chart inherits from our common library chart. You can check the default values/options here:
+# https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common/values.yaml
+#
+
+image:
+  # -- image repository
+  repository: ghcr.io/k8s-at-home/qbittorrent
+  # -- image tag
+  tag: v4.3.5
+  # -- image pull policy
+  pullPolicy: IfNotPresent
+
+settings:
+  # -- Enables automatic port configuration at startup
+  # This sets the qbittorrent port to the value of `service.bittorrent.ports.bittorrent.port`.
+  automaticPortSetup: false
+
+# -- environment variables. See [image docs](https://docs.k8s-at-home.com/our-container-images/configuration/) for more details.
+# @default -- See below
+env:
+  # -- Set the container timezone
+  TZ: UTC
+
+# -- Configures service settings for the chart.
+# @default -- See values.yaml
+service:
+  main:
+    ports:
+      http:
+        port: 8080
+  bittorrent:
+    enabled: false
+    type: ClusterIP
+    ports:
+      bittorrent:
+        enabled: true
+        port: 6881
+        protocol: TCP
+        targetPort: 6881
+
+ingress:
+  # -- Enable and configure ingress settings for the chart under this key.
+  # @default -- See values.yaml
+  main:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: local
+    hosts:
+      - host: "torrent.local"
+        paths:
+          - path: "/"
+            backend:
+              serviceName: "qbittorrent"
+      - host: "qbittorrent.local"
+        paths:
+          - path: "/"
+            backend:
+              serviceName: "qbittorrent"              
+# -- Configure persistence settings for the chart under this key.
+# @default -- See values.yaml
+persistence:
+  config:
+    enabled: true
+    existingClaim: transmission-config
+
+  media:
+    enabled: false
+    mountPath: /media
+
+  downloads:
+    enabled: true
+    mountPath: /downloads
+    existingClaim: transmission-downloads
+  shared:
+    enabled: true
+    type: emptyDir
+    mountPath: /shared
+
+addons:
+  vpn:
+    enabled: true
+    # This Should be set to `wireguard`. This will set the add-on to use the default settings for Wireguard based connections.
+    type: wireguard
+    wireguard:
+      image:
+        repository: ghcr.io/k8s-at-home/wireguard
+
+    env:
+      # Enable a killswitch that kills all trafic when the VPN is not connected
+      KILLSWITCH: "true"
+
+    # The wireguard configuration file provided by your VPN provider goes here.
+    #
+    # Set AllowedIPs to 0.0.0.0/0 to route all traffic through the VPN.
+    #
+    # Pay close attention to the PostUp and PreDown lines. They must be added if you wish to run a script when the connection
+    # is opened / closed.
+    configFile: |-
+      [Interface]
+      PrivateKey = EKejfhtDR0NgoPSDGtnnxA0JbuCBCKGcLAbPwXKuu3Q=
+      Address = 10.0.0.1/24
+      DNS = 1.1.1.1
+      PostUp = /config/up.sh %i
+      PreDown = /config/down.sh %i
+
+      [Peer]
+      PublicKey = VHEKsP+aWtvlhaR1AN8mo1TNOSNJ8knV3kS1vQjN8Rk=
+      AllowedIPs = 0.0.0.0/0
+      Endpoint = us6717.nordvpn.com:51820
+    # The scripts that get run when the VPN connection opens/closes are defined here.
+    # The default scripts will write a string to represent the current connection state to a file.
+    # Our qBittorrent image has a feature that can wait for this file to contain the word 'connected' before actually starting the application.
+    scripts:
+      up: |-
+        #!/bin/bash
+        echo "connected" > /shared/vpnstatus
+
+      down: |-
+        #!/bin/bash
+        echo "disconnected" > /shared/vpnstatus

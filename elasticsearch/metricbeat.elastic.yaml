@@ -36,7 +36,7 @@ spec:
           metricsets:
             - stats
           period: 10s
-          hosts: "https://kibana-kb-http.monitoring.svc:5601"
+          hosts: "https://kibana-kb-http.monitoring.svc"
           username: ${MONITORED_ES_USERNAME}
           password: ${MONITORED_ES_PASSWORD}
           # WARNING: disables TLS as the default certificate is not valid for the pod FQDN
