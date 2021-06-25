@@ -50,6 +50,13 @@ spec:
             runAsUser: 0
             # If using Red Hat OpenShift uncomment this:
             #privileged: true
+          resources:
+            requests:
+              memory: 200Mi
+              cpu: 100m
+            limits:
+              memory: 512Mi
+              cpu: 500m
           volumeMounts:
           - name: varlogcontainers
             mountPath: /var/log/containers

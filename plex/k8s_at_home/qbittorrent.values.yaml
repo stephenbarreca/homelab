@@ -81,6 +81,13 @@ persistence:
     type: emptyDir
     mountPath: /shared
 
+securityContext:
+  capabilities:
+    add:
+      - NET_ADMIN
+      - SYS_MODULE
+
+
 addons:
   vpn:
     enabled: true
@@ -92,7 +99,15 @@ addons:
 
     env:
       # Enable a killswitch that kills all trafic when the VPN is not connected
-      KILLSWITCH: "true"
+      KILLSWITCH: "false"
+
+    securityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      capabilities:
+        add:
+          - NET_ADMIN
+          - SYS_MODULE
 
     # The wireguard configuration file provided by your VPN provider goes here.
     #
@@ -103,7 +118,6 @@ addons:
     configFile: |-
       [Interface]
       PrivateKey = EKejfhtDR0NgoPSDGtnnxA0JbuCBCKGcLAbPwXKuu3Q=
-      Address = 10.0.0.1/24
       DNS = 1.1.1.1
       PostUp = /config/up.sh %i
       PreDown = /config/down.sh %i
@@ -118,8 +132,20 @@ addons:
     scripts:
       up: |-
         #!/bin/bash
+        DROUTE=$(ip route | grep default | awk '{print $3}')
+        HOMENET=192.168.0.0/16
+        HOMENET2=10.0.0.0/8
+        HOMENET3=172.16.0.0/12
+        ip route add $HOMENET3 via $DROUTE
+        ip route add $HOMENET2 via $DROUTE
+        ip route add $HOMENET via $DROUTE
+        iptables -I OUTPUT -d $HOMENET -j ACCEPT
+        iptables -A OUTPUT -d $HOMENET2 -j ACCEPT
+        iptables -A OUTPUT -d $HOMENET3 -j ACCEPT
+        iptables -A OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT
         echo "connected" > /shared/vpnstatus
 
       down: |-
         #!/bin/bash
+        iptables -D FORWARD -o %i -j ACCEPT
         echo "disconnected" > /shared/vpnstatus

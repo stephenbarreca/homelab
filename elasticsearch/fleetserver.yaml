@@ -1,0 +1,176 @@
+apiVersion: agent.k8s.elastic.co/v1alpha1
+kind: Agent
+metadata:
+  name: fleet
+  namespace: monitoring
+spec:
+  version: 7.13.2
+  elasticsearchRefs:
+  - name: elasticsearch
+    namespace: monitoring
+  deployment:
+    podTemplate:
+      spec:
+        hostNetwork: true
+        dnsPolicy: ClusterFirstWithHostNet
+        hostName: k8s-main
+        automountServiceAccountToken: true
+        initContainers:
+          - name: init
+            securityContext:
+              runAsUser: 0
+            image: docker.elastic.co/beats/elastic-agent:7.13.2
+            command: [ "cp" ]
+            args: [ "/tmp/agent.yml", "/usr/share/elastic-agent/data/fleet-server/run/agent.yml" ]
+            workingDir: /usr/share/data
+            volumeMounts:
+              - name: config
+                mountPath: /tmp/agent.yml
+                subPath: agent.yml
+                readOnly: false
+              - name: agent-data
+                mountPath: /usr/share/elastic-agent/data/fleet-server/run
+        containers:
+        - name: agent
+          securityContext:
+            runAsUser: 0
+            AllowPrivilegeEscalation: true
+          args:
+            - -e
+            - -c
+            - /usr/share/elastic-agent/data/fleet-server/run/agent.yml
+          volumeMounts:
+            - mountPath: /usr/share/elastic-agent/data/fleet-server/run
+              name: agent-data
+              readOnly: false
+            - mountPath: /mnt/elastic-internal/elasticsearch-association/monitoring/kibana/certs
+              name: kibana-certs-0
+              readOnly: true
+            - mountPath: /etc/agent.yml
+              name: config
+              readOnly: false
+              subPath: agent.yml
+            - mountPath: /hostfs/sys/fs/cgroup
+              name: cgroup
+              readOnly: true
+            - mountPath: /hostfs/proc
+              name: proc
+            - name: entrypoint
+              mountPath: /usr/local/bin
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: FLEET_SERVER_ENABLE
+              value: "1"
+            - name: FLEET_ENROLL
+              value: "1"
+            - name: FLEET_SERVER_ELASTICSEARCH_HOST
+              value: "https://elasticsearch-es-http.monitoring.svc:9200"
+  #          - name: FLEET_SERVER_ELASTICSEARCH_USERNAME
+  #            value: elastic
+  #          - name: FLEET_SERVER_ELASTICSEARCH_PASSWORD
+  #            valueFrom:
+  #              secretKeyRef:
+  #                name: elasticsearch-es-elastic-user
+  #                key: elastic
+            - name: FLEET_SERVER_SERVICE_TOKEN
+              value: AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE2MjQ1NzIwMzczOTY6ci1Fa3hOdm9TUjYybWRManJHeDBKQQ
+            - name: FLEET_SERVER_ELASTICSEARCH_CA
+              value: /mnt/elastic-internal/elasticsearch-association/monitoring/elasticsearch/certs/ca.crt
+            - name: FLEET_SERVER_HOST
+              value: "0.0.0.0"
+            - name: FLEET_SERVER_PORT
+              value: "9243"
+            - name: FLEET_URL
+              value: "https://fleetserver.local"
+            - name: KIBANA_FLEET_SETUP
+              value: "1"
+            - name: KIBANA_FLEET_HOST
+              value: "https://kibana-kb-http.monitoring.svc:443"
+            - name: KIBANA_FLEET_USERNAME
+              value: elastic
+            - name: KIBANA_FLEET_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: elasticsearch-es-elastic-user
+                  key: elastic
+            - name: KIBANA_FLEET_CA
+              value: /mnt/elastic-internal/elasticsearch-association/monitoring/kibana/certs/ca.crt
+            - name: FLEET_FORCE
+              value: "1"
+          ports:
+            - name: https
+              containerPort: 9243
+              protocol: TCP
+        volumes:
+          - hostPath:
+              path: /sys/fs/cgroup
+            name: cgroup
+          - hostPath:
+              path: /var/run/docker.sock
+            name: dockersock
+          - hostPath:
+              path: /proc
+            name: proc
+          - name: kibana-certs-0
+            secret:
+              defaultMode: 420
+              optional: false
+              secretName: kibana-kb-http-certs-public
+          - name: entrypoint
+            configMap:
+              name: fleet-entrypoint
+              defaultMode: 0777
+  config:
+    agent:
+      monitoring:
+        enabled: true
+        use_output: default
+        logs: true
+        metrics: true
+    providers: {}
+    inputs: []
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: fleet
+  namespace: monitoring
+spec:
+  entryPoints:
+    - local
+    - traefik
+    - websecure
+  routes:
+    - match: Host(`fleetserver.local`)
+      kind: Rule
+      services:
+        - kind: Service
+          name: elasticsearch-es-http
+          port: 9200
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fleet-entrypoint
+  namespace: monitoring
+data:
+  docker-entrypoint: |-
+    #!/bin/bash
+    /usr/sbin/init
+
+    set -eo pipefail
+
+    # For information on the possible environment variables that can be passed into the container. Run the following
+    # command for information on the options that are available.
+    #
+    # `./elastic-agent container --help`
+    #
+     elastic-agent container "$@"
+

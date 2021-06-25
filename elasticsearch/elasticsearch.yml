@@ -39,3 +39,21 @@ spec:
             limits:
               memory: 12Gi
               cpu: 8
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: elasticsearch
+  namespace: monitoring
+spec:
+  entryPoints:
+    - local
+    - traefik
+    - websecure
+  routes:
+    - match: Host(`elasticsearch.local`)
+      kind: Rule
+      services:
+        - kind: Service
+          name: elasticsearch-es-http
+          port: 9200

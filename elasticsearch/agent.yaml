@@ -6,8 +6,8 @@ metadata:
 spec:
   version: 7.13.2
   elasticsearchRefs:
-  - name: elasticsearch
-    namespace: monitoring
+    - name: elasticsearch
+      namespace: monitoring
   deployment:
     podTemplate:
       spec:
@@ -31,6 +31,13 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
+          resources:
+            requests:
+              memory: 300Mi
+              cpu: 200m
+            limits:
+              memory: 1Gi
+              cpu: 1
         volumes:
         - hostPath:
             path: /sys/fs/cgroup
