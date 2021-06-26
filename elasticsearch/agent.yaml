@@ -11,9 +11,9 @@ spec:
   deployment:
     podTemplate:
       spec:
-        hostNetwork: true
-        dnsPolicy: ClusterFirstWithHostNet
-        hostName: k8s-main
+        hostNetwork: false
+#        dnsPolicy: ClusterFirstWithHostNet
+#        hostName: k8s-main
         automountServiceAccountToken: true
         containers:
         - name: agent
@@ -33,11 +33,11 @@ spec:
                 fieldPath: metadata.name
           resources:
             requests:
-              memory: 300Mi
+              memory: 600Mi
               cpu: 200m
             limits:
-              memory: 1Gi
-              cpu: 1
+              memory: 600Mi
+              cpu: 400m
         volumes:
         - hostPath:
             path: /sys/fs/cgroup
@@ -197,252 +197,6 @@ spec:
             hosts:
               - 'kube-state-metrics:8080'
             period: 10s
-      - name: system-logs
-        type: logfile
-        use_output: default
-        meta:
-          package:
-            name: system
-            version: 0.10.7
-        data_stream:
-          namespace: monitoring
-        streams:
-          - data_stream:
-              dataset: system.auth
-              type: logs
-            paths:
-              - /var/log/auth.log*
-              - /var/log/secure*
-            exclude_files:
-              - .gz$
-            multiline:
-              pattern: ^\s
-              match: after
-            processors:
-              - add_fields:
-                  target: ''
-                  fields:
-                    ecs.version: 1.9.0
-          - data_stream:
-              dataset: system.syslog
-              type: logs
-            paths:
-              - /var/log/messages*
-              - /var/log/syslog*
-            exclude_files:
-              - .gz$
-            multiline:
-              pattern: ^\s
-              match: after
-            processors:
-              - add_fields:
-                  target: ''
-                  fields:
-                    ecs.version: 1.9.0
-      - name: container-log
-        type: logfile
-        use_output: default
-        meta:
-          package:
-            name: log
-            version: 0.4.6
-        data_stream:
-          namespace: monitoring
-        streams:
-          - data_stream:
-              dataset: generic
-            symlinks: true
-            paths:
-              - /var/log/containers/*${kubernetes.container.id}.log
-      - name: system-metrics
-        type: system/metrics
-        use_output: default
-        meta:
-          package:
-            name: system
-            version: 0.10.9
-        data_stream:
-          namespace: monitoring
-        streams:
-          - data_stream:
-              dataset: system.core
-              type: metrics
-            metricsets:
-              - core
-            core.metrics:
-              - percentages
-          - data_stream:
-              dataset: system.cpu
-              type: metrics
-            period: 10s
-            cpu.metrics:
-              - percentages
-              - normalized_percentages
-            metricsets:
-              - cpu
-          - data_stream:
-              dataset: system.diskio
-              type: metrics
-            period: 10s
-            diskio.include_devices: null
-            metricsets:
-              - diskio
-          - data_stream:
-              dataset: system.filesystem
-              type: metrics
-            period: 1m
-            metricsets:
-              - filesystem
-            processors:
-              - drop_event.when.regexp:
-                  system.filesystem.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
-          - data_stream:
-              dataset: system.fsstat
-              type: metrics
-            period: 1m
-            metricsets:
-              - fsstat
-            processors:
-              - drop_event.when.regexp:
-                  system.fsstat.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
-          - data_stream:
-              dataset: system.load
-              type: metrics
-            period: 10s
-            metricsets:
-              - load
-          - data_stream:
-              dataset: system.memory
-              type: metrics
-            period: 10s
-            metricsets:
-              - memory
-          - data_stream:
-              dataset: system.network
-              type: metrics
-            period: 10s
-            network.interfaces: null
-            metricsets:
-              - network
-          - data_stream:
-              dataset: system.process
-              type: metrics
-            process.include_top_n.by_memory: 5
-            period: 10s
-            processes:
-              - .*
-            process.include_top_n.by_cpu: 5
-            process.cgroups.enabled: false
-            process.cmdline.cache.enabled: true
-            metricsets:
-              - process
-            process.include_cpu_ticks: false
-            system.hostfs: /hostfs
-          - data_stream:
-              dataset: system.process_summary
-              type: metrics
-            period: 10s
-            metricsets:
-              - process_summary
-            system.hostfs: /hostfs
-          - data_stream:
-              dataset: system.socket_summary
-              type: metrics
-            period: 10s
-            metricsets:
-              - socket_summary
-            system.hostfs: /hostfs
-      - name: kubernetes-node-metrics
-        type: kubernetes/metrics
-        use_output: default
-        meta:
-          package:
-            name: kubernetes
-            version: 0.2.8
-        data_stream:
-          namespace: monitoring
-        streams:
-          - data_stream:
-              dataset: kubernetes.controllermanager
-              type: metrics
-            metricsets:
-              - controllermanager
-            hosts:
-              - '${kubernetes.pod.ip}:10252'
-            period: 10s
-            condition: ${kubernetes.pod.labels.component} == 'kube-controller-manager'
-          - data_stream:
-              dataset: kubernetes.scheduler
-              type: metrics
-            metricsets:
-              - scheduler
-            hosts:
-              - '${kubernetes.pod.ip}:10251'
-            period: 10s
-            condition: ${kubernetes.pod.labels.component} == 'kube-scheduler'
-          - data_stream:
-              dataset: kubernetes.proxy
-              type: metrics
-            metricsets:
-              - proxy
-            hosts:
-              - 'localhost:10249'
-            period: 10s
-          - data_stream:
-              dataset: kubernetes.container
-              type: metrics
-            metricsets:
-              - container
-            add_metadata: true
-            bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-            hosts:
-              - 'https://${env.NODE_NAME}:10250'
-            period: 10s
-            ssl.verification_mode: none
-          - data_stream:
-              dataset: kubernetes.node
-              type: metrics
-            metricsets:
-              - node
-            add_metadata: true
-            bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-            hosts:
-              - 'https://${env.NODE_NAME}:10250'
-            period: 10s
-            ssl.verification_mode: none
-          - data_stream:
-              dataset: kubernetes.pod
-              type: metrics
-            metricsets:
-              - pod
-            add_metadata: true
-            bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-            hosts:
-              - 'https://${env.NODE_NAME}:10250'
-            period: 10s
-            ssl.verification_mode: none
-          - data_stream:
-              dataset: kubernetes.system
-              type: metrics
-            metricsets:
-              - system
-            add_metadata: true
-            bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-            hosts:
-              - 'https://${env.NODE_NAME}:10250'
-            period: 10s
-            ssl.verification_mode: none
-          - data_stream:
-              dataset: kubernetes.volume
-              type: metrics
-            metricsets:
-              - volume
-            add_metadata: true
-            bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-            hosts:
-              - 'https://${env.NODE_NAME}:10250'
-            period: 10s
-            ssl.verification_mode: none
           # Add extra input blocks here, based on conditions
           # so as to automatically identify targeted Pods and start monitoring them
           # using a predefined integration. For instance:
@@ -468,3 +222,4 @@ spec:
 #                network: tcp
 #                period: 10s
 #                condition: ${kubernetes.pod.labels.app} == 'redis'
+

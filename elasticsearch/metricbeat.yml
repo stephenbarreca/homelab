@@ -82,7 +82,7 @@ spec:
           - state_persistentvolume
           - state_persistentvolumeclaim
           - state_storageclass
-        hosts: ["kube-state-metrics.monitoring.svc:8080"]
+        hosts: ["kube-state-metrics:8080"]
 
       # Kubernetes API server
       # (when running metricbeat as a deployment)
@@ -92,6 +92,7 @@ spec:
           - apiserver
         hosts: [ "https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}" ]
         bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        ssl.verification_mode: "none"
         ssl.certificate_authorities:
           - /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
         period: 30s
@@ -138,6 +139,13 @@ spec:
                 name: elasticsearch-es-elastic-user
           - name: ELASTIC_APM_VERIFY_SERVER_CERT
             value: "false"
+          resources:
+            requests:
+              memory: 300Mi
+              cpu: 500m
+            limits:
+              memory: 300Mi
+              cpu: 500m
         dnsPolicy: ClusterFirstWithHostNet
         hostNetwork: true # Allows to provide richer host metadata
         securityContext:
@@ -165,39 +173,22 @@ metadata:
 rules:
 - apiGroups:
   - ""
+  - extensions
+  - apps
   resources:
   - nodes
   - namespaces
   - events
   - pods
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - "extensions"
-  resources:
   - replicasets
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - apps
-  resources:
   - statefulsets
   - deployments
   - replicasets
+  - nodes/stats
   verbs:
   - get
   - list
   - watch
-- apiGroups:
-  - ""
-  resources:
-  - nodes/stats
-  verbs:
-  - get
 - nonResourceURLs:
   - /metrics
   verbs:

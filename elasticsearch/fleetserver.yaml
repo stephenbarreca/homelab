@@ -11,9 +11,8 @@ spec:
   deployment:
     podTemplate:
       spec:
-        hostNetwork: true
+        hostNetwork: false
         dnsPolicy: ClusterFirstWithHostNet
-        hostName: k8s-main
         automountServiceAccountToken: true
         initContainers:
           - name: init
@@ -46,17 +45,6 @@ spec:
             - mountPath: /mnt/elastic-internal/elasticsearch-association/monitoring/kibana/certs
               name: kibana-certs-0
               readOnly: true
-            - mountPath: /etc/agent.yml
-              name: config
-              readOnly: false
-              subPath: agent.yml
-            - mountPath: /hostfs/sys/fs/cgroup
-              name: cgroup
-              readOnly: true
-            - mountPath: /hostfs/proc
-              name: proc
-            - name: entrypoint
-              mountPath: /usr/local/bin
           env:
             - name: NODE_NAME
               valueFrom:
@@ -72,13 +60,6 @@ spec:
               value: "1"
             - name: FLEET_SERVER_ELASTICSEARCH_HOST
               value: "https://elasticsearch-es-http.monitoring.svc:9200"
-  #          - name: FLEET_SERVER_ELASTICSEARCH_USERNAME
-  #            value: elastic
-  #          - name: FLEET_SERVER_ELASTICSEARCH_PASSWORD
-  #            valueFrom:
-  #              secretKeyRef:
-  #                name: elasticsearch-es-elastic-user
-  #                key: elastic
             - name: FLEET_SERVER_SERVICE_TOKEN
               value: AAEAAWVsYXN0aWMvZmxlZXQtc2VydmVyL3Rva2VuLTE2MjQ1NzIwMzczOTY6ci1Fa3hOdm9TUjYybWRManJHeDBKQQ
             - name: FLEET_SERVER_ELASTICSEARCH_CA
@@ -86,11 +67,11 @@ spec:
             - name: FLEET_SERVER_HOST
               value: "0.0.0.0"
             - name: FLEET_SERVER_PORT
-              value: "9243"
+              value: "8220"
             - name: FLEET_URL
               value: "https://fleetserver.local"
             - name: KIBANA_FLEET_SETUP
-              value: "1"
+              value: "0"
             - name: KIBANA_FLEET_HOST
               value: "https://kibana-kb-http.monitoring.svc:443"
             - name: KIBANA_FLEET_USERNAME
@@ -102,31 +83,30 @@ spec:
                   key: elastic
             - name: KIBANA_FLEET_CA
               value: /mnt/elastic-internal/elasticsearch-association/monitoring/kibana/certs/ca.crt
-            - name: FLEET_FORCE
-              value: "1"
+#            - name: FLEET_FORCE
+#              value: "1"
+#            - name: FLEET_SERVER_INSECURE_HTTP
+#              value: "1"
+#            - name: FLEET_INSECURE
+#              value: "1"
+
           ports:
             - name: https
-              containerPort: 9243
+              containerPort: 8220
               protocol: TCP
+          resources:
+            requests:
+              memory: 600Mi
+              cpu: 500m
+            limits:
+              memory: 600Mi
+              cpu: 500m
         volumes:
-          - hostPath:
-              path: /sys/fs/cgroup
-            name: cgroup
-          - hostPath:
-              path: /var/run/docker.sock
-            name: dockersock
-          - hostPath:
-              path: /proc
-            name: proc
           - name: kibana-certs-0
             secret:
               defaultMode: 420
               optional: false
               secretName: kibana-kb-http-certs-public
-          - name: entrypoint
-            configMap:
-              name: fleet-entrypoint
-              defaultMode: 0777
   config:
     agent:
       monitoring:
@@ -136,6 +116,22 @@ spec:
         metrics: true
     providers: {}
     inputs: []
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleet-server
+  namespace: monitoring
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.1.251
+  selector:
+    common.k8s.elastic.co/type: agent
+    agent.k8s.elastic.co/name: fleet
+  ports:
+  - name: https
+    port: 8220
+    targetPort: 8220
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -152,25 +148,7 @@ spec:
       kind: Rule
       services:
         - kind: Service
-          name: elasticsearch-es-http
-          port: 9200
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: fleet-entrypoint
-  namespace: monitoring
-data:
-  docker-entrypoint: |-
-    #!/bin/bash
-    /usr/sbin/init
+          name: fleet-server
+          port: 8220
 
-    set -eo pipefail
-
-    # For information on the possible environment variables that can be passed into the container. Run the following
-    # command for information on the options that are available.
-    #
-    # `./elastic-agent container --help`
-    #
-     elastic-agent container "$@"
 
