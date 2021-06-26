@@ -388,7 +388,6 @@ autoscaling:
 # - "--certificatesresolvers.le.acme.storage=/data/acme.json"
 # It will persist TLS certificates.
 persistence:
-persistence:
   enabled: true
   name: data
   # existingClaim: ""
