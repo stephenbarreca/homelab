@@ -29,6 +29,11 @@ spec:
     namespace: monitoring
   config:
     monitoring.ui.container.elasticsearch.enabled: true
+  podTemplate:
+    metadata:
+      annotations:
+        co.elastic.logs/enabled: "true"
+        co.elastic.logs/module: kibana
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute

@@ -53,10 +53,10 @@ spec:
           resources:
             requests:
               memory: 512Mi
-              cpu: 200m
+              cpu: 500m
             limits:
               memory: 512Mi
-              cpu: 200m
+              cpu: 500m
           volumeMounts:
           - name: varlogcontainers
             mountPath: /var/log/containers
@@ -121,5 +121,6 @@ roleRef:
   kind: ClusterRole
   name: filebeat
   apiGroup: rbac.authorization.k8s.io
+
 
 

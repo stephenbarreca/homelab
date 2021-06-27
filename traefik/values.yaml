@@ -216,7 +216,7 @@ additionalArguments:
   - --metrics.prometheus=true
   - --metrics.prometheus.addEntryPointsLabels=true
   - --metrics.prometheus.addServicesLabels=true
-  - --metrics.prometheus.entryPoint=web
+  - --metrics.prometheus.entryPoint=local,traefik
   - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
   - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=dynu
   - --certificatesresolvers.letsencrypt.acme.email=stephenbarreca@gmail.com
