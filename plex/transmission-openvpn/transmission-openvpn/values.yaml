@@ -3,7 +3,7 @@
 
 image:
   repository: haugene/transmission-openvpn
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart version.
   # tag: override-tag
 
@@ -24,8 +24,6 @@ podSecurityContext: {}
   # fsGroup: 2000
 
 securityContext:
-  allowPrivilegeEscalation: true
-  runAsUser: 0
   capabilities:
     add:
       - NET_ADMIN
@@ -36,31 +34,50 @@ securityContext:
   # runAsUser: 1000
 
 service:
-  type: loadBalancer
-  loadBalancerIP: 192.168.1.247
+  type: ClusterIP
   port: 80
+  ## Specify the nodePort value for the LoadBalancer and NodePort service types.
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+  ##
+  # nodePort:
+  ## Provide any additional annotations which may be required. This can be used to
+  ## set the LoadBalancer service type to internal only.
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
+  ##
+  annotations: {}
+  labels: {}
+  ## Use loadBalancerIP to request a specific static IP,
+  ## otherwise leave blank
+  ##
+  loadBalancerIP:
+  # loadBalancerSourceRanges: []
+  ## Set the externalTrafficPolicy in the Service to either Cluster or Local
+  # externalTrafficPolicy: Cluster
 
 ingress:
-  enabled: true
-  annotations:
-    kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/router.entrypoints: local
-  path: /
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
   hosts:
-    - torrent.local
-    - transmission.local
+    - host: chart-example.local
+      paths: []
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
 
-resources:
+resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-   requests:
-     cpu: 250m
-     memory: 1Gi
-   limits:
-     cpu: 2
-     memory: 4Gi
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
 
 nodeSelector: {}
 
@@ -70,40 +87,31 @@ affinity: {}
 
 persistence:
   data:
-    enabled: true
-    existingClaim: "transmission-downloads"
+    enabled: false
+    # existingClaim: "my-existing-claim"
     # storageClass: "my-storage-class"
+    annotations:
     accessModes:
-      - ReadWriteMany
+      - ReadWriteOnce
     ## Persistent Volume size
-    #size: 64Gi
+    size: 64Gi
 
 # An alternative data volume definition
 dataVolume: {}
 
 # see docs: https://haugene.github.io/docker-transmission-openvpn/arguments/
 # for sensitive values, use secretEnv below.
-env:
-  OPENVPN_PROVIDER: PIA
-  OPENVPN_CONFIG: ca_ontario
-  OPENVPN_OPTS: "--inactive 3600 --ping 10 --ping-exit 60"
-  LOCAL_NETWORK: "10.1.0.0/16"
-  TRANSMISSION_DOWNLOAD_DIR: "/data/transmission"
-  TRANSMISSION_INCOMPLETE_DIR: "/data/transmission/incomplete"
-  TRANSMISSION_DOWNLOAD_QUEUE_SIZE: "200"
-  TRANSMISSION_RATIO_LIMIT_ENABLED: "true"
-  TRANSMISSION_RATIO_LIMIT: "1"
-  TRANSMISSION_PEER_LIMIT_PER_TORRENT: "1000"
-  TRANSMISSION_PEER_LIMIT_GLOBAL: "10000"
-  TRANSMISSION_CACHE_SIZE_MB: "16"
-  TRANSMISSION_WEB_UI: "transmission-web-control"
-  LOG_TO_STDOUT: "true"
-#  PUID: "1000"
-#  PGID: "1000"
+env: {}
+  # OPENVPN_PROVIDER: my_value
+  # CREATE_TUN_DEVICE: "true"
+  # TRANSMISSION_SPEED_LIMIT_UP: "2048"
+  # PUID: "1000"
+  # PGID: "1000"
+
 # put sensitive values here
-secretEnv:
-  OPENVPN_USERNAME: p8582314
-  OPENVPN_PASSWORD: EP7dpgVmtV!
+secretEnv: {}
+  # OPENVPN_USERNAME: user
+  # OPENVPN_PASSWORD: MySecretPassword1!
 
 # see: https://haugene.github.io/docker-transmission-openvpn/supported-providers/#using_a_custom_provider
 customProvider:
@@ -117,7 +125,4 @@ timezoneMountFromHost:
   enabled: true
   name: localtime
 
-dnsConfig:
-  nameservers:
-    - 8.8.8.8
-    - 1.1.1.1
+dnsConfig: {}
