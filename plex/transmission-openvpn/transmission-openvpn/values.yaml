@@ -53,6 +53,7 @@ service:
   # loadBalancerSourceRanges: []
   ## Set the externalTrafficPolicy in the Service to either Cluster or Local
   # externalTrafficPolicy: Cluster
+  peerPort: "35244"
 
 ingress:
   enabled: false

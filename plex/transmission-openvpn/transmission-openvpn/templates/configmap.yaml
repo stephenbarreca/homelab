@@ -8,4 +8,5 @@ data:
   {{- toYaml .Values.env | nindent 2 }}
   {{- if and .Values.customProvider.enabled }}
   OPENVPN_PROVIDER: CUSTOM
-  {{- end }}
+  TRANSMISSION_PEER_PORT: {{ .Values.service.peerPort}}
+    {{- end }}

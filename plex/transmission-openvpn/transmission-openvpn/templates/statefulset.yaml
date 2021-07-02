@@ -38,6 +38,9 @@ spec:
             - name: http
               containerPort: 9091
               protocol: TCP
+            - name: vpn
+              containerPort: {{.Values.service.peerPort}
+              protocol: TCP
           readinessProbe:
             tcpSocket:
               port: http
