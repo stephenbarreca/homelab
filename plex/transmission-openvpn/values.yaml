@@ -1,10 +1,12 @@
+# HELM REPO: helm repo add utkuozdemir https://utkuozdemir.org/helm-charts
+# CHART utkuozdemir/transmission-openvpn
 # Optimized for airvpn.
 
 replicaCount: 1
 
 image:
   repository: haugene/transmission-openvpn
-  tag: latest
+  tag: dev
   pullPolicy: IfNotPresent
 
 dnsPolicy: "None"
@@ -16,23 +18,27 @@ dnsConfig:
 
 env:
   - name: OPENVPN_PROVIDER
-    value: "NORDVPN"
+    value: "PIA"
   - name: OPENVPN_USERNAME
-    value: "Q5aderPMaykfq98VY9ffbvQV"
+    value: "p8582314"
   - name: OPENVPN_PASSWORD
-    value: "1zjQcHrogmyFCNT3G9GAjJtQ"
-  - name: NORDVPN_PROTOCOL
-    value: "TCP"
-  - name: NORDVPN_COUNTRY
-    value: "US" # Country where we want to download over VPN
-  - name: NORDVPN_CATEGORY
-    value: "P2P" # VPN Type
+    value: "EP7dpgVmtV"
+  - name: OPENVPN_CONFIG
+    value: "ca_ontario"
+  - name: OPENVPN_OPTS
+    value: "--inactive 3600 --ping 10 --ping-exit 60 --dhcp-option DNS 8.8.8.8"
+#  - name: OVERRIDE_DNS_1
+#    value: 8.8.8.8
+#  - name: OVERRIDE_DNS_1
+#    value: 8.8.4.4
   - name: LOCAL_NETWORK
     value: "192.168.1.0/24,10.0.0.0/8"
-  - name: TRANSMISSION_PEER_PORT
-    value: "51324"
+#  - name: TRANSMISSION_PEER_PORT
+#    value: "51324"
   - name: TRANSMISSION_DOWNLOAD_DIR
     value: "/downloads/transmission"
+  - name: TRANSMISSION_INCOMPLETE_DIR
+    value: "/downloads/transmission/incomplete"
   - name: TRANSMISSION_DOWNLOAD_QUEUE_SIZE
     value: "200"
   - name: TRANSMISSION_RATIO_LIMIT
@@ -74,9 +80,9 @@ volumes:
   - name: "downloads"
     persistentVolumeClaim:
       claimName: "transmission-downloads" # PersistentVolumeClaim created earlier
-  - name: "dev-tun" # Needed for VPN
-    hostPath:
-      path: "/dev/net/tun"
+#  - name: "dev-tun" # Needed for VPN
+#    hostPath:
+#      path: "/dev/net/tun"
 
 volumeMounts:
   - name: "config"
@@ -85,15 +91,18 @@ volumeMounts:
   - name: "downloads"
     mountPath: "/downloads/transmission"
     subPath: "" # Path /mnt/ssd/media/downloads/transmission where transmission downloads Torrents
-  - name: "dev-tun"
-    mountPath: "/dev/net/tun" # Needed for VPN
+#  - name: "dev-tun"
+#    mountPath: "/dev/net/tun" # Needed for VPN
 # Security context for container
 securityContext:
+  allowPrivilegeEscalation: true
+  runAsUser: 0
   capabilities:
     add:
-      - NET_ADMIN
+      - ALL
 
-podSecurityContext: {}
+podSecurityContext:
+  runAsUser: 0
 
 resources:
   limits:
@@ -109,4 +118,5 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
 

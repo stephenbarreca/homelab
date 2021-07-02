@@ -14,6 +14,48 @@ image:
   # -- image pull policy
   pullPolicy: IfNotPresent
 
+additionalContainers:
+  - env:
+    - name: FIREWALL
+      value: "on"
+    - name: PIA_USER
+      value: p8582314
+    - name: PIA_PASS
+      value: EP7dpgVmtV
+    - name: AUTOCONNECT
+      value: 'true'
+    - name: PIA_PF
+      value: 'true'
+#    - name: PIA_DNS
+#      value: 'true'
+    - name: VPN_PROTOCOL
+      value: wireguard
+    - name: PIA_URL
+      value: "https://github.com/pia-foss/manual-connections/archive/refs/tags/v2.0.0.tar.gz"
+#    image: linuxserver/wireguard:version-v1.0.20210424
+    image: oxlade39/piaportforward
+    imagePullPolicy: IfNotPresent
+    name: wireguard
+    resources: {}
+#    command: ['bash', '-c', '/config/pia-entrypoint.sh']
+    command: ['bash', '-c', 'echo "${PIA_USER}" > /etc/openvpn/pia/pass && echo "${PIA_USER}" >> /etc/openvpn/pia/pass && /etc/openvpn/pia/entrypoint.sh']
+    securityContext:
+      allowPrivilegeEscalation: true
+      privileged: true
+      capabilities:
+        add:
+        - ALL
+      runAsGroup: 0
+      runAsUser: 0
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - name: tun # Needed for VPN
+      mountPath: "/dev/net/tun"
+    - name: config
+      mountPath: /config
+    - name: shared
+      mountPath: /shared
 settings:
   # -- Enables automatic port configuration at startup
   # This sets the qbittorrent port to the value of `service.bittorrent.ports.bittorrent.port`.
@@ -22,6 +64,11 @@ settings:
 # -- environment variables. See [image docs](https://docs.k8s-at-home.com/our-container-images/configuration/) for more details.
 # @default -- See below
 env:
+  # Our qBittorrent image has a feature that can wait for the VPN to be
+  # connected before actually starting the application.
+  # It does this by checking the contents of a file /shared/vpnstatus to
+  # contain the string 'connected'.
+  WAIT_FOR_VPN: "true"
   # -- Set the container timezone
   TZ: UTC
 
@@ -33,14 +80,14 @@ service:
       http:
         port: 8080
   bittorrent:
-    enabled: false
+    enabled: true
     type: ClusterIP
     ports:
       bittorrent:
         enabled: true
-        port: 6881
+        port: 20423
         protocol: TCP
-        targetPort: 6881
+        targetPort: 31382
 
 ingress:
   # -- Enable and configure ingress settings for the chart under this key.
@@ -51,16 +98,11 @@ ingress:
     annotations:
       traefik.ingress.kubernetes.io/router.entrypoints: local
     hosts:
-      - host: "torrent.local"
-        paths:
-          - path: "/"
-            backend:
-              serviceName: "qbittorrent"
       - host: "qbittorrent.local"
         paths:
           - path: "/"
             backend:
-              serviceName: "qbittorrent"              
+              serviceName: "qbittorrent"
 # -- Configure persistence settings for the chart under this key.
 # @default -- See values.yaml
 persistence:
@@ -81,71 +123,145 @@ persistence:
     type: emptyDir
     mountPath: /shared
 
+  tun:
+    enabled: true
+    type: hostPath
+    mountPath: "/dev/net/tun"
+    hostPath: "/dev/net/tun"
+
+hostNetwork: false
+
 securityContext:
+  runAsUser: 0
+  privileged: true
   capabilities:
     add:
-      - NET_ADMIN
-      - SYS_MODULE
-
-
+      - ALL
+#podSecurityContext:
+#  runAsUser: 0
+#  privileged: true
+#  capabilities:
+#    add:
+#      - ALL
 addons:
   vpn:
-    enabled: true
-    # This Should be set to `wireguard`. This will set the add-on to use the default settings for Wireguard based connections.
+    enabled: false
+    # This Should be set to `openvpn`. This will set the add-on to use the default settings for OpenVPN based connections.
     type: wireguard
-    wireguard:
-      image:
-        repository: ghcr.io/k8s-at-home/wireguard
+
+    openvpn:
+      # This gets read by the Helm chart. The default OpenVPN image reads this and uses it to connect to the VPN provider.
+      auth: |
+        x8582314
+        bu7ckvHZ69
+
+    # If the podSecurityContext is set to run as a different user, make sure to run the OpenVPN container as root.
+    # This is required for it to be able to read certain configuration files.
+    securityContext:
+      runAsGroup: 0
+      runAsUser: 0
 
     env:
-      # Enable a killswitch that kills all trafic when the VPN is not connected
-      KILLSWITCH: "false"
+      # Set this environment variable to 'on' to make sure all traffic gets routed through the VPN container.
+      # Make sure to check the other environment variables for the OpenVPN image to see how you can exclude certain
+      # traffic from these firewall rules.
+      FIREWALL: 'on'
 
-    securityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      capabilities:
-        add:
-          - NET_ADMIN
-          - SYS_MODULE
-
-    # The wireguard configuration file provided by your VPN provider goes here.
+    # The .ovpn file provided by your VPN provider goes here.
     #
-    # Set AllowedIPs to 0.0.0.0/0 to route all traffic through the VPN.
+    # Any CA / certificate must either be placed inline, or provided through an additionalVolumeMount so that OpenVPN can find it.
     #
-    # Pay close attention to the PostUp and PreDown lines. They must be added if you wish to run a script when the connection
+    # Pay close attention to the last 3 lines in this file. They must be added if you wish to run a script when the connection
     # is opened / closed.
     configFile: |-
-      [Interface]
-      PrivateKey = EKejfhtDR0NgoPSDGtnnxA0JbuCBCKGcLAbPwXKuu3Q=
-      DNS = 1.1.1.1
-      PostUp = /config/up.sh %i
-      PreDown = /config/down.sh %i
+      client
+      dev tun
+      proto udp
+      remote us-chicago.privacy.network 1198
+      resolv-retry infinite
+      nobind
+      persist-key
+      persist-tun
+      cipher aes-128-cbc
+      auth sha1
+      tls-client
+      remote-cert-tls server
 
-      [Peer]
-      PublicKey = VHEKsP+aWtvlhaR1AN8mo1TNOSNJ8knV3kS1vQjN8Rk=
-      AllowedIPs = 0.0.0.0/0
-      Endpoint = us6717.nordvpn.com:51820
+      auth-user-pass /auth
+      compress
+      verb 1
+      reneg-sec 0
+      <crl-verify>
+      -----BEGIN X509 CRL-----
+      MIICWDCCAUAwDQYJKoZIhvcNAQENBQAwgegxCzAJBgNVBAYTAlVTMQswCQYDVQQI
+      EwJDQTETMBEGA1UEBxMKTG9zQW5nZWxlczEgMB4GA1UEChMXUHJpdmF0ZSBJbnRl
+      cm5ldCBBY2Nlc3MxIDAeBgNVBAsTF1ByaXZhdGUgSW50ZXJuZXQgQWNjZXNzMSAw
+      HgYDVQQDExdQcml2YXRlIEludGVybmV0IEFjY2VzczEgMB4GA1UEKRMXUHJpdmF0
+      ZSBJbnRlcm5ldCBBY2Nlc3MxLzAtBgkqhkiG9w0BCQEWIHNlY3VyZUBwcml2YXRl
+      aW50ZXJuZXRhY2Nlc3MuY29tFw0xNjA3MDgxOTAwNDZaFw0zNjA3MDMxOTAwNDZa
+      MCYwEQIBARcMMTYwNzA4MTkwMDQ2MBECAQYXDDE2MDcwODE5MDA0NjANBgkqhkiG
+      9w0BAQ0FAAOCAQEAQZo9X97ci8EcPYu/uK2HB152OZbeZCINmYyluLDOdcSvg6B5
+      jI+ffKN3laDvczsG6CxmY3jNyc79XVpEYUnq4rT3FfveW1+Ralf+Vf38HdpwB8EW
+      B4hZlQ205+21CALLvZvR8HcPxC9KEnev1mU46wkTiov0EKc+EdRxkj5yMgv0V2Re
+      ze7AP+NQ9ykvDScH4eYCsmufNpIjBLhpLE2cuZZXBLcPhuRzVoU3l7A9lvzG9mjA
+      5YijHJGHNjlWFqyrn1CfYS6koa4TGEPngBoAziWRbDGdhEgJABHrpoaFYaL61zqy
+      MR6jC0K2ps9qyZAN74LEBedEfK7tBOzWMwr58A==
+      -----END X509 CRL-----
+      </crl-verify>
+
+      <ca>
+      -----BEGIN CERTIFICATE-----
+      MIIFqzCCBJOgAwIBAgIJAKZ7D5Yv87qDMA0GCSqGSIb3DQEBDQUAMIHoMQswCQYD
+      VQQGEwJVUzELMAkGA1UECBMCQ0ExEzARBgNVBAcTCkxvc0FuZ2VsZXMxIDAeBgNV
+      BAoTF1ByaXZhdGUgSW50ZXJuZXQgQWNjZXNzMSAwHgYDVQQLExdQcml2YXRlIElu
+      dGVybmV0IEFjY2VzczEgMB4GA1UEAxMXUHJpdmF0ZSBJbnRlcm5ldCBBY2Nlc3Mx
+      IDAeBgNVBCkTF1ByaXZhdGUgSW50ZXJuZXQgQWNjZXNzMS8wLQYJKoZIhvcNAQkB
+      FiBzZWN1cmVAcHJpdmF0ZWludGVybmV0YWNjZXNzLmNvbTAeFw0xNDA0MTcxNzM1
+      MThaFw0zNDA0MTIxNzM1MThaMIHoMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0Ex
+      EzARBgNVBAcTCkxvc0FuZ2VsZXMxIDAeBgNVBAoTF1ByaXZhdGUgSW50ZXJuZXQg
+      QWNjZXNzMSAwHgYDVQQLExdQcml2YXRlIEludGVybmV0IEFjY2VzczEgMB4GA1UE
+      AxMXUHJpdmF0ZSBJbnRlcm5ldCBBY2Nlc3MxIDAeBgNVBCkTF1ByaXZhdGUgSW50
+      ZXJuZXQgQWNjZXNzMS8wLQYJKoZIhvcNAQkBFiBzZWN1cmVAcHJpdmF0ZWludGVy
+      bmV0YWNjZXNzLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAPXD
+      L1L9tX6DGf36liA7UBTy5I869z0UVo3lImfOs/GSiFKPtInlesP65577nd7UNzzX
+      lH/P/CnFPdBWlLp5ze3HRBCc/Avgr5CdMRkEsySL5GHBZsx6w2cayQ2EcRhVTwWp
+      cdldeNO+pPr9rIgPrtXqT4SWViTQRBeGM8CDxAyTopTsobjSiYZCF9Ta1gunl0G/
+      8Vfp+SXfYCC+ZzWvP+L1pFhPRqzQQ8k+wMZIovObK1s+nlwPaLyayzw9a8sUnvWB
+      /5rGPdIYnQWPgoNlLN9HpSmsAcw2z8DXI9pIxbr74cb3/HSfuYGOLkRqrOk6h4RC
+      OfuWoTrZup1uEOn+fw8CAwEAAaOCAVQwggFQMB0GA1UdDgQWBBQv63nQ/pJAt5tL
+      y8VJcbHe22ZOsjCCAR8GA1UdIwSCARYwggESgBQv63nQ/pJAt5tLy8VJcbHe22ZO
+      sqGB7qSB6zCB6DELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRMwEQYDVQQHEwpM
+      b3NBbmdlbGVzMSAwHgYDVQQKExdQcml2YXRlIEludGVybmV0IEFjY2VzczEgMB4G
+      A1UECxMXUHJpdmF0ZSBJbnRlcm5ldCBBY2Nlc3MxIDAeBgNVBAMTF1ByaXZhdGUg
+      SW50ZXJuZXQgQWNjZXNzMSAwHgYDVQQpExdQcml2YXRlIEludGVybmV0IEFjY2Vz
+      czEvMC0GCSqGSIb3DQEJARYgc2VjdXJlQHByaXZhdGVpbnRlcm5ldGFjY2Vzcy5j
+      b22CCQCmew+WL/O6gzAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBDQUAA4IBAQAn
+      a5PgrtxfwTumD4+3/SYvwoD66cB8IcK//h1mCzAduU8KgUXocLx7QgJWo9lnZ8xU
+      ryXvWab2usg4fqk7FPi00bED4f4qVQFVfGfPZIH9QQ7/48bPM9RyfzImZWUCenK3
+      7pdw4Bvgoys2rHLHbGen7f28knT2j/cbMxd78tQc20TIObGjo8+ISTRclSTRBtyC
+      GohseKYpTS9himFERpUgNtefvYHbn70mIOzfOJFTVqfrptf9jXa9N8Mpy3ayfodz
+      1wiqdteqFXkTYoSDctgKMiZ6GdocK9nMroQipIQtpnwd4yBDWIyC6Bvlkrq5TQUt
+      YDQ8z9v+DMO6iwyIDRiU
+      -----END CERTIFICATE-----
+      </ca>
+
+      disable-occ
+
+
+      script-security 2
+      up /vpn/up.sh
+      down /vpn/down.sh
+
     # The scripts that get run when the VPN connection opens/closes are defined here.
     # The default scripts will write a string to represent the current connection state to a file.
     # Our qBittorrent image has a feature that can wait for this file to contain the word 'connected' before actually starting the application.
     scripts:
       up: |-
         #!/bin/bash
-        DROUTE=$(ip route | grep default | awk '{print $3}')
-        HOMENET=192.168.0.0/16
-        HOMENET2=10.0.0.0/8
-        HOMENET3=172.16.0.0/12
-        ip route add $HOMENET3 via $DROUTE
-        ip route add $HOMENET2 via $DROUTE
-        ip route add $HOMENET via $DROUTE
-        iptables -I OUTPUT -d $HOMENET -j ACCEPT
-        iptables -A OUTPUT -d $HOMENET2 -j ACCEPT
-        iptables -A OUTPUT -d $HOMENET3 -j ACCEPT
-        iptables -A OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT
+        /etc/openvpn/up.sh
         echo "connected" > /shared/vpnstatus
 
       down: |-
         #!/bin/bash
-        iptables -D FORWARD -o %i -j ACCEPT
+        /etc/openvpn/down.sh
         echo "disconnected" > /shared/vpnstatus

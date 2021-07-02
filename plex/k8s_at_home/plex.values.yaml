@@ -171,7 +171,7 @@ resources:
     cpu: 0.5
     memory: 1Gi
   limits:
-    cpu: 4
+    cpu: 13
     memory: 8Gi
     # nvidia.com/gpu: 1
 

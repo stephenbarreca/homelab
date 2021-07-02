@@ -34,6 +34,16 @@ spec:
       annotations:
         co.elastic.logs/enabled: "true"
         co.elastic.logs/module: kibana
+    spec:
+      containers:
+      - name: kibana
+        resources:
+          requests:
+            memory: 2Gi
+            cpu: 4
+          limits:
+            memory: 2Gi
+            cpu: 4
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -52,3 +62,4 @@ spec:
         - kind: Service
           name: kibana-kb-http
           port: 443
+

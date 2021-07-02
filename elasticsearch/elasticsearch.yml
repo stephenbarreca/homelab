@@ -34,10 +34,10 @@ spec:
         - name: elasticsearch
           resources:
             requests:
-              memory: 16Gi
+              memory: 32Gi
               cpu: 4
             limits:
-              memory: 16Gi
+              memory: 32Gi
               cpu: 4
 ---
 apiVersion: traefik.containo.us/v1alpha1
