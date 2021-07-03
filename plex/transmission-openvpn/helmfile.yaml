@@ -1,10 +1,6 @@
-repositories:
-  - name: utkuozdemir
-    url: https://utkuozdemir.org/helm-charts
 releases:
 - name: transmission
   namespace: plex
-  chart: utkuozdemir/transmission-openvpn
+  chart: ./transmission-openvpn
   values:
     - values.yaml
-  recreatePods: true

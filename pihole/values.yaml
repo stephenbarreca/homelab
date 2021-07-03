@@ -141,42 +141,42 @@ dnsmasq:
     - address=/home.local/192.168.1.200
     - address=/www.home.local/192.168.1.200
   # Hiemdall
-    - address=/heimdall.home.local/192.168.1.216
+  #  - address=/heimdall.home.local/192.168.1.216
   # Jackett
-    - address=/jackett.home.local/192.168.1.201
+  #  - address=/jackett.home.local/192.168.1.201
   # Sonarr
-    - address=/sonarr.home.local/192.168.1.202
+  #  - address=/sonarr.home.local/192.168.1.202
   # Radarr
-    - address=/radarr.home.local/192.168.1.203
+  #  - address=/radarr.home.local/192.168.1.203
   # Ombi
-    - address=/ombi.home.local/192.168.1.204
+  #  - address=/ombi.home.local/192.168.1.204
   # Grafana
-    - address=/grafana.home.local/192.168.1.205
+  #  - address=/grafana.home.local/192.168.1.205
   # Prometheus
-    - address=/prometheus.home.local/192.168.1.206
+  #  - address=/prometheus.home.local/192.168.1.206
   # Gitea
     - address=/git.home.local/192.168.1.210
     - address=/gitea.home.local/192.168.1.210
   # Magic-Mirror
-    - address=/magic-mirror.home.local/192.168.1.211
+  #  - address=/magic-mirror.home.local/192.168.1.211
   # Qbittorrent
-    - address=/qbittorrent.home.local/192.168.1.215
-    - address=/bittorrent.home.local/192.168.1.215
-    - address=/torrent.home.local/192.168.1.215
+  #  - address=/qbittorrent.home.local/192.168.1.215
+  #  - address=/bittorrent.home.local/192.168.1.215
+  #  - address=/torrent.home.local/192.168.1.215
   # Plex
-    - rebind-domain-ok=/plex.direct/
-    - address=/plex.home.local/192.168.1.241
+  #  - rebind-domain-ok=/plex.direct/
+  #  - address=/plex.home.local/192.168.1.241
   # Tautulli
-    - address=/tautulli.home.local/192.168.1.243
+  #  - address=/tautulli.home.local/192.168.1.243
   # Transmission
-    - address=/transmission.home.local/192.168.1.245
+  #  - address=/transmission.home.local/192.168.1.245
   # Minecraft
-    - address=/minecraft.home.local/192.168.1.220
-    - address=/rcon.home.local/192.168.1.221
+  #  - address=/minecraft.home.local/192.168.1.220
+  #  - address=/rcon.home.local/192.168.1.221
   # pihole
-    - address=/pihole.home.local/192.168.1.240
+  #  - address=/pihole.home.local/192.168.1.240
   # Elasticsearch
-    - address=/kibana.home.local/192.168.1.235
+  #  - address=/kibana.home.local/192.168.1.235
 
   additionalHostsEntries:
   # Dnsmasq reads the /etc/hosts file to resolve ips. You can add additional entries if you like

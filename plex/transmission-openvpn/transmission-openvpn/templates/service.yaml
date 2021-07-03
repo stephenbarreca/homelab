@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "transmission-openvpn.fullname" . }}-tcp
+  name: {{ include "transmission-openvpn.fullname" . }}
   labels:
     {{- include "transmission-openvpn.labels" . | nindent 4 }}
 {{- if .Values.service.labels }}
@@ -43,7 +43,7 @@ spec:
       protocol: TCP
       targetPort: http
     - name: vpn
-      port: {{ .Values.service.port }}
+      port: {{ .Values.service.peerPort }}
       protocol: TCP
       targetPort: vpn
 {{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort))) }}
@@ -97,7 +97,7 @@ spec:
       protocol: UDP
       targetPort: http
     - name: vpn
-      port: {{ .Values.service.port }}
+      port: {{ .Values.service.peerPort }}
       protocol: UDP
       targetPort: vpn
 {{ if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort))) }}
@@ -105,3 +105,4 @@ spec:
 {{ end }}
   selector:
 {{- include "transmission-openvpn.selectorLabels" . | nindent 4 }}
+

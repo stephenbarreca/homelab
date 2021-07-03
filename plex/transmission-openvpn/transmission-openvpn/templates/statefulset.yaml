@@ -34,12 +34,18 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - "dumb-init"
+            - "--"
+            - "bash"
+            - "-c"
+            - "echo 'net.core.wmem_max = 1048576' >> /etc/sysctl.d/udp.conf && echo 'net.core.rmem_max = 4194304' >> /etc/sysctl.d/udp.conf && sysctl -p && /etc/openvpn/start.sh"
           ports:
             - name: http
               containerPort: 9091
               protocol: TCP
             - name: vpn
-              containerPort: {{.Values.service.peerPort}
+              containerPort: {{.Values.service.peerPort}}
               protocol: TCP
           readinessProbe:
             tcpSocket:
@@ -124,3 +130,4 @@ spec:
             storage: {{ .Values.persistence.data.size | quote }}
         {{ include "transmission-openvpn.data.storageClass" . }}
 {{- end }}
+
