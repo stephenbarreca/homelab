@@ -1,0 +1,6 @@
+releases:
+- name: tautulli
+  namespace: plex
+  chart: ./tautulli
+  values:
+    - values.yaml
