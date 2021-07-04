@@ -7,14 +7,9 @@ templates:
     chart: k8s-at-home/{{`{{ .Release.Name }}`}}
     namespace: plex
     values:
-      - ./k8s_at_home/{{`{{ .Release.Name }}`}}.values.yaml
+    - ./k8s_at_home/{{`{{ .Release.Name }}`}}.values.yaml
     valuesTemplate:
     - persistence:
-        config:
-          enabled: true
-          type: pvc
-          existingClaim: `{{ .Release.Name }}`-config
-          mountPath: /config
         data:
           enabled: true
           type: hostPath
@@ -24,13 +19,8 @@ templates:
   kahNoData: &kahNoData
     chart: k8s-at-home/{{`{{ .Release.Name }}`}}
     namespace: plex
-    valuesTemplate:
-    - persistence:
-        config:
-          enabled: true
-          type: pvc
-          existingClaim: `{{ .Release.Name }}`-config
-          mountPath: /config
+    values:
+    - ./k8s_at_home/{{`{{ .Release.Name }}`}}.values.yaml
   basic: &basic
     chart: ./{{`{{ .Release.Name }}`}}/{{`{{ .Release.Name }}`}}
     values:
@@ -57,3 +47,4 @@ releases:
   <<: *basic
 - name: tautulli
   <<: *basic
+
