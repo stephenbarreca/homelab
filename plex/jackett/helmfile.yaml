@@ -1,0 +1,7 @@
+releases:
+- name: jackett
+  namespace: plex
+  chart: ./jackett
+  values:
+    - values.yaml
+

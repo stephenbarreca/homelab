@@ -5,7 +5,7 @@ if [ $# -eq 0 ]
     exit 1
 fi
 
-for t in $(cat trackers-all.txt )
+for t in $(cat trackers-http.txt )
 do
     echo "Adding tracker: $t"
     transmission-remote transmission.local:80 --torrent $1 --tracker-add "${t}"

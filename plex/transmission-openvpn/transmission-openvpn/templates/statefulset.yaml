@@ -102,32 +102,20 @@ spec:
             type: CharDevice
           name: dev-net-tun
         {{- end }}
-{{- if and .Values.persistence.data.enabled .Values.persistence.data.existingClaim }}
+{{- if .Values.persistence.data.enabled }}
         - name: data
+  {{- if .Values.persistence.data.existingClaim }}
           persistentVolumeClaim:
             claimName: {{ .Values.persistence.data.existingClaim }}
+  {{- else }}
+          hostPath:
+            path: {{ .Values.persistence.data.hostPath }}
+  {{- end }}
 {{- else if and (not .Values.persistence.data.enabled) .Values.dataVolume }}
         {{- toYaml (list .Values.dataVolume) | nindent 8 }}
 {{- else }}
         - name: data
           emptyDir: {}
 {{- end }}
-  volumeClaimTemplates:
-{{- if and .Values.persistence.data.enabled (not .Values.persistence.data.existingClaim) }}
-    - metadata:
-        name: data
-        labels:
-          app: "{{ template "transmission-openvpn.name" . }}"
-          release: {{ .Release.Name | quote }}
-          heritage: {{ .Release.Service | quote }}
-      spec:
-        accessModes:
-        {{- range .Values.persistence.data.accessModes }}
-          - {{ . | quote }}
-        {{- end }}
-        resources:
-          requests:
-            storage: {{ .Values.persistence.data.size | quote }}
-        {{ include "transmission-openvpn.data.storageClass" . }}
-{{- end }}
+
 

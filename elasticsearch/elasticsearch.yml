@@ -26,7 +26,10 @@ spec:
   nodeSets:
   - name: main
     count: 1
-    config: {}
+    config:
+      path:
+        repo:
+          - /usr/share/elasticsearch/data/snapshots
       # node.store.allow_mmap: false
     podTemplate:
       spec:

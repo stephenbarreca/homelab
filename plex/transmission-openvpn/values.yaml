@@ -1,4 +1,4 @@
-# global:
+ # global:
 #   storageClass: my-storage-class
 
 image:
@@ -75,10 +75,11 @@ affinity: {}
 persistence:
   data:
     enabled: true
-    existingClaim: "transmission-downloads"
+    hostPath: /mnt/plex
+    existingClaim:
     # storageClass: "my-storage-class"
-    accessModes:
-      - ReadWriteMany
+    # accessModes:
+    #   - ReadWriteMany
     ## Persistent Volume size
     #size: 64Gi
 
@@ -92,8 +93,8 @@ env:
   OPENVPN_CONFIG: ca_ontario
   OPENVPN_OPTS: "--inactive 3600 --ping 10 --ping-exit 60"
 #  LOCAL_NETWORK: "10.1.0.0/16"
-  TRANSMISSION_DOWNLOAD_DIR: "/data/transmission"
-  TRANSMISSION_INCOMPLETE_DIR: "/data/transmission/incomplete"
+  TRANSMISSION_DOWNLOAD_DIR: "/data/torrents/transmission"
+  TRANSMISSION_INCOMPLETE_DIR: "/data/torrents/transmission/incomplete"
   TRANSMISSION_DOWNLOAD_QUEUE_SIZE: "200"
   TRANSMISSION_RATIO_LIMIT_ENABLED: "true"
   TRANSMISSION_RATIO_LIMIT: "1"

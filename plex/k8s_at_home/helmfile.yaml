@@ -1,0 +1,26 @@
+repositories:
+- name: ks8-at-home
+  url: https://k8s-at-home.com/charts/
+  
+releases:
+- name: plex
+  namespace: plex
+  chart: k8s-at-home/plex
+  values:
+    - plex.values.yaml
+- name: sonarr
+  namespace: plex
+  chart: k8s-at-home/sonarr
+  values:
+    - sonarr.values.yaml
+- name: radarr
+  namespace: plex
+  chart: k8s-at-home/radarr
+  values:
+    - radarr.values.yaml
+- name: ombi
+  namespace: plex
+  chart: k8s-at-home/ombi
+  values:
+    - ombi.values.yaml    
+

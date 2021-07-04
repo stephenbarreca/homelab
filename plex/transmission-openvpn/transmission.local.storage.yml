@@ -44,7 +44,7 @@ spec:
     - ReadWriteMany
   storageClassName: torrent-downloads
   local:
-    path: /mnt/torrent-downloads
+    path: /mnt/plex/torrents
   nodeAffinity:
     required:
       nodeSelectorTerms:

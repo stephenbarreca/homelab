@@ -1,24 +1,24 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-  name: plex-config
+  name: plex-combo
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: Immediate
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: plex-config
+  name: plex-combo
 spec:
   capacity:
-    storage: 50Gi
+    storage: 7Ti
   volumeMode: Filesystem
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: plex-config
+  storageClassName: plex-combo
   local:
-    path: /mnt/extra/plex/config
+    path: /mnt/plex
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -31,13 +31,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: plex-config
+  name: plex-combo
   namespace: plex
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: plex-config
+    - ReadWriteMany
+  storageClassName: plex-combo
   resources:
     requests:
-      storage: 50Gi
----
+      storage: 7Ti

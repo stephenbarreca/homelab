@@ -44,9 +44,11 @@ volumes:
   - name: "config"
     persistentVolumeClaim:
       claimName: "jackett-config" # PersistentVolumeClaim created earlier
-  - name: "downloads"
-    persistentVolumeClaim:
-      claimName: "jackett-downloads" # PersistentVolumeClaim created earlier
+  - name: "blackhole"
+    hostPath:
+      path: /mnt/plex/torrents/watch
+    #persistentVolumeClaim:
+    #  claimName: "plex-combo" # PersistentVolumeClaim created earlier
   - name: "dev-tun"  # Needed for VPN
     hostPath:
       path: "/dev/net/tun"
@@ -55,10 +57,9 @@ volumeMounts:
   - name: "config"
     mountPath: "/config"
     subPath: "" # Path  where jackett writes the configuration
-  - name: "downloads"
-    mountPath: "/downloads"
+  - name: "blackhole"
+    mountPath: "/blackhole"
     subPath: "" # Path ???
-
 
 resources:
   requests:

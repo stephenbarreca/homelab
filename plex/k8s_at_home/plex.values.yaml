@@ -130,16 +130,12 @@ persistence:
     type: pvc
     existingClaim: plex-config
     mountPath: /config
-  movies:
+  data:
     enabled: true
-    existingClaim: plex-movies
-    mountPath: /data/movies
-    accessMode: ReadWriteMany
-    size: 7Ti
-  tv:
-    enabled: true
-    existingClaim: plex-tv
-    mountPath: /data/tv
+    type: hostPath
+    hostPath: /mnt/plex
+    # existingClaim: plex-combo
+    mountPath: /data
     accessMode: ReadWriteMany
     size: 7Ti
   transcode:
