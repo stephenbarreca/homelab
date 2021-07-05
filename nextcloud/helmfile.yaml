@@ -3,7 +3,7 @@ repositories:
   url: https://nextcloud.github.io/helm/
 
 releases:
-- name: plex
+- name: nextcloud
   namespace: nextcloud
   chart: nextcloud/nextcloud
   values:

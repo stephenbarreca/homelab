@@ -1,0 +1,88 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nextcloud
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nextcloud
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+    - ReadWriteOnce
+  storageClassName: "nextcloud"
+  local:
+    path: /mnt/nextcloud
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-main
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nextcloud
+  namespace: nextcloud
+spec:
+  accessModes:
+    - ReadWriteMany
+    - ReadWriteOnce
+  storageClassName: "nextcloud"
+  resources:
+    requests:
+      storage: 1Gi
+---
+
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: mariadb
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mariadb
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+    - ReadWriteOnce
+  storageClassName: "mariadb"
+  local:
+    path: /home/stephen/data/nextcloud/mariadb
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s-main
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mariadb
+  namespace: mariadb
+spec:
+  accessModes:
+    - ReadWriteMany
+    - ReadWriteOnce
+  storageClassName: "mariadb"
+  resources:
+    requests:
+      storage: 1Gi
