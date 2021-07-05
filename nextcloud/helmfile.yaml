@@ -1,0 +1,10 @@
+repositories:
+- name: nextcloud
+  url: https://nextcloud.github.io/helm/
+
+releases:
+- name: plex
+  namespace: nextcloud
+  chart: nextcloud/nextcloud
+  values:
+    - values.yaml
