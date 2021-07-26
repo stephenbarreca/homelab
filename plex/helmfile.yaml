@@ -1,26 +1,29 @@
 repositories:
-- name: ks8-at-home
-  url: https://k8s-at-home.com/charts/
+  - name: ks8-at-home
+    url: https://k8s-at-home.com/charts/
+
+helmDefaults:
+  skipDeps: true
 
 templates:
   kahData: &kahData
     chart: k8s-at-home/{{`{{ .Release.Name }}`}}
     namespace: plex
     values:
-    - ./k8s_at_home/{{`{{ .Release.Name }}`}}.values.yaml
+      - ./k8s_at_home/{{`{{ .Release.Name }}`}}.values.yaml
     valuesTemplate:
-    - persistence:
-        data:
-          enabled: true
-          type: hostPath
-          hostPath: /mnt/plex
-          accessMode: "ReadWriteMany"
-          mountPath: /data
+      - persistence:
+          data:
+            enabled: true
+            type: hostPath
+            hostPath: /mnt/plex
+            accessMode: "ReadWriteMany"
+            mountPath: /data
   kahNoData: &kahNoData
     chart: k8s-at-home/{{`{{ .Release.Name }}`}}
     namespace: plex
     values:
-    - ./k8s_at_home/{{`{{ .Release.Name }}`}}.values.yaml
+      - ./k8s_at_home/{{`{{ .Release.Name }}`}}.values.yaml
   basic: &basic
     chart: ./{{`{{ .Release.Name }}`}}/{{`{{ .Release.Name }}`}}
     values:
@@ -33,18 +36,27 @@ templates:
 #  - path: jackett/helmfile.yaml
 
 releases:
-- name: plex
-  <<: *kahData
-- name: radarr
-  <<: *kahData
-- name: sonarr
-  <<: *kahData
-- name: ombi
-  <<: *kahNoData
-- name: transmission-openvpn
-  <<: *basic
-- name: jackett
-  <<: *basic
-- name: tautulli
-  <<: *basic
+  - name: jackett
+    <<: *basic
+  - name: ombi
+    version: 9.4.0
+    <<: *kahNoData    
+  - name: plex
+    version: 5.2.0
+    <<: *kahData
+  - name: radarr
+    version: 12.2.0
+    <<: *kahData
+  - name: sonarr
+    version: 12.2.0
+    <<: *kahData
+  - name: tautulli
+    <<: *basic
+  - name: transmission-openvpn
+    recreatePods: true
+    installed: true
+    <<: *basic
+
+
+
 

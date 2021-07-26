@@ -37,7 +37,7 @@ lifecycle: {}
 nextcloud:
   host: nextcloud.local
   username: admin
-  password: changeme
+  password: "N!K)L$t3sl4123"
   ## Use an existing secret
   existingSecret:
     enabled: false
@@ -200,13 +200,13 @@ externalDatabase:
 mariadb:
   ## Whether to deploy a mariadb server to satisfy the applications database requirements. To use an external database set this to false and configure the externalDatabase parameters
   enabled: true
-
+  image.debug: true
   db:
     name: nextcloud
     user: nextcloud
-    password: "N!K)L$t3sl4123"
+    password: N!K)L$t3sl4123
     rootUser:
-      password: "N!K)L$t3sl4123"
+      password: N!K)L$t3sl4123
 
   replication:
     enabled: false
@@ -221,7 +221,8 @@ mariadb:
       existingClaim: mariadb
       accessMode: ReadWriteOnce
       size: 8Gi
-
+  volumePermissions:
+    enabled: true
 ##
 ## PostgreSQL chart configuration
 ## for more options see https://github.com/bitnami/charts/tree/master/bitnami/postgresql

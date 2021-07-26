@@ -77,7 +77,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mariadb
-  namespace: mariadb
+  namespace: nextcloud
 spec:
   accessModes:
     - ReadWriteMany

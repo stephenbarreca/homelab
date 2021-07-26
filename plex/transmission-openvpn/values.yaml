@@ -3,9 +3,10 @@
 
 image:
   repository: haugene/transmission-openvpn
-  pullPolicy: Always
+  # pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart version.
-  # tag: override-tag
+  tag: latest
 
 imagePullSecrets: []
 nameOverride: ""
@@ -60,11 +61,11 @@ resources:
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
    requests:
-     cpu: 2
-     memory: 4Gi
+     cpu: 500m
+     memory: 3Gi
    limits:
-     cpu: 2
-     memory: 4Gi
+     cpu: 4
+     memory: 3Gi
 
 nodeSelector: {}
 
@@ -98,11 +99,13 @@ env:
   TRANSMISSION_DOWNLOAD_QUEUE_SIZE: "200"
   TRANSMISSION_RATIO_LIMIT_ENABLED: "true"
   TRANSMISSION_RATIO_LIMIT: "1"
-  TRANSMISSION_PEER_LIMIT_PER_TORRENT: "1000"
-  TRANSMISSION_PEER_LIMIT_GLOBAL: "10000"
-  TRANSMISSION_CACHE_SIZE_MB: "16"
+  TRANSMISSION_PEER_LIMIT_PER_TORRENT: "200"
+  TRANSMISSION_PEER_LIMIT_GLOBAL: "5000"
+  TRANSMISSION_CACHE_SIZE_MB: "1024"
   TRANSMISSION_WEB_UI: "transmission-web-control"
-  TRANSMISSION_MESSAGE_LEVEL: "3"
+  TRANSMISSION_MESSAGE_LEVEL: "1"
+  TRANSMISSION_WATCH_DIR: "/data/torrents/watch"
+  TRANSMISSION_WATCH_DIR_ENABLED: "true"
   LOG_TO_STDOUT: "true"
 #  PUID: "1000"
 #  PGID: "1000"
