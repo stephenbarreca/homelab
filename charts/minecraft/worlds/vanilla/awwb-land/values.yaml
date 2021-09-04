@@ -131,7 +131,7 @@ minecraftServer:
   # Options like -X that need to proceed general JVM options
   jvmXXOpts: "-XX:+UseG1GC -XX:ParallelGCThreads=1 -XX:ActiveProcessorCount=4"
   serviceAnnotations: {}
-  serviceType: ClusterIP
+  serviceType: LoadBalancer
   servicePort: 34567
   ## Set the port used if the serviceType is NodePort
   # nodePort:

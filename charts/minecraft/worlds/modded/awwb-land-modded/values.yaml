@@ -131,7 +131,7 @@ minecraftServer:
   # Options like -X that need to proceed general JVM options
   jvmXXOpts: "-XX:+UseG1GC -XX:ParallelGCThreads=1 -XX:ActiveProcessorCount=4"
   serviceAnnotations: {}
-  serviceType: ClusterIP
+  serviceType: LoadBalancer
   servicePort: 34567
   ## Set the port used if the serviceType is NodePort
   # nodePort:
@@ -202,7 +202,7 @@ persistence:
   dataDir:
     # Set this to false if you don't care to persist state between restarts.
     enabled: true
-    existingClaim: minecraft-awwb-land
+    existingClaim: minecraft-awwb-land-modded
     Size: 1Gi
 
 podAnnotations: {}
