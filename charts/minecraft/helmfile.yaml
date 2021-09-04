@@ -17,4 +17,5 @@ releases:
   - name: awwb-land
     <<: *vanilla
   - name: awwb-land-modded
+    installed: false
     <<: *modded
