@@ -16,4 +16,5 @@ templates:
 releases:
   - name: awwb-land
     <<: *vanilla
-
+  - name: awwb-land-modded
+    <<: *modded

@@ -135,7 +135,7 @@ minecraftServer:
   servicePort: 34567
   ## Set the port used if the serviceType is NodePort
   # nodePort:
-  loadBalancerIP: 192.168.1.220
+  loadBalancerIP: 192.168.1.222
   # loadBalancerSourceRanges: []
   ## Set the externalTrafficPolicy in the Service to either Cluster or Local
   externalTrafficPolicy: Local
@@ -147,7 +147,7 @@ minecraftServer:
     port: 25575
     password: "N!K)L$t3sl4123"
     serviceType: LoadBalancer
-    loadBalancerIP: 192.168.1.221
+    loadBalancerIP: 192.168.1.223
     # loadBalancerSourceRanges: []
     ## Set the externalTrafficPolicy in the Service to either Cluster or Local
     externalTrafficPolicy: Local
