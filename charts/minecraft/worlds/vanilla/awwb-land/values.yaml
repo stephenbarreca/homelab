@@ -1,6 +1,6 @@
 # ref: https://hub.docker.com/r/itzg/minecraft-server/
 image: itzg/minecraft-server
-imageTag: adopt14
+imageTag: java16
 imagePullSecret: ""
 
 ## Configure resource requests and limits
@@ -30,7 +30,7 @@ securityContext:
 # Most of these map to environment variables. See Minecraft for details:
 # https://hub.docker.com/r/itzg/minecraft-server/
 livenessProbe:
-  initialDelaySeconds: 300
+  initialDelaySeconds: 30
   periodSeconds: 5
   failureThreshold: 10
   successThreshold: 1
@@ -47,7 +47,7 @@ minecraftServer:
   # One of: LATEST, SNAPSHOT, or a specific version (ie: "1.7.9").
   version: "LATEST"
   # This can be one of "VANILLA", "FORGE", "SPIGOT", "BUKKIT", "PAPER", "FTBA", "SPONGEVANILLA"
-  type: "CURSEFORGE"
+  type: "VANILLA"
   # If type is set to FORGE, this sets the version; this is ignored if forgeInstallerUrl is set
   forgeVersion:
   # If type is set to SPONGEVANILLA, this sets the version
@@ -113,13 +113,13 @@ minecraftServer:
   # When levelType == FLAT or CUSTOMIZED, this can be used to further customize map generation.
   # ref: https://hub.docker.com/r/itzg/minecraft-server/
   generatorSettings:
-  worldSaveName: awwb-funland
+  worldSaveName: awwb-land
   # If set, this URL will be downloaded at startup and used as a starting point
   downloadWorldUrl:
   # force re-download of server file
   forceReDownload: false
   # If set, the modpack at this URL will be downloaded at startup
-  downloadModpackUrl: 
+  downloadModpackUrl:
   # If true, old versions of downloaded mods will be replaced with new ones from downloadModpackUrl
   removeOldMods: false
   # Check accounts against Minecraft account service.
@@ -134,7 +134,7 @@ minecraftServer:
   serviceType: LoadBalancer
   ## Set the port used if the serviceType is NodePort
   # nodePort:
-  loadBalancerIP: 192.168.1.222
+  loadBalancerIP: 192.168.1.220
   # loadBalancerSourceRanges: []
   ## Set the externalTrafficPolicy in the Service to either Cluster or Local
   externalTrafficPolicy: Local
@@ -146,11 +146,49 @@ minecraftServer:
     port: 25575
     password: "N!K)L$t3sl4123"
     serviceType: LoadBalancer
-    loadBalancerIP: 192.168.1.223
+    loadBalancerIP: 192.168.1.221
     # loadBalancerSourceRanges: []
     ## Set the externalTrafficPolicy in the Service to either Cluster or Local
     externalTrafficPolicy: Local
 
+  extraPorts:
+    # These options allow you to expose another port from the Minecraft server, plugins such
+    # as dynmap (8123) and bluemap (8100) will require this for access to their web interfaces
+    #
+    # - name: map
+    #   containerPort: 8123
+    #   protocol: TCP
+    #   service:
+    #     enabled: false
+    #     embedded: false
+    #     annotations: {}
+    #     type: ClusterIP
+    #     loadBalancerIP: ""
+    #     loadBalancerSourceRanges: []
+    #     externalTrafficPolicy: Cluster
+    #     port: 8123
+    #   ingress:
+    #     enabled: false
+    #     annotations:
+    #       kubernetes.io/ingress.class: nginx
+    #       kubernetes.io/tls-acme: "true"
+    #     hosts:
+    #       - name: map.local
+    #         path: /
+    #     tls:
+    #       - secretName: map-tls
+    #         hosts:
+    #           - map.local
+    - name: minecraft-traefik
+      protocol: TCP
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+#          traefik.ingress.kubernetes.io/router.entrypoints: local
+        hosts:
+          - host: minecraft.local
+            path: "/"
 
   query:
     # If you enable this, your server will be "published" to Gamespy
@@ -159,8 +197,7 @@ minecraftServer:
 
 ## Additional minecraft container environment variables
 ##
-extraEnv: 
-  CF_SERVER_MOD: hr_new_beginnings_2_server.zip
+extraEnv: {}
 
 persistence:
   ## minecraft data Persistent Volume Storage Class
@@ -174,7 +211,7 @@ persistence:
   dataDir:
     # Set this to false if you don't care to persist state between restarts.
     enabled: true
-    existingClaim: minecraft-modded-data-nfs
+    existingClaim: minecraft-data-nfs
     Size: 1Gi
 
 podAnnotations: {}

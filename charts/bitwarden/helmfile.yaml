@@ -1,0 +1,10 @@
+repositories:
+- name: ks8-at-home
+  url: https://k8s-at-home.com/charts/
+
+releases:
+- name: vaultwarden
+  namespace: bitwarden
+  chart: k8s-at-home/vaultwarden
+  values:
+    - vaultwarden.values.yaml

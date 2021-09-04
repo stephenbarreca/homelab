@@ -1,0 +1,19 @@
+repositories:
+- name: itzg
+  url: https://itzg.github.io/minecraft-server-charts/
+
+templates:
+  vanilla: &vanilla
+    chart: itzg/minecraft
+    values:
+      - ./worlds/vanilla/{{`{{ .Release.Name }}`}}/values.yaml
+    namespace: minecraft
+  modded: &modded
+    chart: itzg/minecraft
+    values:
+      - ./worlds/modded/{{`{{ .Release.Name }}`}}/values.yaml
+    namespace: minecraft
+releases:
+  - name: awwb-land
+    <<: *vanilla
+
