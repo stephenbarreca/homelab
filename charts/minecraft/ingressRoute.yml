@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: awwb-land
+  namespace: minecraft
+spec:
+  entryPoints:
+    - local
+    - traefik
+  routes:
+    - match: Host(`minecraft.local`)
+      kind: Rule
+      services:
+        - kind: Service
+          name: awwb-land-minecraft
+          port: 34567

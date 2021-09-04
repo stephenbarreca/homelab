@@ -131,7 +131,8 @@ minecraftServer:
   # Options like -X that need to proceed general JVM options
   jvmXXOpts: "-XX:+UseG1GC -XX:ParallelGCThreads=1 -XX:ActiveProcessorCount=4"
   serviceAnnotations: {}
-  serviceType: LoadBalancer
+  serviceType: ClusterIP
+  servicePort: 34567
   ## Set the port used if the serviceType is NodePort
   # nodePort:
   loadBalancerIP: 192.168.1.220
@@ -179,16 +180,6 @@ minecraftServer:
     #       - secretName: map-tls
     #         hosts:
     #           - map.local
-    - name: minecraft-traefik
-      protocol: TCP
-      ingress:
-        enabled: true
-        annotations:
-          kubernetes.io/ingress.class: traefik
-#          traefik.ingress.kubernetes.io/router.entrypoints: local
-        hosts:
-          - host: minecraft.local
-            path: "/"
 
   query:
     # If you enable this, your server will be "published" to Gamespy
@@ -211,7 +202,7 @@ persistence:
   dataDir:
     # Set this to false if you don't care to persist state between restarts.
     enabled: true
-    existingClaim: minecraft-data-nfs
+    existingClaim: minecraft-awwb-land
     Size: 1Gi
 
 podAnnotations: {}
