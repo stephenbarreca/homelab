@@ -1,23 +1,23 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: minecraft-awwb-land-modded
+  name: minecraft-pokehaan-lite
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: Immediate
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: minecraft-awwb-land-modded
+  name: minecraft-pokehaan-lite
 spec:
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteMany
     - ReadWriteOnce
-  storageClassName: minecraft-awwb-land-modded
+  storageClassName: minecraft-pokehaan-lite
   local:
-    path: /mnt/minecraft/modded/awwb-land/data
+    path: /mnt/minecraft/modded/pokehaan-lite/data
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -30,12 +30,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: minecraft-awwb-land-modded
+  name: minecraft-pokehaan-lite
   namespace: minecraft
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: minecraft-awwb-land-modded
+  storageClassName: minecraft-pokehaan-lite
   resources:
     requests:
       storage: 1Gi

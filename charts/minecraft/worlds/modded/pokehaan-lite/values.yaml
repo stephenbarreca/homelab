@@ -1,6 +1,6 @@
 # ref: https://hub.docker.com/r/itzg/minecraft-server/
 image: itzg/minecraft-server
-imageTag: java16
+imageTag: java8
 imagePullSecret: ""
 
 ## Configure resource requests and limits
@@ -17,11 +17,11 @@ resources:
 # upgrade strategy type (e.g. Recreate or RollingUpdate)
 strategyType: Recreate
 
-nodeSelector: {}
+nodeSelector: { }
 
-tolerations: []
+tolerations: [ ]
 
-affinity: {}
+affinity: { }
 
 securityContext:
   # Security context settings
@@ -41,15 +41,40 @@ readinessProbe:
   failureThreshold: 10
   successThreshold: 1
   timeoutSeconds: 1
+startupProbe:
+  enabled: false
+  failureThreshold: 30
+  periodSeconds: 10
+
+# initContainers:
+#   - name: do-something
+#     image: busybox
+#     command: ['do', 'something']
+#     volumesMounts:
+#       - name: nfs
+#         mountPath: /mnt/volume
+#         readOnly: true
+initContainers: [ ]
+
+extraVolumes:
+  - volumeMounts:
+      - name: modpacks
+        mountPath: /modpacks
+        readOnly: true
+      volumes:
+        - name: modpacks
+          persistentVolumeClaim:
+            claimName: minecraft-modpacks
+
 minecraftServer:
   # This must be overridden, since we can't accept this for the user.
   eula: "TRUE"
   # One of: LATEST, SNAPSHOT, or a specific version (ie: "1.7.9").
-  version: LATEST
-  # This can be one of "VANILLA", "FORGE", "SPIGOT", "BUKKIT", "PAPER", "FTBA", "SPONGEVANILLA"
-  type: FORGE
+  version: "LATEST"
+  # This can be one of "VANILLA", "FORGE", "SPIGOT", "BUKKIT", "PAPER", "FTBA", "SPONGEVANILLA", "CURSEFORGE"
+  type: "CURSEFORGE"
   # If type is set to FORGE, this sets the version; this is ignored if forgeInstallerUrl is set
-  forgeVersion: 1.17.1 - 37.0.53
+  forgeVersion:
   # If type is set to SPONGEVANILLA, this sets the version
   spongeVersion:
   # If type is set to FORGE, this sets the URL to download the Forge installer
@@ -59,13 +84,15 @@ minecraftServer:
   # If type is set to SPIGOT, this sets the URL to download the Spigot package
   spigotDownloadUrl:
   # If type is set to PAPER, this sets the URL to download the PaperSpigot package
-  paperDownloadUrl: 
+  paperDownloadUrl:
   # If type is set to FTB, this sets the server mod to run. You can also provide the URL to download the FTB package
   ftbServerMod:
+  # If type is set to CURSEFORGE, this sets the server mod to run. Can also provide url to curseforge package.
+  cfServerMod: /modpacks/PokehaanCraft-Lite-1.0.4-ServerFiles.zip
   # Set to true if running Feed The Beast and get an error like "unable to launch forgemodloader"
   ftbLegacyJavaFixer: false
   # One of: peaceful, easy, normal, and hard
-  difficulty: peaceful
+  difficulty: easy
   # A comma-separated list of player names to whitelist.
   whitelist:
   # A comma-separated list of player names who should be admins.
@@ -83,7 +110,7 @@ minecraftServer:
   # Enables command blocks.
   enableCommandBlock: true
   # If true, players will always join in the default gameMode even if they were previously set to something else.
-  forcegameMode: false
+  forcegameMode: true
   # Defines whether structures (such as villages) will be generated.
   generateStructures: true
   # If set to true, players will be set to spectator mode if they die.
@@ -105,7 +132,7 @@ minecraftServer:
   # One of: creative, survival, adventure, spectator
   gameMode: survival
   # Message of the Day
-  motd: "Welcome to AwwB and Fishfu's Minecraft World!"
+  motd: "Welcome to our server"
   # If true, enable player-vs-player damage.
   pvp: false
   # One of: DEFAULT, FLAT, LARGEBIOMES, AMPLIFIED, CUSTOMIZED
@@ -113,7 +140,7 @@ minecraftServer:
   # When levelType == FLAT or CUSTOMIZED, this can be used to further customize map generation.
   # ref: https://hub.docker.com/r/itzg/minecraft-server/
   generatorSettings:
-  worldSaveName: awwb-land
+  worldSaveName: pixelmon
   # If set, this URL will be downloaded at startup and used as a starting point
   downloadWorldUrl:
   # force re-download of server file
@@ -129,12 +156,14 @@ minecraftServer:
   # General JVM options to be passed to the Minecraft server invocation
   jvmOpts: ""
   # Options like -X that need to proceed general JVM options
-  jvmXXOpts: "-XX:+UseG1GC -XX:ParallelGCThreads=1 -XX:ActiveProcessorCount=4"
-  serviceAnnotations: {}
+  jvmXXOpts: ""
+  # DEPRECATED: use top-level rconServiceAnnotations instead
+  serviceAnnotations: { }
   serviceType: LoadBalancer
-  servicePort: 34567
   ## Set the port used if the serviceType is NodePort
-  # nodePort:
+  nodePort:
+  # Set the external port of the service, usefull when using the LoadBalancer service type
+  servicePort: 34567
   loadBalancerIP: 192.168.1.222
   # loadBalancerSourceRanges: []
   ## Set the externalTrafficPolicy in the Service to either Cluster or Local
@@ -146,13 +175,17 @@ minecraftServer:
     enabled: true
     port: 25575
     password: "N!K)L$t3sl4123"
+    # existingSecret:
+    # secretKey: rcon-password
     serviceType: LoadBalancer
+    ## Set the external port if the rcon serviceType is NodePort
+    nodePort:
     loadBalancerIP: 192.168.1.223
     # loadBalancerSourceRanges: []
     ## Set the externalTrafficPolicy in the Service to either Cluster or Local
     externalTrafficPolicy: Local
 
-  extraPorts:
+  extraPorts: [ ]
     # These options allow you to expose another port from the Minecraft server, plugins such
     # as dynmap (8123) and bluemap (8100) will require this for access to their web interfaces
     #
@@ -178,8 +211,8 @@ minecraftServer:
     #         path: /
     #     tls:
     #       - secretName: map-tls
-    #         hosts:
-    #           - map.local
+  #         hosts:
+  #           - map.local
 
   query:
     # If you enable this, your server will be "published" to Gamespy
@@ -188,9 +221,15 @@ minecraftServer:
 
 ## Additional minecraft container environment variables
 ##
-extraEnv: {}
+extraEnv:
+  ALLOW_FLIGHT: TRUE
+  EXEC_DIRECTLY: true
+  TZ: America/New_York
+  USE_AIKAR_FLAGS: true
+
 
 persistence:
+  annotations: { }
   ## minecraft data Persistent Volume Storage Class
   ## If defined, storageClassName: <storageClass>
   ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -202,10 +241,13 @@ persistence:
   dataDir:
     # Set this to false if you don't care to persist state between restarts.
     enabled: true
-    existingClaim: minecraft-awwb-land-modded
+    existingClaim: minecraft-pokehaan-lite
     Size: 1Gi
 
-podAnnotations: {}
+podAnnotations: { }
 
-deploymentAnnotations: {}
+deploymentAnnotations: { }
 
+serviceAnnotations: { }
+
+rconServiceAnnotations: { }

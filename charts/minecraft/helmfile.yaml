@@ -13,9 +13,13 @@ templates:
     values:
       - ./worlds/modded/{{`{{ .Release.Name }}`}}/values.yaml
     namespace: minecraft
+
 releases:
   - name: awwb-land
-    <<: *vanilla
-  - name: awwb-land-modded
+    # Vanilla world with farm and tracks into mine
     installed: false
+    <<: *vanilla
+  - name: pokehaan-lite
+    # pixelmon curseforge modpack
+    installed: true
     <<: *modded
