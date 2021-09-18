@@ -61,10 +61,10 @@ extraVolumes:
       - name: modpacks
         mountPath: /modpacks
         readOnly: true
-      volumes:
-        - name: modpacks
-          persistentVolumeClaim:
-            claimName: minecraft-modpacks
+    volumes:
+      - name: modpacks
+        persistentVolumeClaim:
+          claimName: minecraft-modpacks
 
 minecraftServer:
   # This must be overridden, since we can't accept this for the user.
