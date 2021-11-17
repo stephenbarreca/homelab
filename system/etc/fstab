@@ -12,6 +12,7 @@
 /dev/disk/by-uuid/136B-61A4                             /boot/efi   vfat  defaults      0 0
 #
 #
+books               /mnt/calibre/books      9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
 heimdall-config     /mnt/heimdall-config    9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
 jackett-config      /mnt/jackett-config     9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
 jackett-downloads   /mnt/jackett-downloads  9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
