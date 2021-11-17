@@ -26,25 +26,27 @@ env:
   # -- Specify the group ID the application will run as
   PGID: "1001"
   # -- Username for the calibre gui
-  GUAC_USER: fishfu
+  GUAC_USER:
   # -- Password's md5 hash for the calibre gui
-  GUAC_PASS: e66024904874fa14899e1f1a0835a60c
+  GUAC_PASS:
   # -- for umask setting of Calibre, default if left unset is 022.
   UMASK_SET: "022"
   # -- Optionally pass cli start arguments to calibre.
   CLI_ARGS:
-
+  CALIBRE_OVERRIDE_DATABASE_PATH: /config/metadata.db
 # -- Configures service settings for the chart.
 # @default -- See values.yaml
 service:
   main:
+    type: LoadBalancer
+    loadBalancerIP: 192.168.1.215
     ports:
       http:
         port: 8080
   webserver:
     enabled: true
     type: LoadBalancer
-    loadBalancerIP: 192.168.1.215
+    loadBalancerIP: 192.168.1.214
     ports:
       webserver:
         enabled: true
@@ -62,10 +64,12 @@ ingress:
 # @default -- See values.yaml
 persistence:
   config:
+    enabled: true
     type: pvc
     existingClaim: calibre-config
     mountPath: /config
   books:
+    enabled: true
     type: pvc
     existingClaim: books
     mountPath: /books
