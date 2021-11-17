@@ -33,7 +33,6 @@ env:
   UMASK_SET: "022"
   # -- Optionally pass cli start arguments to calibre.
   CLI_ARGS:
-  CALIBRE_OVERRIDE_DATABASE_PATH: /config/metadata.db
 # -- Configures service settings for the chart.
 # @default -- See values.yaml
 service:

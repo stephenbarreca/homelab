@@ -38,8 +38,8 @@ templates:
 releases:
   - name: calibre
     <<: *kahNoData
-#  - name: calibre-web
-#    <<: *kahNoData
+  - name: calibre-web
+    <<: *kahNoData
 
 
 
