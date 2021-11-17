@@ -4,7 +4,7 @@
 image:
   repository: haugene/transmission-openvpn
   # pullPolicy: Always
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart version.
   tag: latest
 
@@ -62,10 +62,10 @@ resources:
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
    requests:
      cpu: 500m
-     memory: 3Gi
+     memory: 6Gi
    limits:
      cpu: 4
-     memory: 3Gi
+     memory: 6Gi
 
 nodeSelector: {}
 
@@ -96,7 +96,8 @@ env:
 #  LOCAL_NETWORK: "10.1.0.0/16"
   TRANSMISSION_DOWNLOAD_DIR: "/data/torrents/transmission"
   TRANSMISSION_INCOMPLETE_DIR: "/data/torrents/transmission/incomplete"
-  TRANSMISSION_DOWNLOAD_QUEUE_SIZE: "200"
+  TRANSMISSION_INCOMPLETE_DIR_ENABLED: "false"
+  TRANSMISSION_DOWNLOAD_QUEUE_SIZE: "20"
   TRANSMISSION_RATIO_LIMIT_ENABLED: "true"
   TRANSMISSION_RATIO_LIMIT: "1"
   TRANSMISSION_PEER_LIMIT_PER_TORRENT: "200"
