@@ -52,10 +52,10 @@ persistence:
   config:
     enabled: true
     type: pvc
-    existingClaim: calibre-config
+    existingClaim: calibre-web-config
     mountPath: /config
-  books:
+  db:
     enabled: true
     type: pvc
-    existingClaim: books
-    mountPath: /books
+    existingClaim: calibre-config
+    mountPath: /db
