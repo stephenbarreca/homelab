@@ -83,7 +83,9 @@ persistence:
     #   - ReadWriteMany
     ## Persistent Volume size
     #size: 64Gi
-
+  books:
+    enabled: true
+    hostPath: /mnt/extra/calibre/config/downloads
 # An alternative data volume definition
 dataVolume: {}
 

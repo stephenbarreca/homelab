@@ -60,8 +60,15 @@ spec:
             - mountPath: /dev/net/tun
               name: dev-net-tun
             {{- end }}
+            {{- if .Values.persistence.data.enabled }}
+              {{- range $index, $persistence := .Values.persistence }}
+            - mountPath: /{{ $index }}
+              name: {{ $index }}
+              {{- end }}
+            {{- else }}
             - mountPath: /data
               name: data
+            {{- end }}
             {{- if and .Values.customProvider.enabled }}
             - mountPath: /etc/openvpn/custom/
               name: custom-provider-config
@@ -103,13 +110,17 @@ spec:
           name: dev-net-tun
         {{- end }}
 {{- if .Values.persistence.data.enabled }}
-        - name: data
-  {{- if .Values.persistence.data.existingClaim }}
-          persistentVolumeClaim:
-            claimName: {{ .Values.persistence.data.existingClaim }}
-  {{- else }}
-          hostPath:
-            path: {{ .Values.persistence.data.hostPath }}
+  {{- range $index, $persistence := .Values.persistence }}
+    {{- if $persistence.enabled }}
+          - name: {{ $index }}
+      {{- if $persistence.existingClaim }}
+            persistentVolumeClaim:
+              claimName: {{ $persistence.existingClaim }}
+      {{- else }}
+            hostPath:
+              path: {{ $persistence.hostPath }}
+      {{- end }}
+    {{- end }}
   {{- end }}
 {{- else if and (not .Values.persistence.data.enabled) .Values.dataVolume }}
         {{- toYaml (list .Values.dataVolume) | nindent 8 }}
