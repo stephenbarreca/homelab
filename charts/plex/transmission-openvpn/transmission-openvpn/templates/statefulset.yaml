@@ -62,8 +62,10 @@ spec:
             {{- end }}
             {{- if .Values.persistence.data.enabled }}
               {{- range $index, $persistence := .Values.persistence }}
+                {{- if $persistence.enabled }}
             - mountPath: /{{ $index }}
               name: {{ $index }}
+                {{- end }}
               {{- end }}
             {{- else }}
             - mountPath: /data
@@ -112,13 +114,13 @@ spec:
 {{- if .Values.persistence.data.enabled }}
   {{- range $index, $persistence := .Values.persistence }}
     {{- if $persistence.enabled }}
-          - name: {{ $index }}
+        - name: {{ $index }}
       {{- if $persistence.existingClaim }}
-            persistentVolumeClaim:
-              claimName: {{ $persistence.existingClaim }}
+          persistentVolumeClaim:
+            claimName: {{ $persistence.existingClaim }}
       {{- else }}
-            hostPath:
-              path: {{ $persistence.hostPath }}
+          hostPath:
+            path: {{ $persistence.hostPath }}
       {{- end }}
     {{- end }}
   {{- end }}
