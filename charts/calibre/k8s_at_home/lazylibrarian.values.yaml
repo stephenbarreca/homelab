@@ -11,7 +11,7 @@ image:
   # -- image tag
   tag: latest
   # -- image pull policy
-  pullPolicy: always
+  pullPolicy: Always
 
 # -- environment variables.
 # @default -- See below
@@ -59,10 +59,20 @@ persistence:
   config:
     enabled: true
     type: pvc
-    existingClaim: calibre-config
+    existingClaim: lazylibrarian
 
   media:
     enabled: true
     type: pvc
     existingClaim: calibre-config
     mountPath: /media
+probes:
+  startup:
+    enabled: true
+    custom: true
+    spec:
+      httpGet:
+        path: /
+        port: 5299
+      failureThreshold: 60
+      periodSeconds: 10
