@@ -24,6 +24,13 @@ env:
   PGID: "1001"
   # -- Adds the ability to perform ebook conversion
   DOCKER_MODS: linuxserver/calibre-web:calibre
+
+podAnnotations:
+  co.elastic.monitor/type: http
+  co.elastic.monitor/urls: "http://${data.host}:${data.port}"
+  co.elastic.monitor/schedule: "@every 10s"
+  co.elastic.monitor/name: "Calibre-Web"
+
 # -- Configures service settings for the chart.
 # @default -- See values.yaml
 service:

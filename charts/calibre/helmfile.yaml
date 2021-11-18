@@ -11,14 +11,6 @@ templates:
     namespace: calibre
     values:
       - ./k8s_at_home/{{`{{ .Release.Name }}`}}.values.yaml
-#    valuesTemplate:
-#      - persistence:
-#          data:
-#            enabled: true
-#            type: hostPath
-#            hostPath: /mnt/plex
-#            accessMode: "ReadWriteMany"
-#            mountPath: /data
   kahNoData: &kahNoData
     chart: k8s-at-home/{{`{{ .Release.Name }}`}}
     namespace: calibre
@@ -30,16 +22,11 @@ templates:
       - ./{{`{{ .Release.Name }}`}}/values.yaml
     namespace: calibre
 
-#helmfiles:
-#  - path: k8s_at_home/helmfile.yaml
-#  - path: transmission-openvpn/helmfile.yaml
-#  - path: jackett/helmfile.yaml
-
 releases:
   - name: calibre
     <<: *kahNoData
   - name: calibre-web
     <<: *kahNoData
-
-
+  - name: lazylibrarian
+    <<: *kahNoData
 
