@@ -60,12 +60,15 @@ persistence:
     enabled: true
     type: pvc
     existingClaim: lazylibrarian
-
   media:
     enabled: true
     type: pvc
     existingClaim: calibre-config
     mountPath: /media
+  books:
+    enabled: true
+    type: pvc
+    existingClaim: books
 probes:
   startup:
     enabled: true
