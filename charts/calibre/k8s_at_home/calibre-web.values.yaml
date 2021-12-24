@@ -45,6 +45,8 @@ ingress:
   main:
     enabled: true
     ingressClassName: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: web,websecure,local
     hosts:
       - host: "calibre-web.local"
         paths:
@@ -52,7 +54,12 @@ ingress:
             backend:
               serviceName: "calibre-web"
               servicePort: 80
-
+      - host: "books.stephenbarre.ca"
+        paths:
+          - path: "/"
+            backend:
+              serviceName: "calibre-web"
+              servicePort: 80
 # -- Configure persistence settings for the chart under this key.
 # @default -- See values.yaml
 persistence:
