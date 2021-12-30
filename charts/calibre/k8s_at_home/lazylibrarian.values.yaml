@@ -45,6 +45,8 @@ ingress:
   main:
     enabled: true
     ingressClassName: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: web,websecure,local
     hosts:
       - host: "lazylibrarian.local"
         paths:
@@ -52,7 +54,11 @@ ingress:
             backend:
               serviceName: "lazylibrarian"
               servicePort: 80
-
+      - host: "book-finder.stephenbarre.ca"
+        paths:
+          - path: "/"
+            backend:
+              serviceName: "lazylibrarian"
 # -- Configure persistence settings for the chart under this key.
 # @default -- See values.yaml
 persistence:
