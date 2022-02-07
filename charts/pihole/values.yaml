@@ -140,6 +140,7 @@ dnsmasq:
     - address=/tower/192.168.1.56
     - address=/tower.local/192.168.1.56
     - address=/local/192.168.1.200
+    - address=/www.local/192.168.1.200
     - address=/home.local/192.168.1.200
     - address=/www.home.local/192.168.1.200
   # Hiemdall
@@ -176,7 +177,8 @@ dnsmasq:
   #  - address=/minecraft.home.local/192.168.1.220
   #  - address=/rcon.home.local/192.168.1.221
   # pihole
-  #  - address=/pihole.home.local/192.168.1.240
+    - address=/pihole.local/192.168.1.240
+    - address=/www.pihole.local/192.168.1.240
   # Elasticsearch
   #  - address=/kibana.home.local/192.168.1.235
 
@@ -310,6 +312,7 @@ whitelist:
   - ecn.dev.virtualearth.net
   - edge.api.brightcove.com
   - eds.xboxlive.com
+  - fdpq.syndication.kbb.com
   - fonts.gstatic.com
   - forums.sonarr.tv
   - g.live.com
@@ -417,6 +420,7 @@ whitelist:
   - twimg.com
   - twitter.com
   - ui.skype.com
+  - upa.syndication.kbb.com
   - v.shopify.com
   - video-stats.l.google.com
   - videos.vidible.tv
