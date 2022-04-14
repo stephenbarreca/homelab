@@ -39,16 +39,12 @@ releases:
   - name: jackett
     <<: *basic
   - name: ombi
-    version: 9.4.0
-    <<: *kahNoData    
+    <<: *kahNoData
   - name: plex
-    version: 5.2.0
     <<: *kahData
   - name: radarr
-    version: 12.2.0
     <<: *kahData
   - name: sonarr
-    version: 12.2.0
     <<: *kahData
   - name: tautulli
     <<: *basic
