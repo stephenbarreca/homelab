@@ -69,5 +69,5 @@ resources:
      cpu: 4
      memory: 6Gi
 
-podSecurityContext:
+securityContext:
   runAsUser: 0
