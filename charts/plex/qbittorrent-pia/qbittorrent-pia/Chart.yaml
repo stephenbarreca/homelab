@@ -1,0 +1,22 @@
+apiVersion: v2
+appVersion: v4.4.0
+description: qBittorrent is a cross-platform free and open-source BitTorrent client
+name: qbittorrent-pia
+version: 1.0.0
+kubeVersion: ">=1.16.0-0"
+keywords:
+  - qbittorrent
+  - torrrent
+  - pia
+  - vpn
+icon: https://cloud.githubusercontent.com/assets/14862437/23586868/89ef2922-01c4-11e7-869c-52aafcece17f.png
+sources:
+  - https://github.com/j4ym0/pia-qbittorrent-docker
+  - https://hub.docker.com/r/j4ym0/pia-qbittorrent
+maintainers:
+  - name: fishfu
+    email: fishfu@gmail.com
+dependencies:
+  - name: common
+    repository: https://library-charts.k8s-at-home.com
+    version: 4.3.0
