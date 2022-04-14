@@ -11,60 +11,16 @@ image:
   pullPolicy: Always
   tag: latest
 
-strategy:
-  type: Recreate
-
 env:
   REGION: Canada
-  USER: p8582314
-  PASSWORD: EP7dpgVmtV
+  USER:
+  PASSWORD:
 
-podAnnotations:
-  co.elastic.monitor/0.type: http
-  co.elastic.monitor/0.urls: "http://${data.host}:${data.port}"
-  co.elastic.monitor/0.schedule: "@every 10s"
-  co.elastic.monitor/0.name: "Qbittorrent"
 
 # -- Configures service settings for the chart.
 # @default -- See values.yaml
-#service:
-#  port:
-#    enabled: true
-#    port: 3579
-
-ingress:
-  # -- Enable and configure ingress settings for the chart under this key.
-  # @default -- See values.yaml
+service:
   main:
-    enabled: true
-    ingressClassName: traefik
-    annotations:
-      traefik.ingress.kubernetes.io/router.entrypoints: local
-    hosts:
-      - host: "qbittorrent.local"
-        paths:
-          - path: "/"
-            backend:
-              serviceName: "qbittorrent-pia"
-              #servicePort: 80
-persistence:
-  config:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/qbittorrent-config
-  data:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/plex
-  books:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/extra/calibre/config/downloads
-
-resources:
-   requests:
-     cpu: 500m
-     memory: 6Gi
-   limits:
-     cpu: 4
-     memory: 6Gi
+    ports:
+      http:
+        port: 8888
