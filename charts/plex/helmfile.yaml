@@ -56,7 +56,8 @@ releases:
     recreatePods: true
     installed: true
     <<: *basic
-
-
-
+  - name: qbittorrent-pia
+    recreatePods: true
+    installed: true
+    <<: *basic
 
