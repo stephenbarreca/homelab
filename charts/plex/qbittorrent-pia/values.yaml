@@ -70,4 +70,6 @@ resources:
      memory: 6Gi
 
 securityContext:
-  runAsUser: 0
+  capabilities:
+    add:
+      - "NET_ADMIN"
