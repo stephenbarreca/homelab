@@ -1,6 +1,6 @@
 repositories:
   - name: ks8-at-home
-    url: https://k8s-at-home.com/charts/
+    url: https://library-charts.k8s-at-home.com
 
 releases:
 - name: qbittorrent-pia
