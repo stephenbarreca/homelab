@@ -52,14 +52,17 @@ persistence:
     enabled: true
     type: hostPath
     hostPath: /mnt/extra/qbittorrent-config
+    mountPath: /config
   data:
     enabled: true
     type: hostPath
     hostPath: /mnt/plex
+    mountPath: /data
   books:
     enabled: true
     type: hostPath
     hostPath: /mnt/extra/calibre/config/downloads
+    mountPath: /books
 
 resources:
    requests:
