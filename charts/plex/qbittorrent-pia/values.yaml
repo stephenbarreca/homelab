@@ -51,7 +51,7 @@ persistence:
   config:
     enabled: true
     type: hostPath
-    hostPath: /mnt/qbittorrent-config
+    hostPath: /mnt/extra/qbittorrent-config
   data:
     enabled: true
     type: hostPath
