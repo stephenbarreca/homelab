@@ -15,7 +15,7 @@ strategy:
   type: Recreate
 
 env:
-  REGION: CA Toronto
+  REGION: ca_toronto
   USER: p8582314
   PASSWORD: EP7dpgVmtV
 
