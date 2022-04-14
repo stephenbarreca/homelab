@@ -1,0 +1,8 @@
+releases:
+- name: qbittorrent-pia
+  namespace: plex
+  chart: ./qbittorrent-pia
+  recreatePods: true
+  installed: true
+  values:
+    - values.yaml
