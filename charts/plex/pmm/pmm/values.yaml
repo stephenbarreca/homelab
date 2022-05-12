@@ -10,14 +10,3 @@ image:
   repository: plex-meta-manager:v1.16.5
   pullPolicy: Always
   tag: latest
-
-env: {}
-
-persistence:
-  config:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/plex/movies/plex-meta-manager
-    mountPath: /config
-    accessMode: ReadWriteMany
-    size: 7Ti
