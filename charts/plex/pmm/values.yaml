@@ -11,12 +11,14 @@ image:
   tag: v1.16.5
   pullPolicy: Always
 
+env:
+  TZ: "America/New York"
 
 persistence:
   config:
     enabled: true
     type: hostPath
-    hostPath: /mnt/plex/movies/plex-meta-manager
+    hostPath: /mnt/plex/movies/plex-meta-manager/config
     mountPath: /config
     accessMode: ReadWriteMany
     size: 7Ti
