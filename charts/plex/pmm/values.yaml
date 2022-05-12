@@ -7,7 +7,7 @@
 #
 
 image:
-  repository: plex-meta-manager:v1.16.5
+  repository: meisnate12/plex-meta-manager:v1.16.5
   pullPolicy: Always
   tag: latest
 
