@@ -16,6 +16,10 @@ env:
   PUID: 1000
   PGID: 1000
 
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+
 persistence:
   config:
     enabled: true
