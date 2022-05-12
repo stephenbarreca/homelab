@@ -39,7 +39,10 @@ ingress:
     ingressClassName: traefik
     annotations:
       traefik.ingress.kubernetes.io/router.entrypoints: local
-    path: /
+    paths:
+      - path: /
+        backend:
+          serviceName: jackett
     hosts:
       - jackett.local
 
