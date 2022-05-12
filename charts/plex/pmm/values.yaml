@@ -1,0 +1,21 @@
+# Chart: k8s-at-home/ombi
+#
+# IMPORTANT NOTE
+#
+# This chart inherits from our common library chart. You can check the default values/options here:
+# https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common/values.yaml
+#
+
+image:
+  repository: plex-meta-manager:v1.16.5
+  pullPolicy: Always
+  tag: latest
+
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/plex/movies/plex-meta-manager
+    mountPath: /config
+    accessMode: ReadWriteMany
+    size: 7Ti
