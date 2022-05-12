@@ -34,11 +34,14 @@ env:
 #   loadBalancerIP: 192.168.1.201
 
 ingress:
-  enabled: true
-  ingressClassName: traefik
-  path: /
-  hosts:
-    - jackett.local
+  main:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: local
+    path: /
+    hosts:
+      - jackett.local
 
 volumes:
   - name: "config"

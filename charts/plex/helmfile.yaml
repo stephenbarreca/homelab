@@ -51,7 +51,7 @@ releases:
     <<: *basic
   - name: transmission-openvpn
     recreatePods: true
-    installed: true
+    installed: false
     <<: *basic
   - name: qbittorrent-pia
     recreatePods: true
