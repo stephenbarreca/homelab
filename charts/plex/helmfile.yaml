@@ -48,7 +48,7 @@ releases:
   - name: sonarr
     <<: *kahData
   - name: tautulli
-    <<: *basic
+    <<: *kahNoData
   - name: transmission-openvpn
     recreatePods: true
     installed: false
