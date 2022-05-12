@@ -10,3 +10,7 @@ image:
   repository: plex-meta-manager:v1.16.5
   pullPolicy: Always
   tag: latest
+
+service:
+  main:
+    enabled: false
