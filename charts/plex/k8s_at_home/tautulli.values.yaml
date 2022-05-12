@@ -42,12 +42,13 @@ ingress:
     ingressClassName: traefik
     annotations:
       traefik.ingress.kubernetes.io/router.entrypoints: local
-    paths:
-      - path: /
-        backend:
-          serviceName: tautulli
     hosts:
-      - tautulli.local
+      - host: tautulli.local
+        paths:
+          - path: /
+            backend:
+              serviceName: tautulli
+
 persistence:
   config:
     enabled: true
