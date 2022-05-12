@@ -1,0 +1,62 @@
+image:
+  # -- image repository
+  repository: ghcr.io/k8s-at-home/jackett
+  # @default -- chart.appVersion
+  tag:
+  # -- image pull policy
+  pullPolicy: IfNotPresent
+
+env:
+  - name: VPN_ENABLED
+    value: "yes" # Enable Jackett over VPN
+  - name: LAN_NETWORK
+    value: "192.168.0.0/24"
+  - name: CREATE_TUN_DEVICE
+    value: "true" # Needed for VPN
+  - name: PUID
+    value: "1000"
+  - name: PGID
+    value: "1000"
+
+ingress:
+  main:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: local
+    hosts:
+      - host: jackett.local
+        paths:
+          - path: /
+            backend:
+              serviceName: jackett
+
+persistence:
+  config:
+    enabled: true
+    existingClaim: jackett-config
+  blackhole:
+    type: hostPath
+    hostPath: /mnt/plex/torrents/watch
+    mountPath: /blackhole
+    accessMode: ReadWriteMany
+    size: 7Ti
+  dev-tun:
+    type: hostPath
+    hostPath: /dev/net/tun
+    mountPath: /dev/net/tun
+    accessMode: ReadWriteMany
+    size: 7Ti
+
+resources:
+  requests:
+    memory: 256Mi
+    cpu: 0.1
+  limits:
+    memory: 512Mi
+    cpu: 0.5
+
+securityContext:
+  capabilities: # Needed for VPN
+    add:
+      - NET_ADMIN

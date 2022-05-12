@@ -38,7 +38,7 @@ templates:
 
 releases:
   - name: jackett
-    <<: *basic
+    <<: *kahNoData
   - name: ombi
     <<: *kahNoData
   - name: plex
