@@ -1,6 +1,4 @@
 repositories:
-  - name: ks8-at-home
-    url: https://k8s-at-home.com/charts/
   - name: ks8-at-home-common
     url: https://library-charts.k8s-at-home.com
 helmDefaults:
@@ -11,7 +9,7 @@ templates:
     chart: ./{{`{{ .Release.Name }}`}}/{{`{{ .Release.Name }}`}}
     values:
       - ./{{`{{ .Release.Name }}`}}/values.yaml
-    namespace: plex
+    namespace: default
 
 #helmfiles:
 #  - path: k8s_at_home/helmfile.yaml
