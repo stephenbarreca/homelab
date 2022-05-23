@@ -18,7 +18,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: prometheus-data
   local:
-    path: /home/stephen/data/prometheus
+    path: /mnt/prometheus
   nodeAffinity:
     required:
       nodeSelectorTerms:

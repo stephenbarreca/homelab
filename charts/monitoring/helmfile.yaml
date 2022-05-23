@@ -1,0 +1,19 @@
+repositories:
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
+helmDefaults:
+  skipDeps: true
+
+templates:
+  basic: &prometheus-community
+    chart: ./prometheus-community/{{`{{ .Release.Name }}`}}/{{`{{ .Release.Name }}`}}
+    values:
+      - ./{{`{{ .Release.Name }}`}}/values.yaml
+    namespace: monitoring
+
+releases:
+  - name: kube-prometheus-stack
+    recreatePods: true
+    installed: true
+    <<: *prometheus-community
+
