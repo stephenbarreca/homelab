@@ -1,0 +1,54 @@
+# Chart: k8s-at-home/ombi
+#
+# IMPORTANT NOTE
+#
+# This chart inherits from our common library chart. You can check the default values/options here:
+# https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common/values.yaml
+#
+
+image:
+  tag: latest
+
+env:
+  TZ: "America/New York"
+  CRASHPLAN_SRV_MAX_MEM: 9G
+
+ingress:
+  # -- Enable and configure ingress settings for the chart under this key.
+  # @default -- See values.yaml
+  main:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: local
+    hosts:
+      - host: "crashplan.local"
+        paths:
+          - path: "/"
+            backend:
+              serviceName: "crashplan-pro"
+
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/crashplan-pro/config
+    accessMode: ReadWriteMany
+    size: 7Ti
+  storage:
+    enabled: true
+    type: hostPath
+    hostPath: /
+
+resources:
+   requests:
+     cpu: 500m
+     memory: 10Gi
+   limits:
+     cpu: 4
+     memory: 12Gi
+
+securityContext:
+  capabilities:
+    add:
+      - "NET_ADMIN"

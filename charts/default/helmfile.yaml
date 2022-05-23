@@ -1,0 +1,26 @@
+repositories:
+  - name: ks8-at-home
+    url: https://k8s-at-home.com/charts/
+  - name: ks8-at-home-common
+    url: https://library-charts.k8s-at-home.com
+helmDefaults:
+  skipDeps: true
+
+templates:
+  basic: &basic
+    chart: ./{{`{{ .Release.Name }}`}}/{{`{{ .Release.Name }}`}}
+    values:
+      - ./{{`{{ .Release.Name }}`}}/values.yaml
+    namespace: plex
+
+#helmfiles:
+#  - path: k8s_at_home/helmfile.yaml
+#  - path: transmission-openvpn/helmfile.yaml
+#  - path: jackett/helmfile.yaml
+
+releases:
+  - name: crashplan-pro
+    recreatePods: true
+    installed: true
+    <<: *basic
+

@@ -1,0 +1,30 @@
+# Chart: k8s-at-home/ombi
+#
+# IMPORTANT NOTE
+#
+# This chart inherits from our common library chart. You can check the default values/options here:
+# https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common/values.yaml
+#
+
+image:
+  repository: jlesage/crashplan-pro
+  pullPolicy: Always
+  tag: latest
+
+strategy:
+  type: Recreate
+
+env:
+  TZ: "America/New York"
+
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+
+# -- Configures service settings for the chart.
+# @default -- See values.yaml
+service:
+  main:
+    ports:
+      http:
+        port: 5800
