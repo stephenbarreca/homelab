@@ -397,13 +397,13 @@ prometheus:
   prometheusSpec:
     ## Resource limits & requests
     ##
-    resources:
-      limits:
-        cpu: 200m
-        memory: 500Mi
-      requests:
-        cpu: 100m
-        memory: 200Mi
+    # resources:
+    #   limits:
+    #     cpu: 200m
+    #     memory: 500Mi
+    #   requests:
+    #     cpu: 100m
+    #     memory: 200Mi
 
     ## Prometheus StorageSpec for persistent data
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/storage.md
