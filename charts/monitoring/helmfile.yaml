@@ -4,16 +4,12 @@ repositories:
 helmDefaults:
   skipDeps: true
 
-templates:
-  basic: &prometheus-community
-    values:
-      - ./prometheus-community/{{`{{ .Release.Name }}`}}/values.yaml
-    namespace: monitoring
-
 releases:
   - name: kube-prometheus-stack
+    namespace: monitoring
     chart: prometheus-community/kube-prometheus-stack
+    values:
+      - ./prometheus-community/kube-prometheus-stack/values.yaml
     recreatePods: true
     installed: true
-    <<: *prometheus-community
 
