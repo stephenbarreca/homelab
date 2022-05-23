@@ -9,7 +9,7 @@ releases:
     namespace: monitoring
     chart: prometheus-community/kube-prometheus-stack
     values:
-      - ./prometheus-community/kube-prometheus-stack/values.yaml
+      - ./kube-prometheus-stack/values.yaml
     recreatePods: true
     installed: true
 
