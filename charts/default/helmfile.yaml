@@ -11,11 +11,6 @@ templates:
       - ./{{`{{ .Release.Name }}`}}/values.yaml
     namespace: default
 
-#helmfiles:
-#  - path: k8s_at_home/helmfile.yaml
-#  - path: transmission-openvpn/helmfile.yaml
-#  - path: jackett/helmfile.yaml
-
 releases:
   - name: crashplan-pro
     recreatePods: true

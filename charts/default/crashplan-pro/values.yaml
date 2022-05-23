@@ -33,12 +33,14 @@ persistence:
     enabled: true
     type: hostPath
     hostPath: /mnt/crashplan-pro/config
+    mountPath: /config
     accessMode: ReadWriteMany
     size: 7Ti
   storage:
     enabled: true
     type: hostPath
     hostPath: /
+    mountPath: /storage
 
 resources:
    requests:
