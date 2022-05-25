@@ -111,7 +111,13 @@ grafana:
 
     ## Path for grafana ingress
     path: /
-
+  resources:
+    limits:
+      cpu: 100m
+      memory: 200Mi
+    requests:
+      cpu: 50m
+      memory: 100Mi
   sidecar:
     dashboards:
       enabled: true
