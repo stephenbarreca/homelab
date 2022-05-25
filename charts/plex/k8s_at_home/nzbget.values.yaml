@@ -72,8 +72,8 @@ addons:
     scripts:
       up: |-
         #!/bin/bash
-        echo "connected" > /shared/vpnstatus
+        # echo "connected" > /shared/vpnstatus
 
       down: |-
         #!/bin/bash
-        echo "disconnected" > /shared/vpnstatus
+        # echo "disconnected" > /shared/vpnstatus
