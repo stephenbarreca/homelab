@@ -59,7 +59,7 @@ spec:
           - name: backup
             hostPath:
               path: /mnt/extra/es-backup
-              type: directory
+              type: Directory
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
