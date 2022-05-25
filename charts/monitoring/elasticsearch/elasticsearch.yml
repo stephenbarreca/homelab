@@ -4,7 +4,7 @@ metadata:
   name: elasticsearch
   namespace: monitoring
 spec:
-  version: 7.13.2
+  version: 8.1.3
   http:
     service:
       metadata:
