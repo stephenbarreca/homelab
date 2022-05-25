@@ -32,3 +32,47 @@ resources: {}
 securityContext:
   runAsUser: 1000
   runAsGroup: 1000
+
+addons:
+  vpn:
+    enabled: true
+    type: wireguard
+    securityContext:
+      runAsUser: 568
+      runAsGroup: 568
+    env:
+      # Enable a killswitch that kills all trafic when the VPN is not connected
+      KILLSWITCH: "true"
+
+    # The wireguard configuration file provided by your VPN provider goes here.
+    #
+    # Set AllowedIPs to 0.0.0.0/0 to route all traffic through the VPN.
+    #
+    # Pay close attention to the PostUp and PreDown lines. They must be added if you wish to run a script when the connection
+    # is opened / closed.
+    configFile: |-
+      [Interface]
+      Address = 10.14.173.94
+      PrivateKey = 8Bbubiq00UKR85lcnXGTz2sqMXbwUohva+SS6RQ5vVc=
+      DNS = 10.0.0.243,10.0.0.242
+      PostUp = /config/up.sh %i
+      PreDown = /config/down.sh %i
+
+      [Peer]
+      PublicKey = IP2YAS/0Ovt5vPZbNWh0mAoWZS2nX3URzjEkhB/8SDk=
+      Endpoint = 172.83.47.183:1337
+      AllowedIPs = 0.0.0.0/0
+      PersistentKeepalive = 25
+
+
+    # The scripts that get run when the VPN connection opens/closes are defined here.
+    # The default scripts will write a string to represent the current connection state to a file.
+    # Our qBittorrent image has a feature that can wait for this file to contain the word 'connected' before actually starting the application.
+    scripts:
+      up: |-
+        #!/bin/bash
+        echo "connected" > /shared/vpnstatus
+
+      down: |-
+        #!/bin/bash
+        echo "disconnected" > /shared/vpnstatus
