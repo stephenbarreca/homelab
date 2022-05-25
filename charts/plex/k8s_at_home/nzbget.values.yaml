@@ -28,3 +28,7 @@ persistence:
     mountPath: /books
 
 resources: {}
+
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
