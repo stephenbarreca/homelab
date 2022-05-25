@@ -51,6 +51,7 @@ addons:
       # KILLSWITCH_EXCLUDEDNETWORKS_IPV4: "10.0.0.0/8;172.16.0.0/12;192.168.0.0/16"
       FIREWALL: 'on'
       ROUTE: '192.168.1.0/24'
+      DNS: '8.8.4.4'
     # The wireguard configuration file provided by your VPN provider goes here.
     #
     # Set AllowedIPs to 0.0.0.0/0 to route all traffic through the VPN.
