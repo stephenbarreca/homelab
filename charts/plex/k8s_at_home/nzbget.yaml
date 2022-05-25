@@ -21,11 +21,6 @@ persistence:
     type: hostPath
     hostPath: /mnt/extra/qbittorrent-config
     mountPath: /config
-  video:
-    enabled: true
-    type: hostPath
-    hostPath: /mnt/plex
-    mountPath: /data
   books:
     enabled: true
     type: hostPath

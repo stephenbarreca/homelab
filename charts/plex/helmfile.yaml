@@ -47,6 +47,8 @@ releases:
     <<: *kahData
   - name: sonarr
     <<: *kahData
+  - name: nzbget
+    <<: *kahData
   - name: tautulli
     <<: *kahNoData
   - name: transmission-openvpn
