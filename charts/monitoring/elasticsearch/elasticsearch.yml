@@ -29,19 +29,38 @@ spec:
     config:
       path:
         repo:
-          - /usr/share/elasticsearch/data/snapshots
+          - /usr/share/elasticsearch/snapshots
       # node.store.allow_mmap: false
+#    volumeClaimTemplates:
+#      - metadata:
+#          name: elasticsearch-data # Do not change this name unless you set up a volume mount for the data path.
+#        spec:
+#          accessModes:
+#            - ReadWriteOnce
+#          resources:
+#            requests:
+#              storage: 1Gi
+#          storageClassName: standard
     podTemplate:
       spec:
         containers:
-        - name: elasticsearch
-          resources:
-            requests:
-              memory: 32Gi
-              cpu: 4
-            limits:
-              memory: 32Gi
-              cpu: 4
+          - name: elasticsearch
+            volumeMounts:
+              - name: backup
+                mountPath: /usr/share/elasticsearch/snapshots
+            resources:
+              limits:
+                memory: 8Gi
+                cpu: 1
+              requests:
+                memory: 8Gi
+                cpu: 200m
+        volumes:
+          - name: backup
+            hostPath:
+              path: /mnt/extra/es-backup
+              type: directory
+
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute

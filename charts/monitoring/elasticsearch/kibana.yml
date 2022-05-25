@@ -40,10 +40,10 @@ spec:
         resources:
           requests:
             memory: 2Gi
-            cpu: 4
+            cpu: 1
           limits:
             memory: 2Gi
-            cpu: 4
+            cpu: 200m
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
