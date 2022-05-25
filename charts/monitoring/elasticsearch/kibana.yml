@@ -38,12 +38,13 @@ spec:
       containers:
       - name: kibana
         resources:
-          requests:
-            memory: 2Gi
-            cpu: 1
           limits:
             memory: 2Gi
+            cpu: 1
+          requests:
+            memory: 2Gi
             cpu: 200m
+
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
