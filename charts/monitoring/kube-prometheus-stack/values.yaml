@@ -127,7 +127,6 @@ grafana:
   ## Pass the plugins you want installed as a list.
   ##
   plugins:
-    - grafana-piechart-panel
     - devopsprodigy-kubegraf-app
 
 ## Component scraping the kubelet and kubelet-hosted cAdvisor
