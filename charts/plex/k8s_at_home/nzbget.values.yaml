@@ -19,7 +19,7 @@ persistence:
   config:
     enabled: true
     type: hostPath
-    hostPath: /mnt/extra/qbittorrent-config
+    hostPath: /mnt/extra/nzbget
     mountPath: /config
   books:
     enabled: true
