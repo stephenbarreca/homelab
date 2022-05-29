@@ -8,7 +8,7 @@
 
 image:
   repository: meisnate12/plex-meta-manager
-  tag: nightly
+  tag: latest
   pullPolicy: Always
 
 env:
