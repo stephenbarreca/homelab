@@ -389,6 +389,7 @@ prometheus:
   ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
   ##
   prometheusSpec:
+    enableAdminAPI: true
     ## Resource limits & requests
     ##
     resources:
