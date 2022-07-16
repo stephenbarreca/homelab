@@ -139,8 +139,8 @@ dnsmasq:
   # Default
     - address=/tower/192.168.1.56
     - address=/tower.local/192.168.1.56
-    - address=/klipper.local/192.168.1.56
-    - address=/octopi.local/192.168.1.56
+    - address=/klipper.local/192.168.1.197
+    - address=/octopi.local/192.168.1.197
     - address=/local/192.168.1.200
     - address=/www.local/192.168.1.200
     - address=/home.local/192.168.1.200
