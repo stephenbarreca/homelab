@@ -1,7 +1,7 @@
 apiVersion: v2
 appVersion: v1.16.5
 description: Plex Meta Manager
-name: pmm
+name: Plex Meta Manager
 version: 1.0.0
 kubeVersion: ">=1.16.0-0"
 keywords:
