@@ -18,7 +18,7 @@ if [ -f "${btmp}" ]; then
 fi
 
 # make backup and store at temp location
-tar --exclude="${plexcache}" -jcvf "$btmp" "$plexdir"
+tar --exclude="${plexcache}" --use-compress-program=lbzip2 -cvf "$btmp" "$plexdir"
 
 echo "rotating existing backups"
 if [ -f "${bfile}.2" ]; then
