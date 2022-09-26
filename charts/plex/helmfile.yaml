@@ -31,11 +31,6 @@ templates:
       - ./{{`{{ .Release.Name }}`}}/values.yaml
     namespace: plex
 
-#helmfiles:
-#  - path: k8s_at_home/helmfile.yaml
-#  - path: transmission-openvpn/helmfile.yaml
-#  - path: jackett/helmfile.yaml
-
 releases:
   - name: jackett
     <<: *kahNoData
@@ -59,7 +54,7 @@ releases:
     recreatePods: true
     installed: true
     <<: *basic
-  - name: pmm
+  - name: plex-meta-manager
     recreatePods: true
     installed: true
     <<: *basic
