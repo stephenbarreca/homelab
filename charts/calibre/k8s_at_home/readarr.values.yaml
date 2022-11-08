@@ -23,6 +23,14 @@ env:
 # @default -- See values.yaml
 service:
   main:
+    ports:
+      http:
+        port: 8787
+
+ingress:
+  # -- Enable and configure ingress settings for the chart under this key.
+  # @default -- See values.yaml
+  main:
     enabled: true
     ingressClassName: traefik
     annotations:
@@ -34,15 +42,6 @@ service:
             backend:
               serviceName: "readarr"
               servicePort: 8787
-#    ports:
-#      http:
-#        port: 8787
-
-ingress:
-  # -- Enable and configure ingress settings for the chart under this key.
-  # @default -- See values.yaml
-  main:
-    enabled: false
 
 # -- Configures the probes for the main Pod.
 # @default -- See values.yaml
