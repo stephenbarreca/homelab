@@ -77,8 +77,13 @@ persistence:
     accessMode: ReadWriteMany
     size: 7Ti
 
-  books:
+  calibre:
     enabled: true
     type: pvc
     existingClaim: calibre-config
     mountPath: /data
+
+  books:
+    enabled: true
+    type: pvc
+    existingClaim: books
