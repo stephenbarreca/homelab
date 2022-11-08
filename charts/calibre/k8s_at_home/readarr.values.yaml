@@ -23,9 +23,20 @@ env:
 # @default -- See values.yaml
 service:
   main:
-    ports:
-      http:
-        port: 8787
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: local
+    hosts:
+      - host: "readarr.local"
+        paths:
+          - path: "/"
+            backend:
+              serviceName: "readarr"
+              servicePort: 8787
+#    ports:
+#      http:
+#        port: 8787
 
 ingress:
   # -- Enable and configure ingress settings for the chart under this key.
