@@ -29,4 +29,5 @@ releases:
     <<: *kahNoData
   - name: lazylibrarian
     <<: *kahNoData
-
+  - name: readarr
+    <<: *kahNoData
