@@ -94,3 +94,8 @@ persistence:
     type: hostPath
     hostPath: /mnt/extra/calibre/config/downloads
     mountPath: /books
+
+  nas:
+    enabled: true
+    type: pvc
+    existingClaim: books
