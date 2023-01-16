@@ -1,7 +1,7 @@
 # ref: https://hub.docker.com/r/itzg/minecraft-server/
 image:
   repository: itzg/minecraft-server
-  tag: java16
+  tag: java17
   pullPolicy: Always
 
 ## Configure resource requests and limits
