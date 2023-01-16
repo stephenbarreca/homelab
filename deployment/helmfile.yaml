@@ -1,0 +1,12 @@
+templates:
+  common: &basic
+    values:
+      - ./{{`{{ .Release.Name }}`}}/values.yaml
+  minecraft: &minecraft
+    chart: itzg/minecraft
+    namespace: minecraft
+    values:
+      - ./minecraft/{{`{{ .Release.Name }}`}}/values.yaml
+releases:
+  - name: autumn-land
+    <<: *minecraft
