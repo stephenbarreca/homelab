@@ -1,0 +1,78 @@
+# Chart: k8s-at-home/ombi
+#
+# IMPORTANT NOTE
+#
+# This chart inherits from our common library chart. You can check the default values/options here:
+# https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common/values.yaml
+#
+
+image:
+  repository: j4ym0/pia-qbittorrent
+  pullPolicy: Always
+  tag: latest
+
+strategy:
+  type: Recreate
+
+env:
+  REGION: ca_toronto
+  USER: p8582314
+  PASSWORD: EP7dpgVmtV
+
+podAnnotations:
+  co.elastic.monitor/0.type: http
+  co.elastic.monitor/0.urls: "http://${data.host}:${data.port}"
+  co.elastic.monitor/0.schedule: "@every 10s"
+  co.elastic.monitor/0.name: "Qbittorrent"
+
+# -- Configures service settings for the chart.
+# @default -- See values.yaml
+#service:
+#  port:
+#    enabled: true
+#    port: 3579
+
+ingress:
+  # -- Enable and configure ingress settings for the chart under this key.
+  # @default -- See values.yaml
+  main:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      traefik.ingress.kubernetes.io/router.entrypoints: local
+    hosts:
+      - host: "qbittorrent.local"
+        paths:
+          - path: "/"
+            backend:
+              serviceName: "qbittorrent-pia"
+              #servicePort: 80
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/extra/qbittorrent-config
+    mountPath: /config
+  data:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/plex
+    mountPath: /data
+  books:
+    enabled: true
+    type: hostPath
+    hostPath: /mnt/extra/calibre/config/downloads
+    mountPath: /books
+
+resources:
+   requests:
+     cpu: 500m
+     memory: 6Gi
+   limits:
+     cpu: 4
+     memory: 6Gi
+
+securityContext:
+  capabilities:
+    add:
+      - "NET_ADMIN"

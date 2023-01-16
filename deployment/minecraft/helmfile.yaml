@@ -1,0 +1,10 @@
+templates:
+  minecraft: &minecraft
+    chart: itzg/minecraft
+    namespace: minecraft
+    values:
+      - ./{{`{{ .Release.Name }}`}}/values.yaml
+releases:
+  - name: autumn-land
+    installed: true
+    <<: *minecraft

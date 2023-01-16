@@ -1,0 +1,59 @@
+repositories:
+  - name: ks8-at-home
+    url: https://k8s-at-home.com/charts/
+  - name: ks8-at-home-common
+    url: https://library-charts.k8s-at-home.com
+helmDefaults:
+  skipDeps: true
+
+templates:
+  withData: &withData
+    chart: k8s-at-home/{{`{{ .Release.Name }}`}}
+    namespace: plex
+    values:
+      - ./{{`{{ .Release.Name }}`}}.values.yaml
+    valuesTemplate:
+      - env:
+          # -- Set the container timezone
+          TZ: America/New_York
+        persistence:
+          data:
+            enabled: true
+            type: hostPath
+            hostPath: /mnt/plex
+            accessMode: ReadWriteMany
+            mountPath: /data
+  withoutData: &withoutData
+    chart: k8s-at-home/{{`{{ .Release.Name }}`}}
+    namespace: plex
+    values:
+      - ./{{`{{ .Release.Name }}`}}.values.yaml
+  localChart: &localChart
+    chart: ../../new_charts/{{`{{ .Release.Name }}`}}
+    namespace: plex
+    values:
+      - ./{{`{{ .Release.Name }}`}}.values.yaml
+
+releases:
+  - name: ombi
+    <<: *withoutData
+  - name: plex
+    <<: *withData
+  - name: radarr
+    <<: *withData
+  - name: sonarr
+    <<: *withData
+  - name: prowlarr
+    <<: *withoutData
+  - name: nzbget
+    <<: *withData
+  - name: tautulli
+    <<: *withoutData
+  - name: qbittorrent-pia
+    recreatePods: true
+    installed: true
+    <<: *localChart
+  - name: plex-meta-manager
+    recreatePods: true
+    installed: true
+    <<: *localChart
