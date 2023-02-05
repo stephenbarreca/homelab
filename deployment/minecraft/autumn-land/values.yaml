@@ -112,11 +112,11 @@ minecraftServer:
   # Options like -X that need to proceed general JVM options
   jvmXXOpts: "-XX:+UseG1GC -XX:ParallelGCThreads=1 -XX:ActiveProcessorCount=4"
   serviceAnnotations: {}
-  serviceType: LoadBalancer
+#  serviceType: LoadBalancer
   servicePort: 25565
   ## Set the port used if the serviceType is NodePort
   # nodePort:
-  loadBalancerIP: 192.168.1.220
+#  loadBalancerIP: 192.168.1.220
   # loadBalancerSourceRanges: []
   ## Set the externalTrafficPolicy in the Service to either Cluster or Local
   externalTrafficPolicy: Local

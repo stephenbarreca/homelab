@@ -213,10 +213,10 @@ additionalArguments:
   - --tracing.elastic.serverurl=https://apm-server-apm-http.monitoring.svc:8200/
   - --tracing.elastic.serviceenvironment=production
   - --tracing.elastic.secrettoken=5tIBfaAv6833791IgWej42GC
-  - --metrics.prometheus=true
-  - --metrics.prometheus.addEntryPointsLabels=true
-  - --metrics.prometheus.addServicesLabels=true
-  - --metrics.prometheus.entryPoint=local,traefik
+#  - --metrics.prometheus=true
+#  - --metrics.prometheus.addEntryPointsLabels=true
+#  - --metrics.prometheus.addServicesLabels=true
+#  - --metrics.prometheus.entryPoint=local,traefik
   - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
   - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=dynu
   - --certificatesresolvers.letsencrypt.acme.email=stephenbarreca@gmail.com
@@ -235,6 +235,10 @@ env:
     value: "false"
   - name: DYNU_API_KEY
     value: TcUgX43V544We64c3633e6UaYV6b3dZ5
+#  - name: CLOUDFLARE_EMAIL
+#    value: fishfu@gmail.com
+#  - name: CLOUDFLARE_DNS_API_TOKEN
+#    value: fEAv4JjgMklJ9HqKBeSlllY8b8xwud_YD0bYsArb
 # - name: SOME_VAR
 #   value: some-var-value
 # - name: SOME_VAR_FROM_CONFIG_MAP
@@ -289,6 +293,11 @@ ports:
     expose: true
     exposedPort: 80
     protocol: TCP
+  minecraft:
+    port: 25565
+    expose: true
+    exposedPort: 25565
+    protocol: TCP
   web:
     port: 8000
     # hostPort: 8000
@@ -302,7 +311,7 @@ ports:
     # Port Redirections
     # Added in 2.2, you can make permanent redirects via entrypoints.
     # https://docs.traefik.io/routing/entrypoints/#redirection
-    redirectTo: websecure
+#    redirectTo: websecure
   websecure:
     port: 8443
     # hostPort: 8443
@@ -322,6 +331,9 @@ ports:
         - main: "stephenbarre.ca"
           sans:
             - "*.stephenbarre.ca"
+        - main: "autumnbarre.ca"
+          sans:
+            - "*.autumnbarre.ca"
 
 # TLS Options are created as TLSOption CRDs
 # https://doc.traefik.io/traefik/https/tls/#tls-options
@@ -339,6 +351,11 @@ tlsOptions:
     sniStrict: false
     preferServerCipherSuites: true
 
+
+metrics:
+  prometheus:
+    addServicesLabels: true
+    addEntryPointsLabels: true
 # Options for the main traefik service, where the entrypoints traffic comes
 # from.
 service:
@@ -464,7 +481,7 @@ securityContext:
 podSecurityContext:
   fsGroup: 65532
 
-
+instanceLabelOverride: traefik
 
 
 
