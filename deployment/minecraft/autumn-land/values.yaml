@@ -9,10 +9,10 @@ image:
 ##
 resources:
   requests:
-    memory: 9Gi
+    memory: 10Gi
     cpu: 0.2
   limits:
-    memory: 11Gi
+    memory: 12Gi
     cpu: 4
 
 # upgrade strategy type (e.g. Recreate or RollingUpdate)
@@ -48,11 +48,11 @@ minecraftServer:
   # One of: LATEST, SNAPSHOT, or a specific version (ie: "1.7.9").
   version: "LATEST"
   # This can be one of "VANILLA", "FORGE", "SPIGOT", "BUKKIT", "PAPER", "FTBA", "SPONGEVANILLA"
-  type: "VANILLA"
+  type: "PAPER"
   # One of: peaceful, easy, normal, and hard
   difficulty: peaceful
   # A comma-separated list of player names to whitelist.
-  whitelist:
+  whitelist: fishfu,AwwB
   # A comma-separated list of player names who should be admins.
   ops: fishfu
   # A server icon URL for server listings. Auto-scaled and transcoded.
@@ -76,7 +76,8 @@ minecraftServer:
   # The maximum height in which building is allowed.
   maxBuildHeight: 256
   # The maximum number of milliseconds a single tick may take before the server watchdog stops the server with the message. -1 disables this entirely.
-  maxTickTime: 60000
+  # maxTickTime: 60000
+  maxTickTime: -1
   # Determines if animals will be able to spawn.
   spawnAnimals: true
   # Determines if monsters will be spawned.
@@ -102,15 +103,16 @@ minecraftServer:
   # If set, this URL will be downloaded at startup and used as a starting point
   downloadWorldUrl:
   # force re-download of server file
-  forceReDownload: false
+  forceReDownload: true
   # Check accounts against Minecraft account service.
   onlineMode: true
   # If you adjust this, you may need to adjust resources.requests above to match.
-  memory: 9G
+  memory: 10G
   # General JVM options to be passed to the Minecraft server invocation
-  jvmOpts: ""
+  jvmOpts: "-Ddisable.watchdog=true"
+  #jvmOpts: "-Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -jar paper.jar --nogui"
   # Options like -X that need to proceed general JVM options
-  jvmXXOpts: "-XX:+UseG1GC -XX:ParallelGCThreads=1 -XX:ActiveProcessorCount=4"
+  #jvmXXOpts: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1"
   serviceAnnotations: {}
 #  serviceType: LoadBalancer
   servicePort: 25565
@@ -119,8 +121,15 @@ minecraftServer:
 #  loadBalancerIP: 192.168.1.220
   # loadBalancerSourceRanges: []
   ## Set the externalTrafficPolicy in the Service to either Cluster or Local
-  externalTrafficPolicy: Local
+  #externalTrafficPolicy: Local
   externalIPs:
+
+  # List with URLs and paths to jar files, additionally may be a directory with jars
+  # This works for both mods and plugins depending on server type
+  modUrls: []
+
+  # A list of Spigot resources/plugins IDs to download.
+  spigetResources: []
 
   rcon:
     # If you enable this, make SURE to change your password below.
@@ -169,7 +178,9 @@ minecraftServer:
 
 ## Additional minecraft container environment variables
 ##
-extraEnv: {}
+extraEnv:
+  USE_AIKAR_FLAGS: true
+  ENABLE_AUTOPAUSE: TRUE
 
 persistence:
   ## minecraft data Persistent Volume Storage Class
