@@ -20,7 +20,7 @@ image:
 # @default -- See below
 env:
   # -- Set the container timezone
-  TZ: UTC
+  TZ: America/New_York
 
 podAnnotations:
   co.elastic.monitor/type: http
