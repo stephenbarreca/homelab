@@ -1,0 +1,12 @@
+repositories:
+  - name: mojo2600
+    url: https://mojo2600.github.io/pihole-kubernetes/
+helmDefaults:
+  skipDeps: true
+
+releases:
+  - name: pihole
+    chart: mojo2600/{{`{{ .Release.Name }}`}}
+    values:
+      - values.yaml
+    namespace: pihole

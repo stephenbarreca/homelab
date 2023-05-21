@@ -6,29 +6,28 @@ replicaCount: 1
 
 image:
   repository: "pihole/pihole"
-  tag: latest
+  tag: ""
   pullPolicy: Always
 
-serviceTCP:
+serviceDhcp:
+  enabled: false
+
+serviceDns:
   type: LoadBalancer
   loadBalancerIP: "192.168.1.240"
     # a fixed LoadBalancer IP
   annotations:
     metallb.universe.tf/allow-shared-ip: pihole-svc
-    co.elastic.monitor/0.type: http
-    co.elastic.monitor/0.urls: "http://192.168.1.240/"
-    co.elastic.monitor/0.schedule: "@every 10s"
-    co.elastic.monitor/0.name: "PiHole Web"
-    co.elastic.monitor/0.check.response.status: "200"
   externalTrafficPolicy: Local
 
-serviceUDP:
+serviceWeb:
+  http:
+    enabled: true
+    port: 80
   type: LoadBalancer
   loadBalancerIP: "192.168.1.240"
-    # a fixed LoadBalancer IP
   annotations:
     metallb.universe.tf/allow-shared-ip: pihole-svc
-  externalTrafficPolicy: Local
 
 virtualHost: pi.hole
 
@@ -186,7 +185,7 @@ dnsmasq:
 
   additionalHostsEntries:
   # Dnsmasq reads the /etc/hosts file to resolve ips. You can add additional entries if you like
-  - 192.168.1.56     tower
+  - 192.168.1.56    tower
   - 192.168.1.55    k8s-main
   - 192.168.1.55    klipper
 
