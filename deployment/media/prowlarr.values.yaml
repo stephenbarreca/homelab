@@ -56,5 +56,6 @@ persistence:
     enabled: true
     type: hostPath
     hostPath: /mnt/extra/prowlarr/config
+    mountPath: /config
     accessMode: ReadWriteMany
     size: 500Gi
