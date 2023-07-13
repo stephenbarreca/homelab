@@ -6,5 +6,5 @@ templates:
       - ./{{`{{ .Release.Name }}`}}/values.yaml
 releases:
   - name: autumn-land
-    installed: true
+    installed: false
     <<: *minecraft

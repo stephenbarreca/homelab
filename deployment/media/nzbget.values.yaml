@@ -43,7 +43,7 @@ securityContext:
 
 addons:
   vpn:
-    enabled: true
+    enabled: false
     type: openvpn
     openvpn:
       auth: |
