@@ -164,7 +164,7 @@ podSecurityContext:
 # -- Configure the resource requests and/or limits for the Pod
 resources:
   requests:
-    cpu: 0.5
+    cpu: 1
     memory: 1Gi
   limits:
     cpu: 13

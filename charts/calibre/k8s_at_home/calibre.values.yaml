@@ -12,7 +12,8 @@ image:
   # -- image repository
   repository: linuxserver/calibre
   # -- image tag
-  tag: version-v5.21.0
+  # tag: version-v5.21.0
+  tag: version-v6.23.0
   # -- image pull policy
   pullPolicy: Always
 

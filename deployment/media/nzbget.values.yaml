@@ -22,20 +22,26 @@ persistence:
     hostPath: /mnt/extra/nzbget
     mountPath: /config
 
-#  persistence:
-#    data:
-#      enabled: true
-#      type: hostPath
-#      hostPath: /mnt/plex
-#      accessMode: ReadWriteMany
-#      mountPath: /data
+#  data:
+#    enabled: true
+#    type: hostPath
+#    hostPath: /mnt/plex
+#    accessMode: ReadWriteMany
+#    mountPath: /data
   books:
     enabled: true
     type: hostPath
     hostPath: /mnt/extra/calibre/config/downloads
     mountPath: /books
 
-resources: {}
+# -- Configure the resource requests and/or limits for the Pod
+resources:
+  requests:
+    cpu: 1
+    memory: 2Gi
+  limits:
+    cpu: 7
+    memory: 10Gi
 
 securityContext:
   runAsUser: 1000

@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: "pihole/pihole"
-  tag: ""
+  tag: "2023.05.2"
   pullPolicy: Always
 
 serviceDhcp:

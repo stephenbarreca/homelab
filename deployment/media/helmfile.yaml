@@ -51,7 +51,7 @@ releases:
     <<: *withoutData
   - name: qbittorrent-pia
     recreatePods: true
-    installed: true
+    installed: false
     <<: *localChart
   - name: plex-meta-manager
     recreatePods: true
