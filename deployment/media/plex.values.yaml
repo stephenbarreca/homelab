@@ -8,7 +8,7 @@
 
 image:
   # -- image repository
-  repository: ghcr.io/ghcr.io/onedr0p/plex
+  repository: ghcr.io/onedr0p/plex
   # -- image tag
   tag: rolling
   # -- image pull policy

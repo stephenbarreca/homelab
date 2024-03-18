@@ -28,7 +28,7 @@ echo "disabling microk8s ha-cluster"
 microk8s disable ha-cluster --force
 echo "enabling microk8s features"
 #microk8s enable dns helm3 metallb metrics-server
-microk8s enable dns helm3
+microk8s enable dns helm3 metallb
 #----------------
 #----------------
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
