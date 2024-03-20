@@ -36,9 +36,7 @@ tasks:
       - sops --decrypt {{.KUBERNETES_DIR}}/flux/vars/cluster-secrets.sops.yaml
       - kustomize build {{.KUBERNETES_DIR}}/bootstrap/flux
       - kustomize build {{.KUBERNETES_DIR}}/flux/config
-    requires:
-      vars:
-        - cluster
+
 
   apply:
     desc: Apply a Flux Kustomization resource for a cluster
