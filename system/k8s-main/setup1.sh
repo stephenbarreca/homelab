@@ -22,5 +22,7 @@ mkdir -p $CORE_DIR/network/media/movies
 mkdir -p $CORE_DIR/network/media/tv
 mkdir -p $CORE_DIR/network/minecraft
 
+echo "install taskfile"
+sudo snap install task --classic
 
 

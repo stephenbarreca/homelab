@@ -1,0 +1,20 @@
+apiVersion: v2
+appVersion: v1.16.5
+description: Plex Meta Manager
+name: Plex Meta Manager
+version: 1.0.0
+kubeVersion: ">=1.16.0-0"
+keywords:
+  - plex
+  - plex meta manager
+icon: https://cloud.githubusercontent.com/assets/14862437/23586868/89ef2922-01c4-11e7-869c-52aafcece17f.png
+sources:
+  - https://hub.docker.com/r/meisnate12/plex-meta-manager
+  - https://github.com/meisnate12/Plex-Meta-Manager
+maintainers:
+  - name: fishfu
+    email: fishfu@gmail.com
+dependencies:
+  - name: common
+    repository: https://library-charts.k8s-at-home.com
+    version: 4.3.0

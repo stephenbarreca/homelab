@@ -1,0 +1,87 @@
+repositories:
+  - name: ks8-at-home
+    url: https://k8s-at-home.com/charts/
+  - name: ks8-at-home-common
+    url: https://library-charts.k8s-at-home.com
+helmDefaults:
+  skipDeps: true
+  namespace: default
+
+templates:
+  withMedia: &withMedia
+    chart: k8s-at-home/{{`{{ .Release.Name }}`}}
+    valuesTemplate:
+      - env:
+          # -- Set the container timezone
+          TZ: America/New_York
+        persistence:
+          movies:
+            enabled: true
+            type: pvc
+            existingClaim: movies
+            mountPath: /data/movies
+          tv:
+            enabled: true
+            type: pvc
+            existingClaim: movies
+            mountPath: /data/tv
+          data:
+            enabled: false
+            type: hostPath
+            hostPath: /mnt/plex
+            accessMode: ReadWriteMany
+            mountPath: /data
+  withoutMedia: &withoutMedia
+    chart: k8s-at-home/{{`{{ .Release.Name }}`}}
+    values:
+      - ./{{`{{ .Release.Name }}`}}.values.yaml
+  localChart: &localChart
+    chart: ../../new_charts/{{`{{ .Release.Name }}`}}
+    values:
+      - ./{{`{{ .Release.Name }}`}}.values.yaml
+
+releases:
+
+  - name: plex
+    k8s-at-home/plex
+    installed: false
+    <<: *withMedia
+
+  - name: radarr
+    chart: k8s-at-home/radarr
+    installed: false
+    <<: *withMedia
+
+  - name: sonarr
+    chart: k8s-at-home/sonarr
+    installed: false
+    <<: *withMedia
+
+  - name: prowlarr
+    chart: k8s-at-home/prowlarr
+    installed: false
+    <<: *withoutMedia
+
+  - name: nzbget
+    chart: k8s-at-home/nzbget
+    installed: false
+    <<: *withMedia
+
+  - name: tautulli
+    chart: k8s-at-home/tautulli
+    installed: false
+    <<: *withoutMedia
+
+  - name: plex-meta-manager
+    recreatePods: true
+    installed: true
+    <<: *localChart
+
+  - name: ombi
+    installed: false
+    <<: *withoutMedia
+
+  - name: qbittorrent-pia
+    recreatePods: true
+    installed: false
+    <<: *localChart
