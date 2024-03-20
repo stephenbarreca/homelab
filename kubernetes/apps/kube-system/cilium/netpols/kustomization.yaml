@@ -15,5 +15,6 @@ resources:
   - ./allow-ingress-lan.yaml
   - ./allow-ingress-world.yaml
 
+  - ./bgppeeringpolicy.yaml
   # - ./default-allow-kubedns.yaml
   - ./kube-system-allow-all.yaml
