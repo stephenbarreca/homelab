@@ -31,7 +31,7 @@ tasks:
       - test -f {{.KUBERNETES_DIR}}/flux/vars/cluster-secrets.sops.yaml
       - sops --decrypt {{.KUBERNETES_DIR}}/bootstrap/flux/age-key.sops.yaml
       - sops --decrypt {{.KUBERNETES_DIR}}/flux/vars/cluster-secrets.sops.yaml
-#      - kustomize build {{.KUBERNETES_DIR}}/bootstrap/flux
+      - kustomize build {{.KUBERNETES_DIR}}/bootstrap/flux
       - kustomize build {{.KUBERNETES_DIR}}/flux/config
 
 
