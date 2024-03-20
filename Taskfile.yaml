@@ -1,0 +1,20 @@
+---
+version: "3"
+
+vars:
+  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
+  TERRAFORM_DIR: "{{.ROOT_DIR}}/infrastructure/terraform"
+
+includes:
+  flux:
+    dir: .taskfiles/flux
+    taskfile: .taskfiles/flux
+  sops:
+    taskfile: ".taskfiles/sops"
+    dir: .taskfiles/sops
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task -l
