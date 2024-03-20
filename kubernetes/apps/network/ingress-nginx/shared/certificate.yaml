@@ -1,0 +1,14 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "stephenbarre-ca"
+spec:
+  secretName: "stephenbarre-ca-tls"
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "stephenbarre.ca"
+  dnsNames:
+    - "stephenbarre.ca"
+    - "*.stephenbarre.ca"
