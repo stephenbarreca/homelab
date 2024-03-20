@@ -1,6 +1,8 @@
 apiVersion: v1
 kind: Secret
 type: Opaque
+metadata:
+    name: cloudflare-api-token
 data:
     api-token: ENC[AES256_GCM,data:CNiEfGGpBRQaTRspF3HHJjB1o7w5S71W1O8ThA0TB3lP+XlZnTHN1Q==,iv:Z8zgdwmlmVme8gcyQPvG38aZf/hLTdGqutO350b1zpo=,tag:VCsx4ErEXbVbsWDtyfArPg==,type:str]
 sops:
