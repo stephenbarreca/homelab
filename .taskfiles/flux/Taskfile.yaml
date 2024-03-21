@@ -11,21 +11,15 @@ tasks:
     desc: Bootstrap Flux into a Kubernetes cluster
     # prompt: Bootstrap Flux into the '{{.cluster}}' cluster... continue?
     cmds:
+      # setup
       - export GITHUB_TOKEN={{.GITHUB_TOKEN}}
-      # Install essential Prometheus Operator CRDs
-#      - kubectl apply --server-side --filename https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/{{.PROMETHEUS_OPERATOR_VERSION}}/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
-#      - kubectl apply --server-side --filename https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/{{.PROMETHEUS_OPERATOR_VERSION}}/example/prometheus-operator-crd/monitoring.coreos.com_prometheusrules.yaml
-#      - kubectl apply --server-side --filename https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/{{.PROMETHEUS_OPERATOR_VERSION}}/example/prometheus-operator-crd/monitoring.coreos.com_scrapeconfigs.yaml
-#      - kubectl apply --server-side --filename https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/{{.PROMETHEUS_OPERATOR_VERSION}}/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
-      # Install Flux
-      - flux bootstrap github --token-auth --owner=stephenbarreca --repository=homelab --branch=main --path=kubernetes/apps --personal
-#      - kubectl apply --server-side --kustomize {{.KUBERNETES_DIR}}/bootstrap/flux
+      - kubectl create ns flux-system
       # Install secrets and configmaps
       - sops --decrypt {{.KUBERNETES_DIR}}/apps/flux-system/vars/age-key.sops.yaml | kubectl apply -f -
       - sops --decrypt {{.KUBERNETES_DIR}}/apps/flux-system/vars/cluster-secrets.sops.yaml | kubectl apply -f -
       - kubectl apply --server-side --filename {{.KUBERNETES_DIR}}/apps/flux-system/vars/cluster-settings.yaml
-      # Install Flux Kustomization resources
-#      - kubectl apply --server-side --kustomize {{.KUBERNETES_DIR}}/flux/config
+      # Install Flux
+      - flux bootstrap github --token-auth --owner=stephenbarreca --repository=homelab --branch=main --path=kubernetes/apps --personal
     preconditions:
       - test -f $HOME/.config/sops/age/keys.txt
       - test -f {{.KUBERNETES_DIR}}/apps/flux-system/vars/age-key.sops.yaml
