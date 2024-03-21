@@ -16,6 +16,10 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   wait: true
   dependsOn:
     - name: cert-manager-issuers
@@ -37,6 +41,10 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   wait: false
   dependsOn:
     - name: nginx-shared
@@ -58,6 +66,10 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   wait: false
   dependsOn:
     - name: nginx-shared
