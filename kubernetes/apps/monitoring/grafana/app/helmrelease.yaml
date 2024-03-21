@@ -134,12 +134,12 @@ spec:
           - access: proxy
             name: Prometheus
             type: prometheus
-            url: http://prometheus-prometheus-server
+            url: http://kube-prometheus-stack-prometheus:9090
             isDefault: true
           - name: Alertmanager
             type: alertmanager
             access: proxy
-            url: http://alertmanager.monitoring.svc.cluster.local:9093
+            url: http://alertmanager:9093
             jsonData:
               implementation: prometheus
         deleteDatasources:
