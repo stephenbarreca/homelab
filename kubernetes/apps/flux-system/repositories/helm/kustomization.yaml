@@ -3,5 +3,7 @@ kind: Kustomization
 resources:
   - bjw-s.yaml
   - cilium.yaml
+  - grafana.yaml
   - ingress-nginx.yaml
   - jetstack.yaml
+  - prometheus-community.yaml
