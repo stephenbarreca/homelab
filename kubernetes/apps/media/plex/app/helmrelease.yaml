@@ -18,6 +18,8 @@ spec:
   values:
     controllers:
       plex:
+        hostNetwork: true
+
         annotations:
           reloader.stakater.com/auto: "true"
 
@@ -39,6 +41,7 @@ spec:
             image:
               repository: ghcr.io/onedr0p/plex
               tag: rolling
+              pullPolicy: Always
             env:
               #PLEX_ADVERTISE_URL: https://10.45.0.20:32400,https://plex.bjw-s.dev:443
               #PLEX_NO_AUTH_NETWORKS: 10.244.0.0/16
