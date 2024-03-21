@@ -20,4 +20,4 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  wait: true
+  wait: false
