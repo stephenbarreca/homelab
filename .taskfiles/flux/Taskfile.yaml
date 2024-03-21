@@ -20,7 +20,7 @@ tasks:
       - sops --decrypt {{.KUBERNETES_DIR}}/apps/flux-system/vars/cluster-secrets.sops.yaml | kubectl apply -f -
       - kubectl apply --server-side --filename {{.KUBERNETES_DIR}}/apps/flux-system/vars/cluster-settings.yaml
       # Install Flux
-      - flux bootstrap github --token-auth --owner=stephenbarreca --repository=homelab --branch=main --path=kubernetes/apps --personal
+      - flux bootstrap github --token-auth --owner=stephenbarreca --repository=homelab --branch=main --path=kubernetes/apps --personal --decryption-provider=sops --decryption-secret=sops-age
     preconditions:
       - test -f $HOME/.config/sops/age/keys.txt
       - test -f {{.KUBERNETES_DIR}}/apps/flux-system/vars/age-key.sops.yaml
