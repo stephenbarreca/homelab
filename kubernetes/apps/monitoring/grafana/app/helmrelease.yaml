@@ -24,7 +24,7 @@ spec:
     replicas: 1
 
     admin:
-      existingSecret: ""
+      existingSecret: grafana-admin
       userKey: admin-user
       passwordKey: admin-password
 
@@ -166,7 +166,7 @@ spec:
       GF_SECURITY_COOKIE_SAMESITE: grafana
       GF_SERVER_ROOT_URL: https://grafana.stephenbarre.ca
 
-    envFromSecret: grafana-secret
+    #envFromSecret: grafana-secret
 
     # grafana.ini:
     #   auth.generic_oauth:
