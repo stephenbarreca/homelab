@@ -30,7 +30,7 @@ loadBalancer:
 
 bandwidthManager:
   enabled: true
-  bbr: true
+  bbr: false
 bpf:
   masquerade: true
   tproxy: true
