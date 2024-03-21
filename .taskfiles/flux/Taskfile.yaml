@@ -11,9 +11,10 @@ tasks:
     desc: Bootstrap Flux into a Kubernetes cluster
     # prompt: Bootstrap Flux into the '{{.cluster}}' cluster... continue?
     cmds:
-      # setup
+      # set github token
       - export GITHUB_TOKEN={{.GITHUB_TOKEN}}
-      - kubectl create ns flux-system
+      # create flux-system namespace if it does not exist
+      - kubectl create ns flux-system --dry-run=client -o yaml | kubectl apply -f -
       # Install secrets and configmaps
       - sops --decrypt {{.KUBERNETES_DIR}}/apps/flux-system/vars/age-key.sops.yaml | kubectl apply -f -
       - sops --decrypt {{.KUBERNETES_DIR}}/apps/flux-system/vars/cluster-secrets.sops.yaml | kubectl apply -f -
