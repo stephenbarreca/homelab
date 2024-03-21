@@ -18,12 +18,12 @@ spec:
   values:
     controllers:
       plex:
-        hostNetwork: true
 
         annotations:
           reloader.stakater.com/auto: "true"
 
         pod:
+          hostNetwork: true
           nodeSelector:
             nvidia.com/gpu.present: "true"
           securityContext:
