@@ -23,7 +23,7 @@ spec:
           reloader.stakater.com/auto: "true"
 
         pod:
-          hostNetwork: true
+          #hostNetwork: true
           nodeSelector:
             nvidia.com/gpu.present: "true"
           securityContext:
@@ -44,7 +44,7 @@ spec:
               pullPolicy: Always
             env:
               #PLEX_ADVERTISE_URL: https://10.45.0.20:32400,https://plex.bjw-s.dev:443
-              #PLEX_NO_AUTH_NETWORKS: 10.244.0.0/16
+              PLEX_NO_AUTH_NETWORKS: 10.0.0.0/8
               PLEX_UID: "1005"
               PLEX_GID: "8675309"
               PMS_INTERNAL_ADDRESS: "http://plex:32400"
