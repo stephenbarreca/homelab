@@ -72,7 +72,7 @@ spec:
       app:
         controller: plex
         type: LoadBalancer
-        externalTrafficPolicy: local
+        externalTrafficPolicy: Local
         ports:
           http:
             port: 32400
