@@ -1,0 +1,82 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: traefik
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: traefik
+      version: 26.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: ingress-nginx
+        namespace: flux-system
+      interval: 30m
+  values:
+    ports:
+      traefik:
+        port: 9000
+        expose: false
+        exposedPort: 9000
+        protocol: TCP
+        exposeInternal: false
+      web:
+        port: 8000
+        expose: true
+        exposedPort: 8080
+        protocol: TCP
+        exposeInternal: false
+        redirectTo:
+          port: websecure
+      websecure:
+        port: 8443
+        expose: true
+        exposedPort: 443
+        protocol: TCP
+        exposeInternal: false
+        tls:
+          enabled: true
+          # this is the name of a TLSOption definition
+          options: ""
+          certResolver: "letsencrypt"
+          domains:
+            - main: "stephenbarre.ca"
+              sans:
+                - "*.stephenbarre.ca"
+            - main: "autumnbarre.ca"
+              sans:
+                - "*.autumnbarre.ca"
+      local:
+        port: 7000
+        expose: true
+        exposedPort: 80
+        protocol: TCP
+
+      metrics:
+        port: 9100
+        expose: false
+        exposedPort: 9100
+        protocol: TCP
+
+    tlsOptions:
+      default:
+        sniStrict: false
+        preferServerCipherSuites: true
+
+    tlsStore:
+      default:
+        defaultCertificate:
+          secretName: stephenbarre-ca-tls
+
+    service:
+      single: true
+      type: LoadBalancer
+      externalTrafficPolicy: Local
+      loadBalancerIP: 192.168.1.203
+
+    persistence:
+      enabled: true
+      storageClass: "microk8s-hostpath"
