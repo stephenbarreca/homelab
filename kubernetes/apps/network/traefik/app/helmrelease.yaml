@@ -12,7 +12,7 @@ spec:
       version: 26.1.0
       sourceRef:
         kind: HelmRepository
-        name: ingress-nginx
+        name: traefik
         namespace: flux-system
       interval: 30m
   values:
