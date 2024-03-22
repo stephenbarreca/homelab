@@ -33,16 +33,19 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/plex
-              tag: rolling
+              repository: lscr.io/linuxserver/plex
+              tag: latest
               pullPolicy: Always
             env:
               PLEX_ADVERTISE_URL: https://192.168.1.241:32400,https://plex.stephenbarre.ca:443
               PLEX_NO_AUTH_NETWORKS: 10.0.0.0/8,192.168.1.0/24
               PLEX_UID: "1000"
               PLEX_GID: "1000"
+              PUID: "1000"
+              PGID: "1000"
               TZ: America/New_York
               PLEX_CLAIM_TOKEN: "claim-YXerstYdxtr5pWE85G9L"
+              NVIDIA_VISIBLE_DEVICES: all
 #            envFrom:
 #              - secretRef:
 #                  name: plex-secrets
