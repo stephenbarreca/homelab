@@ -33,6 +33,7 @@ spec:
 
         containers:
           app:
+            hostNetwork: true
             image:
               repository: ghcr.io/onedr0p/plex
               tag: rolling
