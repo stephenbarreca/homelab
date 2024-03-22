@@ -79,18 +79,15 @@ spec:
     ingress:
       app:
         annotations:
-          nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-        className: "external-nginx"
+          traefik.ingress.kubernetes.io/router.entrypoints: web,websecure,local
+        className: traefik
         hosts:
-          - host: &hostName plex.stephenbarre.ca
+          - host: plex.stephenbarre.ca
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *hostName
 
     persistence:
       config:
