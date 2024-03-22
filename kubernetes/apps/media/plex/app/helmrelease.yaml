@@ -23,7 +23,6 @@ spec:
           reloader.stakater.com/auto: "true"
 
         pod:
-          hostNetwork: true
           nodeSelector:
             nvidia.com/gpu.present: "true"
           securityContext:
