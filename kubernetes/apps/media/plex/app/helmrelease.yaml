@@ -43,7 +43,7 @@ spec:
               PLEX_UID: "1000"
               PLEX_GID: "1000"
               TZ: America/New_York
-              PLEX_CLAIM_TOKEN: "claim-jfU9aThNi-jTncrxdMHG"
+              PLEX_CLAIM_TOKEN: "claim-YXerstYdxtr5pWE85G9L"
 #            envFrom:
 #              - secretRef:
 #                  name: plex-secrets
