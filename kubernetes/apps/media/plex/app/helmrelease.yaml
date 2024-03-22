@@ -38,15 +38,15 @@ spec:
               tag: rolling
               pullPolicy: Always
             env:
-              #PLEX_ADVERTISE_URL: https://10.45.0.20:32400,https://plex.bjw-s.dev:443
+              PLEX_ADVERTISE_URL: https://192.168.1.241:32400,https://plex.stephenbarre.ca:443
               PLEX_NO_AUTH_NETWORKS: 10.0.0.0/8,192.168.1.0/24
-              PLEX_UID: "1005"
-              PLEX_GID: "8675309"
-              PMS_INTERNAL_ADDRESS: "http://plex:32400"
+              PLEX_UID: "1000"
+              PLEX_GID: "1000"
               TZ: America/New_York
-            envFrom:
-              - secretRef:
-                  name: plex-secrets
+              PLEX_CLAIM="claim-pifc-ZgzoPbyMMA_Aqn_"
+#            envFrom:
+#              - secretRef:
+#                  name: plex-secrets
             probes:
               liveness:
                 enabled: true
