@@ -35,7 +35,7 @@ spec:
           app:
             image:
               repository: lscr.io/linuxserver/plex
-              tag: 1.32.8
+              tag: latest
               pullPolicy: Always
             env:
               PLEX_ADVERTISE_URL: https://192.168.1.241:32400,https://plex.stephenbarre.ca:443
