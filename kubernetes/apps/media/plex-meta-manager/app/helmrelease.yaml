@@ -158,6 +158,7 @@ spec:
         globalMounts:
           - path: /config/config.yml
             subPath: config.yml
+            readOnly: false
           - path: /config/movies_collections.yml
             subPath: movies_collections.yml
           - path: /config/movies_overlays.yml
