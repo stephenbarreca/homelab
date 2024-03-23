@@ -2,7 +2,7 @@
 libraries:
   Movies:
     collection_files:
-      - file: config/movies-collections.yml
+      - file: config/movies_collections.yml
       - pmm: seasonal
         template_variables:
           use_halloween: false
@@ -14,7 +14,7 @@ libraries:
         template_variables:
           include:
     overlay_files:
-      - file: config/movies-overlays.yml
+      - file: config/movies_overlays.yml
       - pmm: ribbon
         template_variables:
           use_rotten: false
@@ -27,7 +27,7 @@ libraries:
           rating2_image: rt_popcorn
           rating3: user
           rating3_image: letterboxd
-    remove_overlays: true
+    remove_overlays: false
     operations:
       mass_user_rating_update: mdb_letterboxd
 #      mass_poster_update:
@@ -37,7 +37,7 @@ libraries:
       - file: config/tv-collections.yml
     overlay_files:
       - file: config/tv-overlays.yml
-    remove_overlays: true
+    remove_overlays: false
 #    operations:
 #      mass_poster_update:
 #        source: plex
