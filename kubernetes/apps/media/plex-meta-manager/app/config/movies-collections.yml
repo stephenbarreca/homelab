@@ -1,0 +1,53 @@
+templates:
+  Chart:
+    sort_title: +++++++++<<num>><<collection_name>>
+    sync_mode: sync
+    smart_label: random
+collections:
+  Movies Trending on Plex:
+    template: { name: Chart, num: 1 }
+    tautulli_popular:
+      list_days: 14
+      list_size: 30
+      list_buffer: 30
+    tautulli_watched:
+      list_days: 14
+      list_size: 30
+      list_buffer: 30
+    summary: Trending on Plex
+    visible_library: true
+    visible_home: true
+    visible_shared: true
+    cache_builders: 1
+
+  Movies Trending Online:
+    template: { name: Chart, num: 2 }
+    trakt_trending: 40
+    tmdb_trending_daily: 40
+    tmdb_trending_weekly: 40
+    summary: Trending across the internet
+    visible_library: true
+    visible_home: true
+    visible_shared: true
+    cache_builders: 1
+    # item_overlay: TMDB-TRENDING
+
+  Top Rated Movies:
+    template: { name: Chart, num: 4 }
+    imdb_list: https://www.imdb.com/search/title/?groups=top_250&count=250/
+    tmdb_top_rated: 250
+    cache_builders: 30
+    summary: Top Rated across the internet IMDB
+    # item_overlay: IMDB-250
+
+  Popular Movies This Year:
+    trakt_watched_yearly: 250
+    sort_title: "+++++++++1_3 Watched This Year"
+    sync_mode: sync
+    radarr_add: false
+    collection_order: custom
+    visible_library: true
+    visible_home: true
+    visible_shared: true
+    cache_builders: 7
+    # item_overlay: TMDB-MOST-WATCHED

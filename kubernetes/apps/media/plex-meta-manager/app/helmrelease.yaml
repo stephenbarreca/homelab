@@ -1,0 +1,150 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.4/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: plex-meta-manager
+spec:
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.4
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  interval: 30m
+  values:
+    controllers:
+      plex-meta-manager:
+        enabled: false
+        type: cronjob
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        cronjob:
+          schedule: @midnight
+
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+
+        containers:
+          app:
+            image:
+              repository: docker.io/meisnate12/plex-meta-manager
+              tag: v1.20.0
+            args:
+              - --run
+              - --read-only-config
+            env:
+              PMM_PLEX_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: plex-secret
+                    key: token
+              PMM_TMDB_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: tmdb-secret
+                    key: api-key
+              PMM_OMDB_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: omdb-secret
+                    key: api-key
+              PMM_TRAKT_CLIENT_ID:
+                valueFrom:
+                  secretKeyRef:
+                    name: trakt-client-secret
+                    key: id
+              PMM_TRAKT_CLIENT_SECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: trakt-client-secret
+                    key: secret
+            envFrom:
+              - secretRef:
+                  name: plex-meta-manager-secret
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 512Mi
+              limits:
+                memory: 1024Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+      plex-meta-manager-debug:
+        enabled: true
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+
+        containers:
+          app:
+            image:
+              repository: docker.io/meisnate12/plex-meta-manager
+              tag: v1.20.0
+            env:
+              PMM_PLEX_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: plex-secret
+                    key: token
+            envFrom:
+              - secretRef:
+                  name: plex-meta-manager-secret
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 512Mi
+              limits:
+                memory: 1024Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+    persistence:
+      config:
+        existingClaim: plex-meta-manager-config
+      config-file:
+        type: configMap
+        name: plex-meta-manager-configmap
+        globalMounts:
+          - path: /config/config.yml
+            subPath: config.yml
+            readOnly: true
+          - path: /config/tv_shows.yml
+            subPath: tv_shows.yml
+            readOnly: true

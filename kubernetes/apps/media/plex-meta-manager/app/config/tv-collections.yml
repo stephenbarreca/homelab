@@ -1,0 +1,56 @@
+######################################################
+#                Chart Collections                   #
+######################################################
+templates:
+  Chart:
+    sort_title: +1_<<num>><<collection_name>>
+    sync_mode: sync
+    smart_label: random
+collections:
+#  TV Trending on Plex:
+#    template: { name: Chart, num: 1 }
+#    tautulli_popular:
+#      list_days: 10
+#      list_size: 30
+#      list_buffer: 40
+#    tautulli_watched:
+#      list_days: 10
+#      list_size: 30
+#      list_buffer: 40
+#    summary: Trending on Plex
+#    visible_library: true
+#    visible_home: true
+#    visible_shared: true
+#    cache_builders: 1
+
+
+  TV Trending Online:
+    template: { name: Chart, num: 2 }
+    trakt_trending: 20
+    tmdb_trending_daily: 20
+    tmdb_trending_weekly: 20
+    summary: Trending across the internet
+    visible_library: true
+    visible_home: true
+    visible_shared: true
+    cache_builders: 1
+
+  Top Rated TV:
+    template: { name: Chart, num: 4 }
+    imdb_list:
+      url: https://www.imdb.com/search/title/?title_type=tv_series,tv_miniseries&num_votes=20000,&sort=user_rating,desc
+      limit: 100
+    tmdb_top_rated: 100
+    cache_builders: 30
+    summary: Top Rated across the internet
+
+  Popular TV This Year:
+    trakt_watched_yearly: 250
+    sort_title: "+++++++++1_3 Watched This Year"
+    sync_mode: sync
+    radarr_add: false
+    collection_order: custom
+    visible_library: true
+    visible_home: true
+    visible_shared: true
+    cache_builders: 1

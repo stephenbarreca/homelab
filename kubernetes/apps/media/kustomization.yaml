@@ -6,5 +6,6 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  - ./plex/ks.yaml
   - ./media-pvc/ks.yaml
+  - ./plex/ks.yaml
+  - ./plex-meta-manager/ks.yaml
