@@ -53,6 +53,11 @@ spec:
                   secretKeyRef:
                     name: tmdb-secret
                     key: api-key
+              PMM_MDB_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: mdb-secret
+                    key: api-key
               PMM_OMDB_API_KEY:
                 valueFrom:
                   secretKeyRef:
@@ -115,6 +120,11 @@ spec:
                   secretKeyRef:
                     name: tmdb-secret
                     key: api-key
+              PMM_MDB_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: mdb-secret
+                    key: api-key
               PMM_OMDB_API_KEY:
                 valueFrom:
                   secretKeyRef:
@@ -155,11 +165,9 @@ spec:
       config-file:
         type: configMap
         name: plex-meta-manager-configmap
-        defaultMode: 438
         globalMounts:
           - path: /config/config.yml
             subPath: config.yml
-            readOnly: false
           - path: /config/movies_collections.yml
             subPath: movies_collections.yml
           - path: /config/movies_overlays.yml

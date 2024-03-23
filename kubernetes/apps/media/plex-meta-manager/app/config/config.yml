@@ -27,7 +27,7 @@ libraries:
           rating2_image: rt_popcorn
           rating3: user
           rating3_image: letterboxd
-    remove_overlays: true
+    remove_overlays: false
     operations:
       mass_user_rating_update: mdb_letterboxd
 #      mass_poster_update:
@@ -37,7 +37,7 @@ libraries:
       - file: config/tv-collections.yml
     overlay_files:
       - file: config/tv-overlays.yml
-    remove_overlays: true
+    remove_overlays: false
 #    operations:
 #      mass_poster_update:
 #        source: plex
@@ -87,15 +87,19 @@ plex:
   empty_trash: false
   optimize: false
 
+mdblist:
+  apikey: <<MDB_API_KEY>>
+  cache_expiration: 60
+
+omdb:
+  apikey: <<OMDB_API_KEY>>
+  cache_expiration: 60
+
 tmdb:
   apikey: <<TMDB_API_KEY>>
   language: en
   cache_expiration: 60
   region:
-
-omdb:
-  apikey: <<OMDB_API_KEY>>
-  cache_expiration: 60
 
 trakt:
   client_id: <<TRAKT_CLIENT_ID>>
