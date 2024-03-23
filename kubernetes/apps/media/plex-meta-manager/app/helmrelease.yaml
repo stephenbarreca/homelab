@@ -158,7 +158,9 @@ spec:
         globalMounts:
           - path: /config/config.yml
             subPath: config.yml
-            readOnly: true
-          - path: /config/tv_shows.yml
-            subPath: tv_shows.yml
-            readOnly: true
+          - path: /config/movies_collections.yml
+            subPath: movies_collections.yml
+          - path: /config/movies_overlays.yml
+            subPath: movies_overlays.yml
+          - path: /config/tv_collections.yml
+            subPath: tv_collections.yml

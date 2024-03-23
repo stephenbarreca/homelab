@@ -12,9 +12,9 @@ configMapGenerator:
   - name: plex-meta-manager-configmap
     files:
       - ./config/config.yml
-      - ./config/movies-collections.yml
-      - ./config/movies-overlays.yml
-      - ./config/tv-collections.yml
+      - ./config/movies_collections.yml
+      - ./config/movies_overlays.yml
+      - ./config/tv_collections.yml
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
