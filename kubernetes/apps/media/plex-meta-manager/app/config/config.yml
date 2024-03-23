@@ -28,6 +28,7 @@ libraries:
             - NEON
             - Pixar
             - Walt Disney Pictures
+    overlay_files:
       - file: config/movies_overlays.yml
       - pmm: ribbon
         template_variables:
@@ -136,7 +137,13 @@ tmdb:
 trakt:
   client_id: <<TRAKT_CLIENT_ID>>
   client_secret: <<TRAKT_CLIENT_SECRET>>
-
+  authorization:
+    access_token: <<TRAKT_ACCESS_TOKEN>>
+    token_type: Bearer
+    expires_in: 7889237
+    refresh_token: <<TRAKT_REFRESH_TOKEN>>
+    scope: public
+    created_at: 1709874033
 #tautulli:
 #  url: http://tautulli:8181
 #  apikey: <<TAUTULLI_API_KEY>>

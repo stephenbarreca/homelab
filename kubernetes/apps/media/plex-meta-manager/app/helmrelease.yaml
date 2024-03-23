@@ -73,6 +73,16 @@ spec:
                   secretKeyRef:
                     name: trakt-client-secret
                     key: secret
+              PMM_TRAKT_ACCESS_TOKEN:
+                valueFrom:
+                  secretKeyRef:
+                    name: trakt-client-secret
+                    key: access_token
+              PMM_TRAKT_REFRESH:
+                valueFrom:
+                  secretKeyRef:
+                    name: trakt-client-secret
+                    key: refresh_token
             probes:
               liveness:
                 enabled: false
@@ -140,6 +150,16 @@ spec:
                   secretKeyRef:
                     name: trakt-client-secret
                     key: secret
+              PMM_TRAKT_ACCESS_TOKEN:
+                valueFrom:
+                  secretKeyRef:
+                    name: trakt-client-secret
+                    key: access_token
+              PMM_TRAKT_REFRESH:
+                valueFrom:
+                  secretKeyRef:
+                    name: trakt-client-secret
+                    key: refresh_token
             probes:
               liveness:
                 enabled: false
