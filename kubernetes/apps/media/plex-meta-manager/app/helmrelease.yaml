@@ -68,9 +68,6 @@ spec:
                   secretKeyRef:
                     name: trakt-client-secret
                     key: secret
-            envFrom:
-              - secretRef:
-                  name: plex-meta-manager-secret
             probes:
               liveness:
                 enabled: false
