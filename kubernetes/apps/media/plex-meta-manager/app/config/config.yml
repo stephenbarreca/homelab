@@ -16,6 +16,11 @@ libraries:
         template_variables:
           use_rotten: false
           use_common: false
+          use_cesar: false
+          use_spirit: false
+          use_berlinale: false
+          use_venice: false
+          use_metacritic: false
       - pmm: ratings
         template_variables:
           horizontal_position: center
@@ -32,15 +37,15 @@ libraries:
           rating3_image: letterboxd
           rating3_back_color: 0000001A
     remove_overlays: false
-    operations:
-      mass_user_rating_update: mdb_letterboxd
+#    operations:
+#      mass_user_rating_update: mdb_letterboxd
 #      mass_poster_update:
 #        source: plex
   TV Shows:
     collection_files:
-      - file: config/tv-collections.yml
+      - file: config/tv_collections.yml
     overlay_files:
-      - file: config/tv-overlays.yml
+      - file: config/tv_overlays.yml
     remove_overlays: false
 #    operations:
 #      mass_poster_update:
