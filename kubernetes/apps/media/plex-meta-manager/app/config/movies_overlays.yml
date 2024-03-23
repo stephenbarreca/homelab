@@ -19,92 +19,92 @@ overlays:
 #    imdb_chart: top_movies
 #    cache_builders: 30
     
-  TMDB-TRENDING:
-    overlay: 
-      name: TMDB-TRENDING
-    trakt_trending: 40
-    tmdb_trending_daily: 40
-    tmdb_trending_weekly: 40
+#  TMDB-TRENDING:
+#    overlay:
+#      name: TMDB-TRENDING
+#    trakt_trending: 40
+#    tmdb_trending_daily: 40
+#    tmdb_trending_weekly: 40
+#    cache_builders: 1
+
+  audience_rating:
+    overlay:
+      name: text(audience_rating%)
+      horizontal_offset: 100
+      horizontal_align: right
+      vertical_offset: 15
+      vertical_align: top
+      font: fonts/Inter-Medium.ttf
+      font_size: 63
+      font_color: "#FFFFFF"
+      back_color: "#00000099"
+      back_radius: 30
+      back_width: 150
+      back_height: 105
+    plex_all: true
     cache_builders: 1
 
-#  audience_rating:
-#    overlay:
-#      name: text(audience_rating%)
-#      horizontal_offset: 100
-#      horizontal_align: right
-#      vertical_offset: 15
-#      vertical_align: top
-#      font: fonts/Inter-Medium.ttf
-#      font_size: 63
-#      font_color: "#FFFFFF"
-#      back_color: "#00000099"
-#      back_radius: 30
-#      back_width: 150
-#      back_height: 105
-#    plex_all: true
-#    cache_builders: 1
-#
-#  critic_rating:
-#    overlay:
-#      name: text(critic_rating%)
-#      horizontal_offset: 400
-#      horizontal_align: right
-#      vertical_offset: 15
-#      vertical_align: top
-#      font: fonts/Inter-Medium.ttf
-#      font_size: 63
-#      font_color: "#FFFFFF"
-#      back_color: "#00000099"
-#      back_radius: 30
-#      back_width: 150
-#      back_height: 105
-#    plex_all: true
-#    cache_builders: 1
-#
-#  rt_critic_fresh:
-#    overlay:
-#      name: rt-critic-fresh
-#      horizontal_offset: 555
-#      horizontal_align: right
-#      vertical_offset: 15
-#      vertical_align: top
-#    plex_all: true
-#    filters:
-#      critic_rating.gte: 6
-#    cache_builders: 1
-#
-#  rt_critic_rotten:
-#    overlay:
-#      name: rt-critic-rotten
-#      horizontal_offset: 555
-#      horizontal_align: right
-#      vertical_offset: 15
-#      vertical_align: top
-#    plex_all: true
-#    filters:
-#      critic_rating.lt: 6
-#    cache_builders: 1
-#
-#  rt_audience_fresh:
-#    overlay:
-#      name: rt-audience-fresh
-#      horizontal_offset: 255
-#      horizontal_align: right
-#      vertical_offset: 15
-#      vertical_align: top
-#    plex_all: true
-#    filters:
-#      audience_rating.gte: 6
-#    cache_builders: 1
-#
-#  rt_audience_rotten:
-#    overlay:
-#      name: rt-audience-rotten
-#      horizontal_offset: 255
-#      horizontal_align: right
-#      vertical_offset: 15
-#      vertical_align: top
-#    plex_all: true
-#    filters:
-#      audience_rating.lt: 6
-#    cache_builders: 1
+  critic_rating:
+    overlay:
+      name: text(critic_rating%)
+      horizontal_offset: 400
+      horizontal_align: right
+      vertical_offset: 15
+      vertical_align: top
+      font: fonts/Inter-Medium.ttf
+      font_size: 63
+      font_color: "#FFFFFF"
+      back_color: "#00000099"
+      back_radius: 30
+      back_width: 150
+      back_height: 105
+    plex_all: true
+    cache_builders: 1
+
+  rt_critic_fresh:
+    overlay:
+      name: rt-critic-fresh
+      horizontal_offset: 555
+      horizontal_align: right
+      vertical_offset: 15
+      vertical_align: top
+    plex_all: true
+    filters:
+      critic_rating.gte: 6
+    cache_builders: 1
+
+  rt_critic_rotten:
+    overlay:
+      name: rt-critic-rotten
+      horizontal_offset: 555
+      horizontal_align: right
+      vertical_offset: 15
+      vertical_align: top
+    plex_all: true
+    filters:
+      critic_rating.lt: 6
+    cache_builders: 1
+
+  rt_audience_fresh:
+    overlay:
+      name: rt-audience-fresh
+      horizontal_offset: 255
+      horizontal_align: right
+      vertical_offset: 15
+      vertical_align: top
+    plex_all: true
+    filters:
+      audience_rating.gte: 6
+    cache_builders: 1
+
+  rt_audience_rotten:
+    overlay:
+      name: rt-audience-rotten
+      horizontal_offset: 255
+      horizontal_align: right
+      vertical_offset: 15
+      vertical_align: top
+    plex_all: true
+    filters:
+      audience_rating.lt: 6
+    cache_builders: 1

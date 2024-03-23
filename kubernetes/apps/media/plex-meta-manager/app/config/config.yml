@@ -38,21 +38,18 @@ libraries:
           use_berlinale: false
           use_venice: false
           use_metacritic: false
-      - pmm: ratings
-        template_variables:
-          horizontal_position: center
-          vertical_position: top
-          rating_alignment: horizontal
-          addon_position: left
-          rating1: critic
-          rating1_image: rt_tomato
-          rating_1_font_size: 40
-          rating2: audience
-          rating2_image: rt_popcorn
-          rating_2_font_size: 40
-          rating3: user
-          rating3_image: letterboxd
-          rating_3_font_size: 40
+#      - pmm: ratings
+#        template_variables:
+#          horizontal_position: center
+#          vertical_position: top
+#          rating_alignment: horizontal
+#          addon_position: left
+#          rating1: critic
+#          rating1_image: rt_tomato
+#          rating2: audience
+#          rating2_image: rt_popcorn
+#          rating3: user
+#          rating3_image: letterboxd
     remove_overlays: false
 #    operations:
 #      mass_user_rating_update: mdb_letterboxd
