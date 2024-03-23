@@ -70,8 +70,8 @@ libraries:
             - NEON
             - Pixar
             - Walt Disney Pictures
-    overlay_files:
-      - file: config/tv_overlays.yml
+#    overlay_files:
+#      - file: config/tv_overlays.yml
     remove_overlays: false
 #    operations:
 #      mass_poster_update:
