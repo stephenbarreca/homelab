@@ -15,7 +15,11 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops-kubernetes
+    name: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   wait: false
   dependsOn:
     - name: plex
