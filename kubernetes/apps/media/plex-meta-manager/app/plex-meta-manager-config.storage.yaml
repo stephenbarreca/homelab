@@ -16,7 +16,7 @@ spec:
   accessModes:
   - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: movies
+  storageClassName: plex-meta-manager-config
   local:
     path: /data/network/media/movies/plex-meta-manager
   nodeAffinity:
