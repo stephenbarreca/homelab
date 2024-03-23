@@ -29,13 +29,10 @@ libraries:
           addon_position: left
           rating1: critic
           rating1_image: rt_tomato
-          rating1_back_color: 0000001A
           rating2: audience
           rating2_image: rt_popcorn
-          rating2_back_color: 0000001A
           rating3: user
           rating3_image: letterboxd
-          rating3_back_color: 0000001A
     remove_overlays: false
 #    operations:
 #      mass_user_rating_update: mdb_letterboxd
