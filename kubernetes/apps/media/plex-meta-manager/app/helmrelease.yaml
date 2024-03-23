@@ -93,7 +93,7 @@ spec:
                 drop:
                   - ALL
       plex-meta-manager-debug:
-        enabled: false
+        enabled: true
         annotations:
           reloader.stakater.com/auto: "true"
 
