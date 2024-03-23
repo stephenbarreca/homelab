@@ -110,26 +110,26 @@ spec:
                   secretKeyRef:
                     name: plex-secret
                     key: token
-                PMM_TMDB_API_KEY:
-                  valueFrom:
-                    secretKeyRef:
-                      name: tmdb-secret
-                      key: api-key
-                PMM_OMDB_API_KEY:
-                  valueFrom:
-                    secretKeyRef:
-                      name: omdb-secret
-                      key: api-key
-                PMM_TRAKT_CLIENT_ID:
-                  valueFrom:
-                    secretKeyRef:
-                      name: trakt-client-secret
-                      key: id
-                PMM_TRAKT_CLIENT_SECRET:
-                  valueFrom:
-                    secretKeyRef:
-                      name: trakt-client-secret
-                      key: secret
+              PMM_TMDB_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: tmdb-secret
+                    key: api-key
+              PMM_OMDB_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: omdb-secret
+                    key: api-key
+              PMM_TRAKT_CLIENT_ID:
+                valueFrom:
+                  secretKeyRef:
+                    name: trakt-client-secret
+                    key: id
+              PMM_TRAKT_CLIENT_SECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: trakt-client-secret
+                    key: secret
             probes:
               liveness:
                 enabled: false
