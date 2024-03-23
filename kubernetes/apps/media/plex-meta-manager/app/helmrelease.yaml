@@ -155,7 +155,7 @@ spec:
       config-file:
         type: configMap
         name: plex-meta-manager-configmap
-        defaultMode: 666
+        defaultMode: '0666'
         globalMounts:
           - path: /config/config.yml
             subPath: config.yml
