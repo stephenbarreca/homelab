@@ -10,7 +10,24 @@ libraries:
       - pmm: decade
       - pmm: universe
       - pmm: based
-    overlay_files:
+      - pmm: oscars
+        template_variable:
+          use_year_collections: false
+      - pmm: cannes
+        template_variable:
+          use_year_collections: false
+      - pmm: razzie
+        template_variable:
+          use_year_collections: false
+      - pmm: studio
+        template_variables:
+          include:
+            - A24
+            - Blumhouse Productions
+            - DreamWorks Studios
+            - NEON
+            - Pixar
+            - Walt Disney Pictures
       - file: config/movies_overlays.yml
       - pmm: ribbon
         template_variables:
@@ -29,10 +46,13 @@ libraries:
           addon_position: left
           rating1: critic
           rating1_image: rt_tomato
+          rating_1_font_size: 40
           rating2: audience
           rating2_image: rt_popcorn
+          rating_2_font_size: 40
           rating3: user
           rating3_image: letterboxd
+          rating_3_font_size: 40
     remove_overlays: false
 #    operations:
 #      mass_user_rating_update: mdb_letterboxd
@@ -41,6 +61,15 @@ libraries:
   TV Shows:
     collection_files:
       - file: config/tv_collections.yml
+      - pmm: studio
+        template_variables:
+          include:
+            - A24
+            - Blumhouse Productions
+            - DreamWorks Studios
+            - NEON
+            - Pixar
+            - Walt Disney Pictures
     overlay_files:
       - file: config/tv_overlays.yml
     remove_overlays: false
