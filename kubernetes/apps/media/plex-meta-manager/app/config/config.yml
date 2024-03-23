@@ -10,9 +10,6 @@ libraries:
       - pmm: decade
       - pmm: universe
       - pmm: based
-      - pmm: studio
-        template_variables:
-          include:
     overlay_files:
       - file: config/movies_overlays.yml
       - pmm: ribbon

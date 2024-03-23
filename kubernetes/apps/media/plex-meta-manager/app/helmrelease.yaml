@@ -18,7 +18,7 @@ spec:
   values:
     controllers:
       plex-meta-manager:
-        enabled: false
+        enabled: true
         type: cronjob
 
         annotations:
@@ -93,7 +93,7 @@ spec:
                 drop:
                   - ALL
       plex-meta-manager-debug:
-        enabled: true
+        enabled: false
         annotations:
           reloader.stakater.com/auto: "true"
 
