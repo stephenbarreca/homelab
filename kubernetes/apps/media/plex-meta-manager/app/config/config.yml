@@ -27,7 +27,7 @@ libraries:
           rating2_image: rt_popcorn
           rating3: user
           rating3_image: letterboxd
-    remove_overlays: false
+    remove_overlays: true
     operations:
       mass_user_rating_update: mdb_letterboxd
 #      mass_poster_update:
@@ -37,7 +37,7 @@ libraries:
       - file: config/tv-collections.yml
     overlay_files:
       - file: config/tv-overlays.yml
-    remove_overlays: false
+    remove_overlays: true
 #    operations:
 #      mass_poster_update:
 #        source: plex
