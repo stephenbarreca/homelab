@@ -73,7 +73,7 @@ spec:
                   port: http
     persistence:
       config:
-        existingClaim: adguard-home
+        existingClaim: adguard-config
         globalMounts:
           - path: /opt/adguardhome/conf
       data:
