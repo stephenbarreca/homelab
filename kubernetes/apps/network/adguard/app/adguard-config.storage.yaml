@@ -1,0 +1,43 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: adguard-config
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: adguard-config
+spec:
+  capacity:
+    storage: 100Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: adguard-config
+  local:
+    path: /data/network/adguard-config
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: adguard-config
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: adguard-config
+  resources:
+    requests:
+      storage: 100Gi
+---

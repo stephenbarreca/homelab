@@ -1,0 +1,83 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: adguard
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.0.4
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controllers:
+      adguard:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsNonRoot: true
+            fsGroupChangePolicy: "OnRootMismatch"
+
+        containers:
+          app:
+            image:
+              repository: adguard/adguardhome
+              tag: latest
+              pullPolicy: Always
+            args: []
+            env: {}
+            resources:
+              requests:
+                cpu: 100m
+                memory: 500M
+              limits:
+                memory: 500M
+
+    service:
+      app:
+        controller: adguard
+        type: LoadBalancer
+        loadBalancerIP: 192.168.1.240
+        externalTrafficPolicy: Local
+        ports:
+          http:
+            port: 80
+          https:
+            port: 443
+          dns:
+            port: 53
+          dns-https:
+            port: 3000
+
+    ingress:
+      app:
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: local
+        className: traefik
+        hosts:
+          - host: adguard.stephenbarre.ca
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        existingClaim: adguard-home
+        globalMounts:
+          - path: /opt/adguardhome/conf
+      data:
+        type: emptyDir
+        medium: Memory
+        globalMounts:
+          - path: /opt/adguardhome/work
