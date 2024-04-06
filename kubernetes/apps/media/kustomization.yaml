@@ -11,3 +11,4 @@ resources:
   - ./plex-meta-manager/ks.yaml
   - ./prowlarr/ks.yaml
   - ./radarr/ks.yaml
+  - ./sonarr/ks.yaml
