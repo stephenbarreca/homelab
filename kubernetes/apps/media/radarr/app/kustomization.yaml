@@ -3,7 +3,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - movies.storage.yaml
-  - plex-config.storage.yaml
-  - radarr.storage.yaml
-  - tv.storage.yaml
+  - ./radarr-secret.sops.yaml
+  - ./helmrelease.yaml

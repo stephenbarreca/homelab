@@ -9,3 +9,4 @@ resources:
   - ./media-pvc/ks.yaml
   - ./plex/ks.yaml
   - ./plex-meta-manager/ks.yaml
+  - ./radarr/ks.yaml
