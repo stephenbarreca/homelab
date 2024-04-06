@@ -5,5 +5,6 @@ kind: Kustomization
 resources:
   - movies.storage.yaml
   - plex-config.storage.yaml
+  - prowlarr.storage.yaml
   - radarr.storage.yaml
   - tv.storage.yaml
