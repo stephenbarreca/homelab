@@ -1,8 +1,0 @@
-releases:
-- name: transmission-openvpn
-  namespace: plex
-  chart: ./transmission-openvpn
-  recreatePods: true
-  installed: true
-  values:
-    - values.yaml
