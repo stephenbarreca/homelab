@@ -17,109 +17,23 @@ spec:
   interval: 30m
   values:
     controllers:
-      plex-meta-manager:
-        enabled: true
-        type: cronjob
-
-        annotations:
-          reloader.stakater.com/auto: "true"
-
-        cronjob:
-          schedule: "@midnight"
-
-        pod:
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
-            fsGroupChangePolicy: "OnRootMismatch"
-
-        containers:
-          app:
-            image:
-              repository: docker.io/meisnate12/plex-meta-manager
-              tag: v1.20.0
-            args:
-              - --run
-              - --read-only-config
-            env:
-              PMM_PLEX_API_KEY:
-                valueFrom:
-                  secretKeyRef:
-                    name: plex-secret
-                    key: token
-              PMM_TMDB_API_KEY:
-                valueFrom:
-                  secretKeyRef:
-                    name: tmdb-secret
-                    key: api-key
-              PMM_MDB_API_KEY:
-                valueFrom:
-                  secretKeyRef:
-                    name: mdb-secret
-                    key: api-key
-              PMM_OMDB_API_KEY:
-                valueFrom:
-                  secretKeyRef:
-                    name: omdb-secret
-                    key: api-key
-              PMM_TRAKT_CLIENT_ID:
-                valueFrom:
-                  secretKeyRef:
-                    name: trakt-client-secret
-                    key: id
-              PMM_TRAKT_CLIENT_SECRET:
-                valueFrom:
-                  secretKeyRef:
-                    name: trakt-client-secret
-                    key: secret
-              PMM_TRAKT_ACCESS_TOKEN:
-                valueFrom:
-                  secretKeyRef:
-                    name: trakt-client-secret
-                    key: access_token
-              PMM_TRAKT_REFRESH:
-                valueFrom:
-                  secretKeyRef:
-                    name: trakt-client-secret
-                    key: refresh_token
-            probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
-              startup:
-                enabled: false
-            resources:
-              requests:
-                cpu: 10m
-                memory: 512Mi
-              limits:
-                memory: 1024Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
-      plex-meta-manager-debug:
+      plex-meta-manager-debug: &controller
         enabled: false
         annotations:
           reloader.stakater.com/auto: "true"
-
         pod:
           securityContext:
             runAsUser: 568
             runAsGroup: 568
             fsGroup: 568
             fsGroupChangePolicy: "OnRootMismatch"
-
         containers:
-          app:
+          app: &app-container
             image:
               repository: docker.io/meisnate12/plex-meta-manager
               tag: v1.20.0
             env:
+              PMM_READ_ONLY_CONFIG: true
               PMM_PLEX_API_KEY:
                 valueFrom:
                   secretKeyRef:
@@ -179,6 +93,19 @@ spec:
               capabilities:
                 drop:
                   - ALL
+      plex-meta-manager:
+        <<: *controller
+        enabled: true
+        type: cronjob
+        cronjob:
+          schedule: "@midnight"
+        containers:
+          app:
+            <<: *app-container
+            args:
+              - --run
+              - --read-only-config
+
     persistence:
       config:
         existingClaim: plex-meta-manager-config
@@ -194,3 +121,4 @@ spec:
             subPath: movies_overlays.yml
           - path: /config/tv_collections.yml
             subPath: tv_collections.yml
+ 
