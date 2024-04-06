@@ -7,4 +7,5 @@ resources:
   - plex-config.storage.yaml
   - prowlarr.storage.yaml
   - radarr.storage.yaml
+  - sonarr.storage.yaml
   - tv.storage.yaml
