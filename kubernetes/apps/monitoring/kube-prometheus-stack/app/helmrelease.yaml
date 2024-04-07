@@ -125,13 +125,12 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        ingressClassName: internal-nginx
+        ingressClassName: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: local
         pathType: Prefix
         hosts:
-          - &host_prometheus prometheus.stephenbarre.ca
-        tls:
-          - hosts:
-              - *host_prometheus
+          - prometheus.stephenbarre.ca
 
       prometheusSpec:
         alertingEndpoints:

@@ -181,12 +181,11 @@ spec:
 
     ingress:
       enabled: true
-      ingressClassName: internal-nginx
+      ingressClassName: traefik
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: local
       hosts:
-        - &host grafana.stephenbarre.ca
-      tls:
-        - hosts:
-            - *host
+        - grafana.stephenbarre.ca
 
     persistence:
       enabled: false
