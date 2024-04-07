@@ -1,17 +1,17 @@
 overlays:
   
-#  PLEX-TRENDING:
-#    overlay:
-#      name: PLEX-TRENDING
-#    tautulli_popular:
-#      list_days: 30
-#      list_size: 30
-#      list_buffer: 30
-#    tautulli_watched:
-#      list_days: 30
-#      list_size: 30
-#      list_buffer: 30
-#    cache_builders: 1
+  PLEX-TRENDING:
+    overlay:
+      name: PLEX-TRENDING
+    tautulli_popular:
+      list_days: 14
+      list_size: 30
+      list_buffer: 30
+    tautulli_watched:
+      list_days: 14
+      list_size: 30
+      list_buffer: 30
+    cache_builders: 1
 
 #  IMDB-250:
 #    overlay:
@@ -19,13 +19,13 @@ overlays:
 #    imdb_chart: top_movies
 #    cache_builders: 30
     
-#  TMDB-TRENDING:
-#    overlay:
-#      name: TMDB-TRENDING
-#    trakt_trending: 40
-#    tmdb_trending_daily: 40
-#    tmdb_trending_weekly: 40
-#    cache_builders: 1
+  TMDB-TRENDING:
+    overlay:
+      name: TMDB-TRENDING
+    trakt_trending: 40
+    tmdb_trending_daily: 40
+    tmdb_trending_weekly: 40
+    cache_builders: 1
 
   audience_rating:
     overlay:

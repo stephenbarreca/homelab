@@ -32,12 +32,12 @@ collections:
     cache_builders: 1
     # item_overlay: TMDB-TRENDING
 
-  Top Rated Movies:
-    template: { name: Chart, num: 4 }
-    imdb_list: https://www.imdb.com/search/title/?groups=top_250&count=250/
-    tmdb_top_rated: 250
-    cache_builders: 30
-    summary: Top Rated across the internet IMDB
+#  Top Rated Movies:
+#    template: { name: Chart, num: 4 }
+#    imdb_list: https://www.imdb.com/search/title/?groups=top_250&count=250/
+#    tmdb_top_rated: 250
+#    cache_builders: 30
+#    summary: Top Rated across the internet IMDB
     # item_overlay: IMDB-250
 
   Popular Movies This Year:

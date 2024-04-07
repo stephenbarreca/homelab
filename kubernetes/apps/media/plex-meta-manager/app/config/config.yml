@@ -1,13 +1,15 @@
 ---
 libraries:
   Movies:
+    template_variables:
+      use_separator: false
     collection_files:
       - file: config/movies_collections.yml
       - pmm: seasonal
         template_variables:
           use_halloween: false
           use_christmas: false
-      - pmm: decade
+      #- pmm: decade
       - pmm: universe
       - pmm: based
       - pmm: oscars
@@ -28,6 +30,12 @@ libraries:
             - NEON
             - Pixar
             - Walt Disney Pictures
+      - pmm: imdb
+        template_variables:
+          use_lowest: false
+          use_popular: false
+          radarr_add_missing_top: true
+
     overlay_files:
       - file: config/movies_overlays.yml
       - pmm: ribbon
@@ -112,6 +120,14 @@ settings:
   custom_repo: None
   check_nightly: false
 
+mdblist:
+  apikey: <<MDB_API_KEY>>
+  cache_expiration: 60
+
+omdb:
+  apikey: <<OMDB_API_KEY>>
+  cache_expiration: 60
+
 plex:
   url: http://plex.media.svc.cluster.local:32400
   token: <<PLEX_API_KEY>>
@@ -120,13 +136,44 @@ plex:
   empty_trash: false
   optimize: false
 
-mdblist:
-  apikey: <<MDB_API_KEY>>
-  cache_expiration: 60
+radarr:
+  url: http://radarr:7878
+  token: <<RADARR_API_KEY>>
+  add_missing: false
+  add_existing: false
+  root_folder_path: /data/movies/movies
+  monitor: true
+  availability: released
+  quality_profile: 1080p Preferred
+  tag:
+  search: false
+  radarr_path:
+  plex_path:
+  upgrade_existing: false
+  ignore_cache: false
 
-omdb:
-  apikey: <<OMDB_API_KEY>>
-  cache_expiration: 60
+sonarr:
+  url: http://sonarr:8989
+  token: <<SONARR_API_KEY>>
+  add_missing: false
+  add_existing: false
+  root_folder_path: /data/tv/tv
+  monitor: all
+  quality_profile: ANY-1080p
+  language_profile: English
+  series_type: standard
+  season_folder: true
+  tag:
+  search: false
+  cutoff_search: false
+  sonarr_path:
+  plex_path:
+  upgrade_existing: false
+  ignore_cache: false
+
+tautulli:
+  url: http://tautulli:8181
+  apikey: <<TAUTULLI_API_KEY>>
 
 tmdb:
   apikey: <<TMDB_API_KEY>>
@@ -144,43 +191,3 @@ trakt:
     refresh_token: <<TRAKT_REFRESH_TOKEN>>
     scope: public
     created_at: 1709874033
-#tautulli:
-#  url: http://tautulli:8181
-#  apikey: <<TAUTULLI_API_KEY>>
-
-
-
-#radarr:
-#  url: http://radarr.downloads.svc.cluster.local:7878
-#  token: <<RADARR_API_KEY>>
-#  add_missing: false
-#  add_existing: false
-#  root_folder_path: /data/nas-media/Library/Main/Movies
-#  monitor: true
-#  availability: released
-#  quality_profile: Ultra-HD
-#  tag:
-#  search: false
-#  radarr_path:
-#  plex_path:
-#  upgrade_existing: false
-#  ignore_cache: false
-#
-#sonarr:
-#  url: http://sonarr.downloads.svc.cluster.local:8989
-#  token: <<SONARR_API_KEY>>
-#  add_missing: false
-#  add_existing: false
-#  root_folder_path: /data/nas-media/Library/Main/Series
-#  monitor: all
-#  quality_profile: Ultra-HD
-#  language_profile: English
-#  series_type: standard
-#  season_folder: true
-#  tag:
-#  search: false
-#  cutoff_search: false
-#  sonarr_path:
-#  plex_path:
-#  upgrade_existing: false
-#  ignore_cache: false

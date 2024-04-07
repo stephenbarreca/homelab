@@ -31,19 +31,9 @@ spec:
           app: &app-container
             image:
               repository: docker.io/meisnate12/plex-meta-manager
-              tag: v1.20.0
+              tag: v1.21.0
             env:
               PMM_READ_ONLY_CONFIG: true
-              PMM_PLEX_API_KEY:
-                valueFrom:
-                  secretKeyRef:
-                    name: plex-secret
-                    key: token
-              PMM_TMDB_API_KEY:
-                valueFrom:
-                  secretKeyRef:
-                    name: tmdb-secret
-                    key: api-key
               PMM_MDB_API_KEY:
                 valueFrom:
                   secretKeyRef:
@@ -53,6 +43,31 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     name: omdb-secret
+                    key: api-key
+              PMM_PLEX_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: plex-secret
+                    key: token
+              PMM_RADARR_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: radarr-secret
+                    key: api_key
+              PMM_SONARR_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: sonarr-secret
+                    key: api_key
+              PMM_TAUTULLI_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: tautulli-secret
+                    key: api-key
+              PMM_TMDB_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: tmdb-secret
                     key: api-key
               PMM_TRAKT_CLIENT_ID:
                 valueFrom:
