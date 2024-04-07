@@ -9,7 +9,9 @@ resources:
   - ./media-pvc/ks.yaml
   - ./plex/ks.yaml
   - ./plex-meta-manager/ks.yaml
+  - ./sabnzbd/ks.yaml
+  - ./tautulli/ks.yaml
+  # *Arr
   - ./prowlarr/ks.yaml
   - ./radarr/ks.yaml
-  - ./sabnzbd/ks.yaml
   - ./sonarr/ks.yaml
