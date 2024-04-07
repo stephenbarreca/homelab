@@ -9,4 +9,5 @@ resources:
   - radarr.storage.yaml
   - sabnzbd.storage.yaml
   - sonarr.storage.yaml
+  - tautulli.storage.yaml
   - tv.storage.yaml
