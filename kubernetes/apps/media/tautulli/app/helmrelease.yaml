@@ -75,3 +75,8 @@ spec:
         existingClaim: tautulli-config
         globalMounts:
           - path: /config
+      backup:
+        existingClaim: movies
+        globalMounts:
+          - path: /config/backups
+            subPath: tautulli-backup
