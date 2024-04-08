@@ -11,3 +11,4 @@ resources:
   - sonarr.storage.yaml
   - tautulli.storage.yaml
   - tv.storage.yaml
+  - qbittorrent.storage.yaml
