@@ -51,9 +51,10 @@ libraries:
       - pmm: director
         template_variables:
           sort_title: "<<title>>"
+          name_format: <<key_name>>
           data:
-            depth: 0
-            limit: 0
+            depth: 3
+            limit: 25
           include:
             - Akira Kurosawa
             - Alex Garland
@@ -81,6 +82,12 @@ libraries:
             - Tim Burton
             - Wes Anderson
             - Yorgos Lanthimos
+          radarr_add_missing_Akira Kurosawa: true
+          radarr_add_missing_Christopher Nolan: true
+          radarr_add_missing_Denis Villeneuve: true
+          radarr_add_missing_Guillermo del Toro: true
+          radarr_add_missing_Ridley Scott: true
+          radarr_add_missing_Wes Anderson: true
       - pmm: actor
         template_variables:
           sort_title: "<<title>>"
@@ -97,13 +104,16 @@ libraries:
         template_variables:
           sort_title: "<<title>>"
           data:
-            depth: 0
-            limit: 0
+            depth: 3
+            limit: 5
           include:
             - Michael Crichton
             - Philip K. Dick
             - Stephen King
             - Tim Burton
+          radarr_add_missing_Michael Crichton: true
+          radarr_add_missing_Philip K. Dick: true
+          radarr_add_missing_Stephen King: true
     overlay_files:
       - file: config/movies_overlays.yml
       - pmm: ribbon
