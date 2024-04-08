@@ -64,7 +64,7 @@ libraries:
       - pmm: director
         template_variables:
           sort_title: "<<title>>"
-          name_format: <<key_name>>
+          name_format: "<<key_name>>"
           data:
             depth: 3
             limit: 25
@@ -104,7 +104,7 @@ libraries:
       - pmm: actor
         template_variables:
           sort_title: "<<title>>"
-          name_format: <<key_name>>
+          name_format: "<<key_name>>"
           data:
             depth: 5
             limit: 10
@@ -117,6 +117,7 @@ libraries:
       - pmm: writer
         template_variables:
           sort_title: "<<title>>"
+          name_format: "<<key_name>>"
           data:
             depth: 3
             limit: 5
