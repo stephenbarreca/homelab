@@ -7,6 +7,7 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./media-pvc/ks.yaml
+  - ./qbittorrent/ks.yaml
   - ./plex/ks.yaml
   - ./plex-image-cleanup/ks.yaml
   - ./plex-meta-manager/ks.yaml
