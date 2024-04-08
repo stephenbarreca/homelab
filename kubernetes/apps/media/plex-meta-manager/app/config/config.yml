@@ -230,7 +230,7 @@ plex:
   optimize: false
 
 radarr:
-  url: http://radarr:7878
+  url: http://radarr:7878/radarr
   token: <<RADARR_API_KEY>>
   add_missing: false
   add_existing: false
@@ -246,7 +246,7 @@ radarr:
   ignore_cache: false
 
 sonarr:
-  url: http://sonarr:8989
+  url: http://sonarr:8989/sonarr
   token: <<SONARR_API_KEY>>
   add_missing: false
   add_existing: false
