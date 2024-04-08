@@ -68,7 +68,7 @@ spec:
               repository: ghcr.io/qdm12/gluetun
               tag: v3.38.0
             env:
-              VPN_SERVICE_PROVIDER: private internet acess
+              VPN_SERVICE_PROVIDER: private internet access
               SERVER_REGIONS: CA Toronto
               PORT_FORWARD_ONLY: true
               PRIVATE_INTERNET_ACCESS_OPENVPN_ENCRYPTION_PRESET: strong
