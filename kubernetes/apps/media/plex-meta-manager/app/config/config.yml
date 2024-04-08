@@ -14,6 +14,15 @@ libraries:
       - pmm: universe
         template_variables:
           sort_title: "<<title>>"
+          radarr_add_missing_askew: true
+          radarr_add_missing_avp: true
+          radarr_add_missing_fast: true
+          radarr_add_missing_mcu: true
+          radarr_add_missing_mummy: true
+          radarr_add_missing_rocky: true
+          radarr_add_missing_star: true
+          radarr_add_missing_trek: true
+          radarr_add_missing_xmen: true
       - pmm: based
         template_variables:
           sort_title: "<<title>>"
@@ -91,6 +100,7 @@ libraries:
       - pmm: actor
         template_variables:
           sort_title: "<<title>>"
+          name_format: <<key_name>>
           data:
             depth: 5
             limit: 10
@@ -125,23 +135,15 @@ libraries:
           use_berlinale: false
           use_venice: false
           use_metacritic: false
-#      - pmm: ratings
-#        template_variables:
-#          horizontal_position: center
-#          vertical_position: top
-#          rating_alignment: horizontal
-#          addon_position: left
-#          rating1: critic
-#          rating1_image: rt_tomato
-#          rating2: audience
-#          rating2_image: rt_popcorn
-#          rating3: user
-#          rating3_image: letterboxd
+    playlist_files:
+      - pmm: playlist
+        use_arrow: false
+        use_dcau: false
+        use_dragonball: false
+        use_pokemon: false
+        use_clonewars: false
+
     remove_overlays: false
-#    operations:
-#      mass_user_rating_update: mdb_letterboxd
-#      mass_poster_update:
-#        source: plex
   TV Shows:
     collection_files:
       - file: config/tv_collections.yml
