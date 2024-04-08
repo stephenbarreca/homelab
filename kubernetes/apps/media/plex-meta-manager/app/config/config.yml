@@ -31,16 +31,20 @@ libraries:
           collection_section: "050"
           use_year_collections: false
           collection_order: release
+          radarr_add_missing_best_picture: true
+          radarr_add_missing_best_director: true
       - pmm: cannes
         template_variables:
           collection_section: "051"
           use_year_collections: false
           collection_order: release
+          radarr_add_missing_palm: true
       - pmm: razzie
         template_variables:
           collection_section: "052"
           use_year_collections: false
           collection_order: release
+          radarr_add_missing_golden: true
       - pmm: studio
         template_variables:
           sort_title: "<<title>>"
@@ -135,13 +139,6 @@ libraries:
           use_berlinale: false
           use_venice: false
           use_metacritic: false
-    playlist_files:
-      - pmm: playlist
-        use_arrow: false
-        use_dcau: false
-        use_dragonball: false
-        use_pokemon: false
-        use_clonewars: false
 
     remove_overlays: false
   TV Shows:
@@ -171,6 +168,14 @@ libraries:
 #      mass_poster_update:
 #        source: plex
 
+  playlist_files:
+    - pmm: playlist
+      template_variables:
+        use_arrow: false
+        use_dcau: false
+        use_dragonball: false
+        use_pokemon: false
+        use_clonewars: false
 settings:
   cache: true
   cache_expiration: 60
