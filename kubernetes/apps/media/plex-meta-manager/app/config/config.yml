@@ -125,7 +125,6 @@ libraries:
             - Michael Crichton
             - Philip K. Dick
             - Stephen King
-            - Tim Burton
           radarr_add_missing_Michael Crichton: true
           radarr_add_missing_Philip K. Dick: true
           radarr_add_missing_Stephen King: true
