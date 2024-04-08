@@ -7,22 +7,34 @@ libraries:
       - file: config/movies_collections.yml
       - pmm: seasonal
         template_variables:
-          use_halloween: false
-          use_christmas: false
-      #- pmm: decade
+          collection_section: "010"
+          visible_library: true
+          visible_home: true
+          visible_shared: true
       - pmm: universe
+        template_variables:
+          sort_title: "<<title>>"
       - pmm: based
+        template_variables:
+          sort_title: "<<title>>"
       - pmm: oscars
-        template_variable:
+        template_variables:
+          collection_section: "050"
           use_year_collections: false
+          collection_order: release
       - pmm: cannes
-        template_variable:
+        template_variables:
+          collection_section: "051"
           use_year_collections: false
+          collection_order: release
       - pmm: razzie
-        template_variable:
+        template_variables:
+          collection_section: "052"
           use_year_collections: false
+          collection_order: release
       - pmm: studio
         template_variables:
+          sort_title: "<<title>>"
           include:
             - A24
             - Blumhouse Productions
@@ -32,10 +44,66 @@ libraries:
             - Walt Disney Pictures
       - pmm: imdb
         template_variables:
+          collection_section: "030"
           use_lowest: false
           use_popular: false
           radarr_add_missing_top: true
-
+      - pmm: director
+        template_variables:
+          sort_title: "<<title>>"
+          data:
+            depth: 0
+            limit: 0
+          include:
+            - Akira Kurosawa
+            - Alex Garland
+            - Alfred Hitchcock
+            - Christopher Nolan
+            - Dario Argento
+            - David Cronenberg
+            - David Fincher
+            - David Lynch
+            - Denis Villeneuve
+            - Guillermo del Toro
+            - Ingmar Bergman
+            - James Cameron
+            - John Carpenter
+            - Martin McDonagh
+            - Martin Scorsese
+            - Michael Mann
+            - Paul Verhoeven
+            - Park Chan-wook
+            - Quentin Tarantino
+            - Ridley Scott
+            - Robert Eggers
+            - Stanley Kubrick
+            - Steven Spielberg
+            - Tim Burton
+            - Wes Anderson
+            - Yorgos Lanthimos
+      - pmm: actor
+        template_variables:
+          sort_title: "<<title>>"
+          data:
+            depth: 5
+            limit: 10
+          include:
+            - Arnold Schwarzenegger
+            - Keanu Reeves
+            - Jackie Chan
+            - Pedro Pascal
+            - Vin Diesel
+      - pmm: writer
+        template_variables:
+          sort_title: "<<title>>"
+          data:
+            depth: 0
+            limit: 0
+          include:
+            - Michael Crichton
+            - Philip K. Dick
+            - Stephen King
+            - Tim Burton
     overlay_files:
       - file: config/movies_overlays.yml
       - pmm: ribbon
@@ -76,6 +144,14 @@ libraries:
             - NEON
             - Pixar
             - Walt Disney Pictures
+      - pmm: actor
+        template_variables:
+          sort_title: "<<title>>"
+          data:
+            depth: 5
+            limit: 5
+          include:
+            - Pedro Pascal
 #    overlay_files:
 #      - file: config/tv_overlays.yml
     remove_overlays: false

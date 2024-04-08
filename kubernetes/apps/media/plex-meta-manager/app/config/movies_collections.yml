@@ -1,6 +1,6 @@
 templates:
   Chart:
-    sort_title: +++++++++<<num>><<collection_name>>
+    sort_title: !!<<num>><<collection_name>>
     sync_mode: sync
     smart_label: random
 collections:
