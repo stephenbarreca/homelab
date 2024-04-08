@@ -92,7 +92,6 @@ libraries:
             - Robert Eggers
             - Stanley Kubrick
             - Steven Spielberg
-            - Tim Burton
             - Wes Anderson
             - Yorgos Lanthimos
           radarr_add_missing_Akira Kurosawa: true
@@ -128,6 +127,7 @@ libraries:
           radarr_add_missing_Michael Crichton: true
           radarr_add_missing_Philip K. Dick: true
           radarr_add_missing_Stephen King: true
+
     overlay_files:
       - file: config/movies_overlays.yml
       - pmm: ribbon

@@ -51,3 +51,11 @@ collections:
     visible_shared: true
     cache_builders: 7
     # item_overlay: TMDB-MOST-WATCHED
+
+  Tim Burton:
+    smart_filter:
+      sort_by: release.desc
+      any:
+        writer: Tim Burton
+        Director: Tim Burton
+    url_poster: https://raw.githubusercontent.com/meisnate12/Plex-Meta-Manager-People-bw/master/T/Images/Tim%20Burton.jpg
