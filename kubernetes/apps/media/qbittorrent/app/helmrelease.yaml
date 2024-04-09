@@ -67,7 +67,12 @@ spec:
             image:
               repository: ghcr.io/qdm12/gluetun
               tag: v3.38.0
+#              repository: thrnz/docker-wireguard-pia
             env:
+#              LOC: ca_toronto
+#              LOCAL_NETWORK: 10.1.0.0/16,10.128.0.0/9
+#              PORT_FORWARDING: 1
+#              PORT_FILE: &port-file "/tmp/pia-shared/port.dat"
 #              VPN_SERVICE_PROVIDER: private internet access
 #              SERVER_REGIONS: CA Toronto
 #              PORT_FORWARD_ONLY: true
@@ -79,7 +84,7 @@ spec:
               VPN_PORT_FORWARDING_PROVIDER: private internet access
               VPN_PORT_FORWARDING: on
               FIREWALL_INPUT_PORTS: 8080
-              FIREWALL_OUTBOUND_SUBNETS: 10.0.0.0/8 # Allow access to k8s subnets
+              FIREWALL_OUTBOUND_SUBNETS: 10.1.0.0/16,10.128.0.0/9 # Allow access to k8s subnets
             envFrom:
               - secretRef:
                   name: qbittorrent-secret
@@ -88,6 +93,19 @@ spec:
                 add:
                   - NET_ADMIN
               allowPrivilegeEscalation: false
+#
+#          port-forward:
+#            dependsOn: gluetun
+#            image:
+#              repository: docker.io/snoringdragon/gluetun-qbittorrent-port-manager
+#              tag: "latest"
+#            env:
+#              - name: QBITTORRENT_SERVER
+#                value: localhost
+#              - name: QBITTORRENT_PORT
+#                value: *port
+#              - name: PORT_FORWARDED
+#                value: *port-file
 
           port-forward:
             image:
@@ -147,3 +165,13 @@ spec:
         existingClaim: tv
         globalMounts:
           - path: /data/tv
+
+      port-data:
+        type: emptyDir
+        advancedMounts:
+          main:
+            gluetun:
+              - path: /tmp/gluetun
+            port-forward:
+              - path: /tmp/gluetun
+                readOnly: true
