@@ -68,6 +68,7 @@ spec:
 #              repository: ghcr.io/qdm12/gluetun
 #              tag: v3.38.0
               repository: thrnz/docker-wireguard-pia
+              tag: latest
             env:
               LOC: ca_toronto
               LOCAL_NETWORK: 10.1.0.0/16,10.128.0.0/9
@@ -88,6 +89,18 @@ spec:
             envFrom:
               - secretRef:
                   name: qbittorrent-secret
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - /bin/sh
+                      - c
+                      - "ping -c 1 www.google.com || exit 1"
+                  initialDelaySeconds: 10
+                  periodSeconds: 5
             securityContext:
               capabilities:
                 add:
