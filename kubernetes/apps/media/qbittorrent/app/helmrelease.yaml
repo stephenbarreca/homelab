@@ -70,40 +70,26 @@ spec:
               repository: thrnz/docker-wireguard-pia
               tag: latest
             env:
-              LOC: ca_toronto
-              LOCAL_NETWORK: 10.1.0.0/16,10.128.0.0/9
-              PORT_FORWARDING: 1
-              PORT_FILE: &port-file "/tmp/pia-shared/port.dat"
-              PORT_SCRIPT: '/scripts/custom/port-forward.sh'
+#              LOC: ca_toronto
+#              LOCAL_NETWORK: 10.1.0.0/16,10.128.0.0/9
+#              PORT_FORWARDING: 1
+#              PORT_FILE: &port-file "/tmp/pia-shared/port.dat"
+#              PORT_SCRIPT: '/scripts/custom/port-forward.sh'
 #              VPN_SERVICE_PROVIDER: private internet access
 #              SERVER_REGIONS: CA Toronto
 #              PORT_FORWARD_ONLY: true
 #              PRIVATE_INTERNET_ACCESS_OPENVPN_ENCRYPTION_PRESET: strong
-#              VPN_SERVICE_PROVIDER: custom
-#              VPN_TYPE: wireguard
-#              VPN_INTERFACE: wg0
-#              VPN_ENDPOINT_PORT: 51820
-#              VPN_PORT_FORWARDING_PROVIDER: private internet access
-#              VPN_PORT_FORWARDING: on
-#              FIREWALL_INPUT_PORTS: 8080
-#              FIREWALL_OUTBOUND_SUBNETS: 10.1.0.0/16,10.128.0.0/9 # Allow access to k8s subnets
+              VPN_SERVICE_PROVIDER: custom
+              VPN_TYPE: wireguard
+              VPN_INTERFACE: wg0
+              VPN_ENDPOINT_PORT: 51820
+              VPN_PORT_FORWARDING_PROVIDER: protonvpn
+              VPN_PORT_FORWARDING: on
+              FIREWALL_INPUT_PORTS: 8080
+              FIREWALL_OUTBOUND_SUBNETS: 10.1.0.0/16,10.152.183.0/24 # Allow access to k8s subnets
             envFrom:
               - secretRef:
                   name: qbittorrent-secret
-            probes:
-              liveness:
-                enabled: true
-                custom: true
-                spec:
-                  exec:
-                    command:
-                      - /bin/sh
-                      - -c
-                      - "ping -c 1 www.google.com || exit 1"
-                  initialDelaySeconds: 30
-                  periodSeconds: 30
-                  timeoutSeconds: 10
-                  failureThreshold: 3
             securityContext:
               capabilities:
                 add:
@@ -111,39 +97,26 @@ spec:
               allowPrivilegeEscalation: false
 
           port-forward:
-            dependsOn: gluetun
             image:
-              repository: docker.io/snoringdragon/gluetun-qbittorrent-port-manager
-              tag: "latest"
+              repository: ghcr.io/bjw-s/gluetun-qb-port-sync
+              tag: v0.0.1
             env:
-              - name: QBITTORRENT_SERVER
-                value: localhost
-              - name: QBITTORRENT_PORT
-                value: *port
-              - name: PORT_FORWARDED
-                value: *port-file
-#
-#          port-forward:
-#            image:
-#              repository: ghcr.io/bjw-s/gluetun-qb-port-sync
-#              tag: v0.0.1
-#            env:
-#              GLUETUN_CONTROL_SERVER_HOST: localhost
-#              GLUETUN_CONTROL_SERVER_PORT: 8000
-#              QBITTORRENT_HOST: localhost
-#              QBITTORRENT_WEBUI_PORT: *port
-#              CRON_ENABLED: true
-#              CRON_SCHEDULE: "*/5 * * * *"
-#              LOG_TIMESTAMP: false
-#            securityContext:
-#              runAsUser: 568
-#              runAsGroup: 568
-#              runAsNonRoot: true
-#              allowPrivilegeEscalation: false
-#              readOnlyRootFilesystem: false
-#              capabilities:
-#                drop:
-#                  - ALL
+              GLUETUN_CONTROL_SERVER_HOST: localhost
+              GLUETUN_CONTROL_SERVER_PORT: 8000
+              QBITTORRENT_HOST: localhost
+              QBITTORRENT_WEBUI_PORT: *port
+              CRON_ENABLED: true
+              CRON_SCHEDULE: "*/5 * * * *"
+              LOG_TIMESTAMP: false
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities:
+                drop:
+                  - ALL
 
     service:
       app:
@@ -182,22 +155,9 @@ spec:
         globalMounts:
           - path: /data/tv
 
-      port-data:
+      empty-config:
         type: emptyDir
         advancedMounts:
           qbittorrent:
-            gluetun:
-              - path: /tmp/pia-shared
             port-forward:
-              - path: /tmp/pia-shared
-                readOnly: true
-
-      scripts:
-        type: configMap
-        name: qbittorrent-scripts
-        defaultMode: 0775
-        advancedMounts:
-          qbittorrent:
-            gluetun:
-              - path: /scripts/custom/
-                readOnly: true
+              - path: /config
