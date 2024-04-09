@@ -5,3 +5,7 @@ kind: Kustomization
 resources:
   - ./qbittorrent-secret.sops.yaml
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: qbittorrent-scripts
+    files:
+      - ./scripts/port-forward.sh

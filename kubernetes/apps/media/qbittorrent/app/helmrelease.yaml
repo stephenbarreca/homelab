@@ -74,6 +74,7 @@ spec:
               LOCAL_NETWORK: 10.1.0.0/16,10.128.0.0/9
               PORT_FORWARDING: 1
               PORT_FILE: &port-file "/tmp/pia-shared/port.dat"
+              PORT_SCRIPT: '/scripts/port-forward.sh'
 #              VPN_SERVICE_PROVIDER: private internet access
 #              SERVER_REGIONS: CA Toronto
 #              PORT_FORWARD_ONLY: true
@@ -97,7 +98,7 @@ spec:
                   exec:
                     command:
                       - /bin/sh
-                      - c
+                      - -c
                       - "ping -c 1 www.google.com || exit 1"
                   initialDelaySeconds: 30
                   periodSeconds: 30
@@ -189,4 +190,14 @@ spec:
               - path: /tmp/pia-shared
             port-forward:
               - path: /tmp/pia-shared
+                readOnly: true
+
+      scripts:
+        type: configMap
+        name: qbittorrent-scripts
+        defaultMode: 0775
+        advancedMounts:
+          qbittorrent:
+            gluetun:
+              - path: /scripts
                 readOnly: true
