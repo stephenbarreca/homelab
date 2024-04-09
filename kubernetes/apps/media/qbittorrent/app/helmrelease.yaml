@@ -65,10 +65,10 @@ spec:
 
           gluetun:
             image:
-#              repository: ghcr.io/qdm12/gluetun
-#              tag: v3.38.0
-              repository: thrnz/docker-wireguard-pia
-              tag: latest
+              repository: ghcr.io/qdm12/gluetun
+              tag: v3.38.0
+#              repository: thrnz/docker-wireguard-pia
+#              tag: latest
             env:
 #              LOC: ca_toronto
 #              LOCAL_NETWORK: 10.1.0.0/16,10.128.0.0/9
