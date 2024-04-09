@@ -74,7 +74,7 @@ spec:
               LOCAL_NETWORK: 10.1.0.0/16,10.128.0.0/9
               PORT_FORWARDING: 1
               PORT_FILE: &port-file "/tmp/pia-shared/port.dat"
-              PORT_SCRIPT: '/scripts/port-forward.sh'
+              PORT_SCRIPT: '/scripts/custom/port-forward.sh'
 #              VPN_SERVICE_PROVIDER: private internet access
 #              SERVER_REGIONS: CA Toronto
 #              PORT_FORWARD_ONLY: true
@@ -199,5 +199,5 @@ spec:
         advancedMounts:
           qbittorrent:
             gluetun:
-              - path: /scripts
+              - path: /scripts/custom/
                 readOnly: true
