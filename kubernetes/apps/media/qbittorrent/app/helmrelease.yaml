@@ -166,12 +166,12 @@ spec:
         globalMounts:
           - path: /data/tv
 
-      port-data:
-        type: emptyDir
-        advancedMounts:
-          main:
-            gluetun:
-              - path: /tmp/gluetun
-            port-forward:
-              - path: /tmp/gluetun
-                readOnly: true
+#      port-data:
+#        type: emptyDir
+#        advancedMounts:
+#          qbittorrent:
+#            gluetun:
+#              - path: /tmp/gluetun
+#            port-forward:
+#              - path: /tmp/gluetun
+#                readOnly: true
