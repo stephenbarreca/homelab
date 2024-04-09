@@ -9,3 +9,5 @@ configMapGenerator:
   - name: qbittorrent-scripts
     files:
       - ./scripts/port-forward.sh
+generatorOptions:
+  disableNameSuffixHash: true
