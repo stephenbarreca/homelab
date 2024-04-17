@@ -6,12 +6,14 @@ libraries:
     collection_files:
       - file: config/movies_collections.yml
       - pmm: seasonal
+        schedule: weekly(sunday)
         template_variables:
           collection_section: "010"
           visible_library: true
           visible_home: true
           visible_shared: true
       - pmm: universe
+        schedule: weekly(monday)
         template_variables:
           sort_title: "<<title>>"
           radarr_add_missing_askew: true
@@ -24,9 +26,11 @@ libraries:
           radarr_add_missing_trek: true
           radarr_add_missing_xmen: true
       - pmm: based
+        schedule: all[monthly(5) monthly(20)]
         template_variables:
           sort_title: "<<title>>"
       - pmm: oscars
+        schedule: monthly(1)
         template_variables:
           collection_section: "050"
           use_year_collections: false
@@ -34,18 +38,21 @@ libraries:
           radarr_add_missing_best_picture: true
           radarr_add_missing_best_director: true
       - pmm: cannes
+        schedule: monthly(2)
         template_variables:
           collection_section: "051"
           use_year_collections: false
           collection_order: release
           radarr_add_missing_palm: true
       - pmm: razzie
+        schedule: monthly(3)
         template_variables:
           collection_section: "052"
           use_year_collections: false
           collection_order: release
           radarr_add_missing_golden: true
       - pmm: studio
+        schedule: weekly(wednesday)
         template_variables:
           sort_title: "<<title>>"
           include:
@@ -56,12 +63,14 @@ libraries:
             - Pixar
             - Walt Disney Pictures
       - pmm: imdb
+        schedule: weekly(thursday)
         template_variables:
           collection_section: "030"
           use_lowest: false
           use_popular: false
           radarr_add_missing_top: true
       - pmm: director
+        schedule: weekly(friday)
         template_variables:
           sort_title: "<<title>>"
           name_format: "<<key_name>>"
@@ -101,6 +110,7 @@ libraries:
           radarr_add_missing_Ridley Scott: true
           radarr_add_missing_Wes Anderson: true
       - pmm: actor
+        schedule: weekly(saturday)
         template_variables:
           sort_title: "<<title>>"
           name_format: "<<key_name>>"
@@ -114,6 +124,7 @@ libraries:
             - Pedro Pascal
             - Vin Diesel
       - pmm: writer
+        schedule: weekly(sunday)
         template_variables:
           sort_title: "<<title>>"
           name_format: "<<key_name>>"
@@ -158,6 +169,7 @@ libraries:
     collection_files:
       - file: config/tv_collections.yml
       - pmm: studio
+        schedule: weekly(wednesday)
         template_variables:
           include:
             - A24
@@ -167,6 +179,7 @@ libraries:
             - Pixar
             - Walt Disney Pictures
       - pmm: actor
+        schedule: weekly(sunday)
         template_variables:
           sort_title: "<<title>>"
           data:
@@ -183,6 +196,7 @@ libraries:
 
   playlist_files:
     - pmm: playlist
+      schedule: all[monthly(1) monthly(15)]
       template_variables:
         use_arrow: false
         use_dcau: false
