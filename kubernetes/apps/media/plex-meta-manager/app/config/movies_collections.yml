@@ -47,8 +47,7 @@ collections:
     trakt_chart:
       chart: watched
       time_period: yearly
-      limit: 25
-    trakt_watched_yearly: 250
+      limit: 50
     radarr_add: false
     collection_order: custom
     visible_library: true
