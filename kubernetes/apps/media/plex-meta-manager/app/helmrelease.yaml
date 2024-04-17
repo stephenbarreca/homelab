@@ -113,7 +113,7 @@ spec:
         enabled: true
         type: cronjob
         cronjob:
-          schedule: "@midnight"
+          schedule: "0 5 * * *"  # at 5:00 UTC everyday
         containers:
           app:
             <<: *app-container
