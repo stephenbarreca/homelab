@@ -132,14 +132,27 @@ libraries:
       - file: config/movies_overlays.yml
       - pmm: ribbon
         template_variables:
-          use_rotten: false
-          use_common: false
-          use_cesar: false
-          use_spirit: false
+          use_oscars: true
+          use_oscars_director: true
+          use_golden: false
+          use_golden_director: false
+          use_bafta: false
+          use_cannes: true
           use_berlinale: false
           use_venice: false
+          use_sundance: false
+          use_emmys: false
+          use_choice: false
+          use_spirit: false
+          use_cesar: false
+          use_imdb: true
+          use_rotten: false
           use_metacritic: false
-
+          use_common: false
+          use_razzie: false
+    operations:
+      - schedule: weekly(tuesday)
+        mass_user_rating_update: mdb_letterboxd
     remove_overlays: false
   TV Shows:
     collection_files:
