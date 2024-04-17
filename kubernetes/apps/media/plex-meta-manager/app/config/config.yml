@@ -194,15 +194,16 @@ libraries:
 #      mass_poster_update:
 #        source: plex
 
-  playlist_files:
-    - pmm: playlist
-      schedule: all[monthly(1) monthly(15)]
-      template_variables:
-        use_arrow: false
-        use_dcau: false
-        use_dragonball: false
-        use_pokemon: false
-        use_clonewars: false
+playlist_files:
+  - pmm: playlist
+    schedule: all[monthly(1) monthly(15)]
+    template_variables:
+      use_arrow: false
+      use_dcau: false
+      use_dragonball: false
+      use_pokemon: false
+      use_clonewars: false
+
 settings:
   cache: true
   cache_expiration: 60

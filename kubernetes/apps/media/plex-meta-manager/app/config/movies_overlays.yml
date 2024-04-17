@@ -13,12 +13,6 @@ overlays:
       list_buffer: 30
     cache_builders: 1
 
-#  IMDB-250:
-#    overlay:
-#      name: imdb-250
-#    imdb_chart: top_movies
-#    cache_builders: 30
-    
   TMDB-TRENDING:
     overlay:
       name: TMDB-TRENDING
@@ -44,7 +38,7 @@ overlays:
       back_width: 150
       back_height: 105
     plex_all: true
-    cache_builders: 1
+    cache_builders: 7
 
   critic_rating:
     overlay:
@@ -61,7 +55,7 @@ overlays:
       back_width: 150
       back_height: 105
     plex_all: true
-    cache_builders: 1
+    cache_builders: 7
 
   rt_critic_fresh:
     overlay:
@@ -73,7 +67,7 @@ overlays:
     plex_all: true
     filters:
       critic_rating.gte: 6
-    cache_builders: 1
+    cache_builders: 7
 
   rt_critic_rotten:
     overlay:
@@ -85,7 +79,7 @@ overlays:
     plex_all: true
     filters:
       critic_rating.lt: 6
-    cache_builders: 1
+    cache_builders: 7
 
   rt_audience_fresh:
     overlay:
@@ -97,7 +91,7 @@ overlays:
     plex_all: true
     filters:
       audience_rating.gte: 6
-    cache_builders: 1
+    cache_builders: 7
 
   rt_audience_rotten:
     overlay:
@@ -109,4 +103,4 @@ overlays:
     plex_all: true
     filters:
       audience_rating.lt: 6
-    cache_builders: 1
+    cache_builders: 7

@@ -32,15 +32,6 @@ collections:
     visible_home: true
     visible_shared: true
     cache_builders: 1
-    # item_overlay: TMDB-TRENDING
-
-#  Top Rated Movies:
-#    template: { name: Chart, num: 4 }
-#    imdb_list: https://www.imdb.com/search/title/?groups=top_250&count=250/
-#    tmdb_top_rated: 250
-#    cache_builders: 30
-#    summary: Top Rated across the internet IMDB
-    # item_overlay: IMDB-250
 
   Popular Movies This Year:
     template: { name: Chart, num: 3 }
@@ -54,7 +45,6 @@ collections:
     visible_home: true
     visible_shared: true
     cache_builders: 7
-    # item_overlay: TMDB-MOST-WATCHED
 
   Tim Burton:
     smart_filter:
@@ -64,7 +54,8 @@ collections:
         Director: Tim Burton
     url_poster: https://raw.githubusercontent.com/meisnate12/Plex-Meta-Manager-People-bw/master/T/Images/Tim%20Burton.jpg
 
-  Maddy's Favorites:
+  Maddy Favorites:
     template: { name: Chart, num: 4 }
+    name: "Maddy's Favorite"
     letterboxd_list: https://letterboxd.com/slime_puppy/list/favorites/
     collection_order: custom
