@@ -1,6 +1,6 @@
 templates:
   Chart:
-    sort_title: !!<<num>><<collection_name>>
+    sort_title: !!<<num>> <<collection_name>>
     sync_mode: sync
     smart_label: random
 collections:
@@ -41,9 +41,8 @@ collections:
     # item_overlay: IMDB-250
 
   Popular Movies This Year:
+    template: { name: Chart, num: 3 }
     trakt_watched_yearly: 250
-    sort_title: "+++++++++1_3 Watched This Year"
-    sync_mode: sync
     radarr_add: false
     collection_order: custom
     visible_library: true
@@ -59,3 +58,8 @@ collections:
         writer: Tim Burton
         Director: Tim Burton
     url_poster: https://raw.githubusercontent.com/meisnate12/Plex-Meta-Manager-People-bw/master/T/Images/Tim%20Burton.jpg
+
+  Maddy's Favorites:
+    template: { name: Chart, num: 4 }
+    letterboxd_list: https://letterboxd.com/slime_puppy/list/favorites/
+    collection_order: custom
