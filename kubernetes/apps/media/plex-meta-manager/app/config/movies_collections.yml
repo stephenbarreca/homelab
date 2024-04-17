@@ -40,7 +40,7 @@ collections:
       chart: watched
       time_period: yearly
       limit: 25
-    smart_label: random
+    collection_order: custom
     radarr_add: false
     visible_library: true
     visible_home: true
@@ -60,4 +60,4 @@ collections:
     sort_title: "!!4 Maddy Favorites"
     sync_mode: sync
     letterboxd_list: https://letterboxd.com/slime_puppy/list/favorites/
-    custom_order: title.asc
+    collection_order: title.asc
