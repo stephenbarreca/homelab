@@ -22,9 +22,11 @@ overlays:
   TMDB-TRENDING:
     overlay:
       name: TMDB-TRENDING
-    trakt_trending: 40
-    tmdb_trending_daily: 40
-    tmdb_trending_weekly: 40
+    trakt_chart:
+      chart: trending
+      limit: 25
+    tmdb_trending_daily: 25
+    tmdb_trending_weekly: 25
     cache_builders: 1
 
   audience_rating:
