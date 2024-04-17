@@ -2,7 +2,6 @@ templates:
   Chart:
     sort_title: "!!<<num>> <<collection_name>>"
     sync_mode: sync
-    smart_label: random
 collections:
   Movies Trending on Plex:
     template: { name: Chart, num: 1 }
@@ -15,6 +14,7 @@ collections:
       list_size: 30
       list_buffer: 30
     summary: Trending on Plex
+    smart_label: plays.desc
     visible_library: true
     visible_home: true
     visible_shared: true
@@ -28,6 +28,7 @@ collections:
     tmdb_trending_daily: 25
     tmdb_trending_weekly: 25
     summary: Trending across the internet
+    smart_label: release.desc
     visible_library: true
     visible_home: true
     visible_shared: true
@@ -38,9 +39,9 @@ collections:
     trakt_chart:
       chart: watched
       time_period: yearly
-      limit: 50
+      limit: 25
+    smart_label: random
     radarr_add: false
-    collection_order: custom
     visible_library: true
     visible_home: true
     visible_shared: true
@@ -55,7 +56,8 @@ collections:
     url_poster: https://raw.githubusercontent.com/meisnate12/Plex-Meta-Manager-People-bw/master/T/Images/Tim%20Burton.jpg
 
   Maddy Favorites:
-    template: { name: Chart, num: 4 }
     name: "Maddy's Favorite"
+    sort_title: "!!4 Maddy Favorites"
+    sync_mode: sync
     letterboxd_list: https://letterboxd.com/slime_puppy/list/favorites/
-    collection_order: custom
+    custom_order: title.asc
