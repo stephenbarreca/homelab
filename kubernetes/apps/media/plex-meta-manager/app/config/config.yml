@@ -165,6 +165,7 @@ libraries:
       - schedule: weekly(tuesday)
         mass_user_rating_update: mdb_letterboxd
     remove_overlays: false
+    reapply_overlays: true
   TV Shows:
     collection_files:
       - file: config/tv_collections.yml
