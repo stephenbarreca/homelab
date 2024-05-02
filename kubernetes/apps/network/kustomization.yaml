@@ -10,3 +10,4 @@ resources:
   - ./ingress-nginx/ks.yaml
   - ./shared/ks.yaml
   - ./traefik/ks.yaml
+  - ./misc/ks.yaml
