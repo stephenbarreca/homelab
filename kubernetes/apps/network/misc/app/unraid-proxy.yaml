@@ -1,24 +1,24 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: &servicename unraid
+  name: unraid
 spec:
   ports:
-    - port: &port-ext 80
+    - port: 80
       # targetPort has to match the EndpointSlice port
-      targetPort: &port-service 80
+      targetPort: 80
 ---
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
 metadata:
   name: unraid-endpoint
   labels:
-    kubernetes.io/service-name: *servicename
+    kubernetes.io/service-name: unraid
 addressType: IPv4
 ports:
   - appProtocol: http
     protocol: TCP
-    port: *port-service
+    port: 80
 endpoints:
   - addresses:
       - "192.168.1.56"
@@ -35,6 +35,6 @@ spec:
     match: Host(`unraid.stephenbarre.ca`) || Host(`tower.stephenbarre.ca`) || Host(`tower.local`)
     services:
     - kind: Service
-      name: *servicename
-      port: *port-ext
+      name: unraid
+      port: 80
 
