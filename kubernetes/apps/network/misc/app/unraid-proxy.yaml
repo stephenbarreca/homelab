@@ -4,7 +4,8 @@ metadata:
   name: unraid
 spec:
   ports:
-    - port: 80
+    - name: http
+      port: 80
       # targetPort has to match the EndpointSlice port
       targetPort: 80
 ---
@@ -16,7 +17,8 @@ metadata:
     kubernetes.io/service-name: unraid
 addressType: IPv4
 ports:
-  - appProtocol: http
+  - name: http
+    appProtocol: http
     protocol: TCP
     port: 80
 endpoints:
