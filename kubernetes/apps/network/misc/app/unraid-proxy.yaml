@@ -9,21 +9,31 @@ spec:
       # targetPort has to match the EndpointSlice port
       targetPort: 80
 ---
-apiVersion: discovery.k8s.io/v1
-kind: EndpointSlice
+apiVersion: v1
+kind: Endpoints
 metadata:
-  name: unraid-endpoint
-  labels:
-    kubernetes.io/service-name: unraid
-addressType: IPv4
-ports:
-  - name: http
-    appProtocol: http
-    protocol: TCP
-    port: 80
-endpoints:
+  name: unraid
+subsets:
   - addresses:
-      - "192.168.1.56"
+      - ip: 192.168.1.56
+    ports:
+      - port: 80
+#---
+#apiVersion: discovery.k8s.io/v1
+#kind: EndpointSlice
+#metadata:
+#  name: unraid-endpoint
+#  labels:
+#    kubernetes.io/service-name: unraid
+#addressType: IPv4
+#ports:
+#  - name: http
+#    appProtocol: http
+#    protocol: TCP
+#    port: 80
+#endpoints:
+#  - addresses:
+#      - "192.168.1.56"
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
