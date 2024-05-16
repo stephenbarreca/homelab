@@ -21,5 +21,3 @@ spec:
     secretRef:
       name: sops-age
   wait: true
-  dependsOn:
-    - name: traefik
