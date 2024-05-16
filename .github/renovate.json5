@@ -5,7 +5,7 @@
     ":dependencyDashboard",
     ":enablePreCommit",
     "docker:enableMajor",
-    "github>stephenbarreca/homelab//.github/renovate/automerge.json",
+    "github>stephenbarreca/homelab//.github/renovate/automerge.json5",
     "github>stephenbarreca/homelab//.github/renovate/pr-labels.json",
     "github>stephenbarreca/homelab//.github/renovate/versioning.json"
   ],
