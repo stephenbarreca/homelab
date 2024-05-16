@@ -4,7 +4,8 @@
     "config:recommended",
     ":dependencyDashboard",
     ":enablePreCommit",
-    "docker:enableMajor"
+    "docker:enableMajor",
+    ":disableRateLimiting"
   ],
   "ignorePaths": [".archive/**"],
   customManagers: [
