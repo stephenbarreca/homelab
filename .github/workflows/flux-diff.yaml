@@ -1,0 +1,46 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: "Flux Diff"
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - kubernetes/**
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  diffs:
+    name: Compute diffs
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        resource:
+          - helmrelease
+          - kustomization
+    steps:
+      - name: Setup Flux CLI
+        uses: fluxcd/flux2/action@v2.2.3
+
+      - uses: allenporter/flux-local/action/diff@5.3.1
+        id: diff
+        with:
+          live-branch: main
+          path: kubernetes
+          resource: ${{ matrix.resource }}
+
+      - name: PR Comments
+        uses: mshick/add-pr-comment@v2
+        if: ${{ steps.diff.outputs.diff != '' }}
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          message-id: ${{ github.event.pull_request.number }}/${{ matrix.resource }}
+          message-failure: Flux diff was not successful
+          message: |
+            Flux Diff: ${{ matrix.resource }}  
+            ```diff
+            ${{ steps.diff.outputs.diff }}
