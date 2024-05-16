@@ -5,7 +5,10 @@
     ":dependencyDashboard",
     ":enablePreCommit",
     "docker:enableMajor",
-    ":disableRateLimiting"
+    ":disableRateLimiting",
+    "github>stephenbarreca/homelab//.github/renovate/automerge.json5",
+    "github>stephenbarreca/homelab//.github/renovate/pr-labels.json",
+    "github>stephenbarreca/homelab//.github/renovate/versioning.json5"
   ],
   "ignorePaths": [".archive/**"],
   customManagers: [
