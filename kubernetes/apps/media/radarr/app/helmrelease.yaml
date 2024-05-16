@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/onedr0p/radarr-develop
-              tag: 5.4.5.8715
+              tag: 5.6.0.8846
               pullPolicy: IfNotPresent
             env:
               RADARR__INSTANCE_NAME: Radarr
