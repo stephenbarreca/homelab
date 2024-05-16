@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: traefik
-      version: 26.1.0
+      version: 28.0.0
       sourceRef:
         kind: HelmRepository
         name: traefik
@@ -19,24 +19,24 @@ spec:
     ports:
       traefik:
         port: 9000
-        expose: false
+        expose:
+          default: false
         exposedPort: 9000
         protocol: TCP
-        exposeInternal: false
       web:
         port: 8000
-        expose: true
+        expose:
+          default: true
         exposedPort: 8080
         protocol: TCP
-        exposeInternal: false
         redirectTo:
           port: websecure
       websecure:
         port: 8443
-        expose: true
+        expose:
+          default: true
         exposedPort: 443
         protocol: TCP
-        exposeInternal: false
         tls:
           enabled: true
           # this is the name of a TLSOption definition
@@ -50,13 +50,15 @@ spec:
                 - "*.autumnbarre.ca"
       local:
         port: 7000
-        expose: true
+        expose:
+          default: true
         exposedPort: 80
         protocol: TCP
 
       metrics:
         port: 9100
-        expose: false
+        expose:
+          default: true
         exposedPort: 9100
         protocol: TCP
 
