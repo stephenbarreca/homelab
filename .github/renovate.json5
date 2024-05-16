@@ -1,0 +1,13 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":enablePreCommit",
+    "docker:enableMajor",
+    "github>stephenbarreca/homelab//.github/renovate/automerge.json",
+    "github>stephenbarreca/homelab//.github/renovate/pr-labels.json",
+    "github>stephenbarreca/homelab//.github/renovate/versioning.json"
+  ],
+  "ignorePaths": [".archive/**"],
+}

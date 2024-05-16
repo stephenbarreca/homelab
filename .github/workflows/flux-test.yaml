@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: "Flux Test"
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - kubernetes/**
+
+jobs:
+  diffs:
+    name: Compute diffs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Flux CLI
+        uses: fluxcd/flux2/action@v2.2.2
+
+      - uses: allenporter/flux-local/action/test@5.3.1
+        with:
+          path: clusters/prod
+          enable-helm: true
+          enable-kyverno: false
