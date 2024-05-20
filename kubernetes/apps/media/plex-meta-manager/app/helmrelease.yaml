@@ -30,8 +30,8 @@ spec:
         containers:
           app: &app-container
             image:
-              repository: linuxserver/kometa
-              tag: 2.0.1
+              repository: kometateam/kometa
+              tag: v2.0.1
             env:
               PMM_READ_ONLY_CONFIG: true
               PMM_MDB_API_KEY:
