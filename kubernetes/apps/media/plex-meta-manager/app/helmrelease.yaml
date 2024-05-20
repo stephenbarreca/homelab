@@ -30,8 +30,8 @@ spec:
         containers:
           app: &app-container
             image:
-              repository: docker.io/meisnate12/plex-meta-manager
-              tag: v1.21.0
+              repository: linuxserver/kometa
+              tag: 2.0.1
             env:
               PMM_READ_ONLY_CONFIG: true
               PMM_MDB_API_KEY:
