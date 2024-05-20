@@ -56,8 +56,15 @@ collections:
     url_poster: https://raw.githubusercontent.com/meisnate12/Plex-Meta-Manager-People-bw/master/T/Images/Tim%20Burton.jpg
 
   Maddy Favorites:
-    name: "Maddy's Favorite"
+    name: "Maddy's Favorites"
     sort_title: "!!4 Maddy Favorites"
     sync_mode: sync
     letterboxd_list: https://letterboxd.com/slime_puppy/list/favorites/
     collection_order: title.asc
+
+  Maddy Monthly Scavenger Hunt:
+    name: "Maddy's Monthly Scavenger Hunt"
+    sort_title: "!!5 Maddy Monthly Scavenger Hunt"
+    sync_mode: sync
+    letterboxd_list: https://letterboxd.com/slime_puppy/list/monthly-scavenger-hunt/share/gaPAcNO3zBXklqPV/
+    collection_order: custom
