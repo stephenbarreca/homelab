@@ -6,7 +6,6 @@ libraries:
     collection_files:
       - file: config/movies_collections.yml
       - pmm: seasonal
-        schedule: weekly(sunday)
         template_variables:
           collection_section: "010"
           visible_library: true
