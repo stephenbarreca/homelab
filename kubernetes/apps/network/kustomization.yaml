@@ -7,6 +7,5 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./adguard/ks.yaml
-  - ./ingress-nginx/ks.yaml
   - ./shared/ks.yaml
   - ./traefik/ks.yaml
