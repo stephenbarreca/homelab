@@ -81,7 +81,7 @@ spec:
         existingClaim: backblaze-config
         globalMounts:
           - path: /config/wine
-      backup-network:
-        existingClaim: backup-network
+      backup-movies:
+        existingClaim: backup-movies
         globalMounts:
-          - path: /drive_n
+          - path: /drive_n/media/movies

@@ -1,24 +1,24 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-  name: backup-network
+  name: backup-movies
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: Immediate
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: backup-network
+  name: backup-movies
 spec:
   capacity:
-    storage: 1Gi
+    storage: 25Ti
   volumeMode: Filesystem
   accessModes:
   - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: backup-network
+  storageClassName: backup-movies
   local:
-    path: /data/network
+    path: /data/network/media/movies
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -31,11 +31,11 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: backup-network
+  name: backup-movies
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: backup-network
+  storageClassName: backup-movies
   resources:
     requests:
-      storage: 1Gi
+      storage: 25Ti
