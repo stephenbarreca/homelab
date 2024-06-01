@@ -1,0 +1,87 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: backblaze
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controllers:
+      backblaze:
+        pod:
+#          securityContext:
+#            runAsUser: 1000
+#            runAsGroup: 1000
+#            runAsNonRoot: true
+#            fsGroup: 1000
+#            fsGroupChangePolicy: "OnRootMismatch"
+
+        containers:
+          app:
+            image:
+              repository: tessypowder/backblaze-personal-wine
+              tag: v1.9@sha256:7b9d348379c2645a3e0f93c3136a53ae9f6f69a55bf5f54db2c1cea0bb8c6f7c
+            env:
+              TZ: America/New_York
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 20m
+                memory: 512M
+              limits:
+                memory: 2G
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities:
+                drop:
+                  - ALL
+
+    service:
+      app:
+        controller: backblaze
+        ports:
+          http:
+            port: 5800
+
+    ingress:
+      app:
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: local
+        className: traefik
+        hosts:
+          - host: backblaze.stephenbarre.ca
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        existingClaim: backblaze-config
+        globalMounts:
+          - path: /config/wine
+      backup-network:
+        existingClaim: backup-network
+        globalMounts:
+          - path: /drive_n
