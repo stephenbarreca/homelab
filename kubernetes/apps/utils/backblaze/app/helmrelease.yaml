@@ -87,8 +87,4 @@ spec:
       backup-movies:
         existingClaim: backup-movies
         globalMounts:
-          - path: /drive_n/media/movies
-      backup-network-bzvol:
-        type: emptyDir
-        globalMounts:
-          - path: /drive_n/.bzvol
+          - path: /drive_m
