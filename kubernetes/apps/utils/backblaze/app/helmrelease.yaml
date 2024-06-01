@@ -50,12 +50,12 @@ spec:
                 memory: 512M
               limits:
                 memory: 2G
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: false
-              capabilities:
-                drop:
-                  - ALL
+#            securityContext:
+#              allowPrivilegeEscalation: false
+#              readOnlyRootFilesystem: false
+#              capabilities:
+#                drop:
+#                  - ALL
 
     service:
       app:
