@@ -32,6 +32,8 @@ spec:
             image:
               repository: tessypowder/backblaze-personal-wine
               tag: v1.9@sha256:7b9d348379c2645a3e0f93c3136a53ae9f6f69a55bf5f54db2c1cea0bb8c6f7c
+            args:
+              - --init
             env:
               TZ: America/New_York
             probes:
@@ -85,3 +87,7 @@ spec:
         existingClaim: backup-movies
         globalMounts:
           - path: /drive_n/media/movies
+      backup-network-bzvol:
+        type: emptyDir
+        globalMounts:
+          - path: /drive_n/.bzvol
