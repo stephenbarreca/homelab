@@ -36,6 +36,7 @@ spec:
               TZ: America/New_York
               USER_ID: 0
               GROUP_ID: 0
+              UMASK: 000
             probes:
               liveness:
                 enabled: true
