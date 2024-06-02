@@ -49,11 +49,11 @@ spec:
                   periodSeconds: 5
             resources:
               requests:
-                cpu: 400m
-                memory: 4G
+                cpu: 200m
+                memory: 2G
               limits:
-                cpu: 4
-                memory: 8G
+                cpu: 1
+                memory: 3G
 #            securityContext:
 #              allowPrivilegeEscalation: false
 #              readOnlyRootFilesystem: false
