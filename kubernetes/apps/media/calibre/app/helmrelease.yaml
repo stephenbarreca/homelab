@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: linuxserver/calibre
-              tag: 7.14.0
+              tag: 7.15.0
               pullPolicy: IfNotPresent
             env:
               # -- Set the container timezone
