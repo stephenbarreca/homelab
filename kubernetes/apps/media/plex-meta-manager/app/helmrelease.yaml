@@ -31,7 +31,7 @@ spec:
           app: &app-container
             image:
               repository: kometateam/kometa
-              tag: v2.0.2
+              tag: v2.1.0
             env:
               PMM_READ_ONLY_CONFIG: true
               PMM_MDB_API_KEY:

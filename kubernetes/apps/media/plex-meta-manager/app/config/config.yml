@@ -163,8 +163,13 @@ libraries:
     operations:
       - schedule: weekly(tuesday)
         mass_user_rating_update: mdb_letterboxd
+        metadata_backup:
+          sync_tags: true
+      - assets_for_all: true
     remove_overlays: false
     reapply_overlays: false
+    settings:
+      asset_directory: config/assets/Movies
   TV Shows:
     collection_files:
       - file: config/tv_collections.yml
@@ -190,7 +195,13 @@ libraries:
 #    overlay_files:
 #      - file: config/tv_overlays.yml
     remove_overlays: false
-#    operations:
+    settings:
+      asset_directory: config/assets/TV Shows
+    operations:
+      - schedule: weekly(tuesday)
+        metadata_backup:
+          sync_tags: true
+      - assets_for_all: true
 #      mass_poster_update:
 #        source: plex
 
@@ -207,13 +218,13 @@ playlist_files:
 settings:
   cache: true
   cache_expiration: 60
-  asset_directory:
+  asset_directory: config/assets
   asset_folders: true
-  asset_depth: 0
-  create_asset_folders: false
-  prioritize_assets: false
-  dimensional_asset_rename: true
-  download_url_assets: false
+  asset_depth: 2
+  create_asset_folders: true
+  prioritize_assets: true
+  dimensional_asset_rename: false
+  download_url_assets: true
   show_missing_assets: true
   show_missing_season_assets: false
   show_missing_episode_assets: false
