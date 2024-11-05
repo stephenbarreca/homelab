@@ -163,8 +163,6 @@ libraries:
     operations:
       - schedule: weekly(tuesday)
         mass_user_rating_update: mdb_letterboxd
-        metadata_backup:
-          sync_tags: true
       - assets_for_all: true
     remove_overlays: false
     reapply_overlays: false
@@ -198,9 +196,6 @@ libraries:
     settings:
       asset_directory: config/assets/TV Shows
     operations:
-      - schedule: weekly(tuesday)
-        metadata_backup:
-          sync_tags: true
       - assets_for_all: true
 #      mass_poster_update:
 #        source: plex
