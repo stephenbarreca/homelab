@@ -1,11 +1,11 @@
 #!/bin/bash
 # plex directory to be backed up
-plexdir="/mnt/nvme/plex/config/Library/Application Support/Plex Media Server"
+plexdir="/data/local/plex/Library/Application Support/Plex Media Server"
 # exclude cache directory
 plexcache="${plexdir}/Cache"
 
 # directory to store the backup
-bdir="/mnt/plex/movies/plex-backup"
+bdir="/data/network/media/movies/plex-backup"
 # backup archive path
 bfile="${bdir}/full-backup.bz2"
 btmp="${bfile}.tmp"
