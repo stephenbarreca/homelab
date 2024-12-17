@@ -1,0 +1,9 @@
+services:
+  overlay-reset:
+    image: kometateam/overlay-reset
+    container_name: overlay-reset
+    environment:
+      #- TZ=TIMEZONE #optional
+    volumes:
+      - /data/local/kometa-overlay-reset/config:/config
+    restart: unless-stopped
