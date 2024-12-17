@@ -37,6 +37,9 @@ spec:
             args: []
             env: {}
             resources:
+              probes:
+                liveness:
+                  enabled: true
               requests:
                 cpu: 100m
                 memory: 500M
