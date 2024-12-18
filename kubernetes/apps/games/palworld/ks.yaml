@@ -6,7 +6,7 @@ metadata:
   name: &appname palworld
   namespace: flux-system
 spec:
-  targetNamespace: media
+  targetNamespace: games
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname

@@ -6,7 +6,6 @@ metadata:
   name: palworld-server
   namespace: flux-system
 spec:
-  type: oci
   interval: 30m
   url: https://twinki14.github.io/palworld-server-chart
   timeout: 3m
