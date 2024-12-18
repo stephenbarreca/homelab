@@ -35,6 +35,7 @@ spec:
       # Storage definitions related to the palworld-server
       #
       storage:
+        externalName: "palworld-backup"
         main:
           external: true
           externalName: "palworld"
