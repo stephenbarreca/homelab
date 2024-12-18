@@ -242,7 +242,7 @@ spec:
           # key: "communityPassword"
 
         # General server settings
-        server_name: "The People's Republic of AuB"
+        server_name: "The Republic of AuB"
         timezone: "UTC"
         public_ip: ""
         public_port: ""
