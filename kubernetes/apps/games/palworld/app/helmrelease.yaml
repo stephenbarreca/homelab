@@ -216,7 +216,7 @@ spec:
         port: *gameport
         query_port: *queryport
         max_players: 3
-        multithreading: true
+        multithreading: "true"
         rcon:
           enable: true
           port: *rconport
