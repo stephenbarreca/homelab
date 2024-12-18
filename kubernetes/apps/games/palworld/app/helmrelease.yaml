@@ -235,11 +235,11 @@ spec:
         # Community server settings
         #
         community:
-          enable: true
+          enable: false
           #password: ""
-          externalPassword:
-           name: "palworld-secret"
-           key: "communityPassword"
+          #externalPassword:
+          # name: "palworld-secret"
+          # key: "communityPassword"
 
         # General server settings
         server_name: "The People's Republic of AuB"

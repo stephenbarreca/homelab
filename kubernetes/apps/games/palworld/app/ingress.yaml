@@ -16,4 +16,4 @@ spec:
               service:
                 name: palworld-svc
                 port:
-                  number: 80
+                  number: 8211
