@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: palworld
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: local
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: palworld.stephenbarre.ca
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: palworld-svc
+                port:
+                  number: 80
