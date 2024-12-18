@@ -6,5 +6,6 @@ resources:
   - grafana.yaml
   - ingress-nginx.yaml
   - jetstack.yaml
+  - palworld-server.yaml
   - prometheus-community.yaml
   - traefik.yaml
