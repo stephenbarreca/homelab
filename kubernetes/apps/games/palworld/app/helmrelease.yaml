@@ -216,7 +216,7 @@ spec:
         port: *gameport
         query_port: *queryport
         max_players: 3
-        multithreading: "true"
+        multithreading: true
         rcon:
           enable: true
           port: *rconport
@@ -280,6 +280,6 @@ spec:
           # When set to false the PalWorldServer.ini will be generated based on environment variables found here https://github.com/thijsvanloef/palworld-server-docker/blob/main/README.md
           #
           DISABLE_GENERATE_SETTINGS: "false"
-          BACKUP_ENABLED: true
+          BACKUP_ENABLED: "true"
           # Backup at midnight, UTC time
           BACKUP_CRON_EXPRESSION: 0 0 * * *
