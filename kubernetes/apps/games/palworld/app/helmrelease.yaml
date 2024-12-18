@@ -176,7 +176,7 @@ spec:
         # For minikube, set this to NodePort, elsewhere use LoadBalancer
         # Use ClusterIP if your setup includes ingress controller
         #
-        type: LoadBalancer
+        type: ClusterIP
 
         # Use if you need to create a TCP health check for load balancers on cloud services.
         #
