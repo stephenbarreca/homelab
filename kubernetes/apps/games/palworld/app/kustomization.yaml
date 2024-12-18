@@ -7,3 +7,4 @@ resources:
   - ./storage.backup.yaml
   - ./storage.main.yaml
   - ./helmrelease.yaml
+  - ./ingress.yaml
