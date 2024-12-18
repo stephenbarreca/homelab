@@ -10,7 +10,7 @@ spec:
   interval: 30m
   chart:
     spec:
-      chart: app-template
+      chart: palworld
       version: 3.4.0
       interval: 30m
       sourceRef:
