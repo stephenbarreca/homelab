@@ -256,7 +256,7 @@ spec:
         # Daily reboot configuration, disabled by default
         #
         daily_reboot:
-          enable: false
+          enable: true
 
           # Countdown in seconds to announce to players before the server is rebooted
           countdown_seconds: 30
