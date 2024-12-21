@@ -285,3 +285,4 @@ spec:
           BACKUP_CRON_EXPRESSION: "0 0 * * *"
           DEATH_PENALTY: "Item"
           PAL_STAMINA_DECREASE_RATE: "0.7"
+          PAL_EGG_DEFAULT_HATCHING_TIME: "48.0"
