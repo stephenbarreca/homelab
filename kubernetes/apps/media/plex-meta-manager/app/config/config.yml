@@ -156,6 +156,8 @@ libraries:
           use_spirit: false
           use_cesar: false
           use_imdb: true
+          use_letterboxd: false
+          use_rottenverified: false
           use_rotten: false
           use_metacritic: false
           use_common: false
