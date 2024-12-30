@@ -18,7 +18,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: palworld-backup
   local:
-    path: /data/network/palworld-backup
+    path: /data/network/backups/palworld-backup
   nodeAffinity:
     required:
       nodeSelectorTerms:
