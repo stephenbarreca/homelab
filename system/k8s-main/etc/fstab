@@ -6,20 +6,15 @@
 #
 # <file system> <mount point>   <type>  <options>       <dump>  <pass>
 # / was on /dev/vda2 during curtin installation
-/dev/disk/by-uuid/4d88c759-bb99-4c86-9d10-cfe7456fbe14  /           xfs   defaults      0 0
-/dev/disk/by-partlabel/extra                            /mnt/extra  ext4  defaults      0 0
+/dev/disk/by-uuid/ede081a0-395f-4e58-9b60-3f7eea353b22 / ext4 defaults 0 1
 # /boot/efi was on /dev/vda1 during curtin installation
-/dev/disk/by-uuid/136B-61A4                             /boot/efi   vfat  defaults      0 0
+/dev/disk/by-uuid/6AC8-500A /boot/efi vfat defaults 0 1
+/swap.img       none    swap    sw      0       0
 #
 #
+backups             /data/network/backups                   9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
 books               /data/network/media/books               9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
 documents           /data/network/documents                 9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
 minecraft           /data/network/minecraft                 9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
 movies              /data/network/media/movies              9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
 tv                  /data/network/media/tv                  9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
-#heimdall-config     /data/heimdall-config    9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
-#jackett-config      /data/jackett-config     9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
-#jackett-downloads   /data/jackett-downloads  9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
-#nextcloud           /data/nextcloud          9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
-#torrent-config      /data/torrent-config     9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
-#torrent-downloads   /data/plex/torrents      9p trans=virtio,version=9p2000.L,_netdev,rw 0 0
