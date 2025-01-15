@@ -237,9 +237,9 @@ spec:
         community:
           enable: false
           #password: ""
-          #externalPassword:
-          # name: "palworld-secret"
-          # key: "communityPassword"
+          externalPassword:
+           name: "palworld-secret"
+           key: "communityPassword"
 
         # General server settings
         server_name: "The Republic of AuB"
