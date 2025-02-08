@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: ghcr.io/onedr0p/tautulli
-              tag: 2.15.0@sha256:96285c7e57dc77b790bb934be25d1d18a7c220b0f9e29748f65b2374bbef24c8
+              tag: 2.15.1@sha256:a8f4aa34e7973e5cb678692c1198e9c1790b7a3b49ce833b7196ce9c641e61f1
             probes:
               liveness:
                 enabled: true
