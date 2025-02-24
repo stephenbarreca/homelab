@@ -38,7 +38,7 @@ spec:
             env: {}
             probes:
               liveness:
-                enabled: true
+                enabled: false
             resources:
               requests:
                 cpu: 100m
