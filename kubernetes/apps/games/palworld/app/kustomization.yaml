@@ -6,5 +6,5 @@ resources:
   - ./secret.sops.yaml
   - ./storage.backup.yaml
   - ./storage.main.yaml
-  - ./helmrelease.yaml
-  - ./service.yaml
+  #- ./helmrelease.yaml
+  #- ./service.yaml
