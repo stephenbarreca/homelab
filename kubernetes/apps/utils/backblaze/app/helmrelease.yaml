@@ -37,6 +37,8 @@ spec:
               USER_ID: "0"
               GROUP_ID: "0"
               UMASK: "000"
+              DISPLAY_WIDTH: "900"
+              DISPLAY_HEIGHT: "800"
             probes:
               liveness:
                 enabled: true
