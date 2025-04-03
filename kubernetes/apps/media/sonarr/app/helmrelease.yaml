@@ -33,36 +33,48 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/sonarr
-              tag: 4.0.14.2938@sha256:f82e69b2d290877b89c2bcae9928df7ed74e05ab3cba905ecaeced85f4f1f2c6
+              repository: ghcr.io/home-operations/sonarr
+              tag: 4.0.14.2938
             env:
-              SONARR__INSTANCE_NAME: Sonarr
-              SONARR__PORT: &port 8989
-              SONARR__AUTHENTICATION_METHOD: Forms
-              SONARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
-              SONARR__APPLICATION_URL: "https://sonarr.stephenbarre.ca"
-              SONARR__LOG_LEVEL: info
-              SONARR__API_KEY:
+              SONARR__APP__INSTANCENAME: Sonarr
+              SONARR__AUTH__APIKEY:
                 valueFrom:
                   secretKeyRef:
                     name: sonarr-secret
                     key: api_key
+              SONARR__AUTH__METHOD: Forms
+              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              SONARR__LOG__DBENABLED: "False"
+              SONARR__LOG__LEVEL: info
+              SONARR__SERVER__PORT: &port 8989
+              SONARR__UPDATE__BRANCH: develop
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
-              readiness:
-                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
               startup:
                 enabled: true
                 spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
                   failureThreshold: 30
                   periodSeconds: 5
             resources:
               requests:
                 cpu: 20m
-                memory: 512M
+                memory: 350Mi
               limits:
-                memory: 768M
+                memory: 1Gi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false

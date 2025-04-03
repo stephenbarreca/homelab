@@ -33,35 +33,48 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/prowlarr
-              tag: 1.32.2.4987@sha256:aa248643aa72c407d2f565c2b63831f887152aae47acb076a12b062bbbdeb61d
+              repository: ghcr.io/home-operations/prowlarr
+              tag: 1.33.1.4997
             env:
-              PROWLARR__INSTANCE_NAME: Prowlarr
-              PROWLARR__PORT: &port 9696
-              PROWLARR__LOG_LEVEL: info
-              PROWLARR__ANALYTICS_ENABLED: "False"
-              PROWLARR__AUTHENTICATION_METHOD: External
-              PROWLARR__API_KEY:
+              PROWLARR__APP__INSTANCENAME: Prowlarr
+              PROWLARR__AUTH__APIKEY:
                 valueFrom:
                   secretKeyRef:
                     name: prowlarr-secret
                     key: api_key
+              PROWLARR__AUTH__METHOD: External
+              PROWLARR__LOG__ANALYTICS_ENABLED: "False"
+              PROWLARR__LOG__DBENABLED: "False"
+              PROWLARR__LOG__LEVEL: info
+              PROWLARR__SERVER__PORT: &port 9696
+              PROWLARR__UPDATE__BRANCH: develop
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
-              readiness:
-                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
               startup:
                 enabled: true
                 spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
                   failureThreshold: 30
                   periodSeconds: 5
             resources:
               requests:
                 cpu: 18m
-                memory: 128Mi
+                memory: 150Mi
               limits:
-                memory: 256Mi
+                memory: 512Mi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
