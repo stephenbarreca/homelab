@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/radarr
-              tag: 5.22.2.9862
+              tag: 5.27.5.10184
               pullPolicy: IfNotPresent
             env:
               RADARR__APP__INSTANCENAME: Radarr
