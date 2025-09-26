@@ -97,6 +97,7 @@ spec:
 
     tlsOptions:
       default:
+        labels: {}
         sniStrict: false
         preferServerCipherSuites: true
 
