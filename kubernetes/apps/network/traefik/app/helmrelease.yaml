@@ -114,6 +114,7 @@ spec:
               name: data
 
     tlsOptions:
+      labels: {}
       sniStrict: false
       preferServerCipherSuites: true
 
