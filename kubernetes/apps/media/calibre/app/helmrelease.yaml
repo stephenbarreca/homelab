@@ -74,6 +74,8 @@ spec:
 
     service:
       app:
+        annotation:
+          traefik.ingress.kubernetes.io/service.serverstransport: calibre-transport@kubernetescrd
         controller: calibre
         ports:
           http:
