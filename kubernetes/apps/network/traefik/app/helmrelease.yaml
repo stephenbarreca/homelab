@@ -40,7 +40,7 @@ spec:
         port: 8443
         expose:
           default: true
-        exposedPort: 443
+        exposedPort: 4443
         protocol: TCP
         tls:
           enabled: true
@@ -59,6 +59,24 @@ spec:
           default: true
         exposedPort: 80
         protocol: TCP
+
+      localsecure:
+        port: 7443
+        expose:
+          default: true
+        exposedPort: 443
+        protocol: TCP
+        tls:
+          enabled: true
+          # this is the name of a TLSOption definition
+          certResolver: "letsencrypt"
+          domains:
+            - main: "stephenbarre.ca"
+              sans:
+                - "*.stephenbarre.ca"
+            - main: "autumnbarre.ca"
+              sans:
+                - "*.autumnbarre.ca"
 
       metrics:
         port: 9100
@@ -96,10 +114,9 @@ spec:
               name: data
 
     tlsOptions:
-      default:
-        labels: {}
-        sniStrict: false
-        preferServerCipherSuites: true
+      labels: {}
+      sniStrict: false
+      preferServerCipherSuites: true
 
     tlsStore:
       default:
