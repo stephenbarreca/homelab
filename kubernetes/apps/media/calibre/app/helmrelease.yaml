@@ -75,7 +75,7 @@ spec:
 
     service:
       app:
-        annotation:
+        annotations:
           traefik.ingress.kubernetes.io/service.serverstransport: calibretransport@file
           traefik.ingress.kubernetes.io/service.serversscheme: https
         controller: calibre
@@ -96,7 +96,7 @@ spec:
               - path: /
                 service:
                   identifier: app
-                  port: http
+                  port: https
 
     persistence:
       config:
