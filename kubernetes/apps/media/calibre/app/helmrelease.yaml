@@ -75,9 +75,9 @@ spec:
 
     service:
       app:
-        annotations:
-          traefik.ingress.kubernetes.io/service.serverstransport: calibretransport@kubernetescrd
-          traefik.ingress.kubernetes.io/service.serversscheme: https
+#        annotations:
+#          traefik.ingress.kubernetes.io/service.serverstransport: calibretransport@kubernetescrd
+#          traefik.ingress.kubernetes.io/service.serversscheme: https
         controller: calibre
         ports:
           http:
@@ -85,18 +85,18 @@ spec:
           https:
             port: *port_https
 
-    ingress:
-      app:
-        annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: local
-        className: traefik
-        hosts:
-          - host: calibre.stephenbarre.ca
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: https
+#    ingress:
+#      app:
+#        annotations:
+#          traefik.ingress.kubernetes.io/router.entrypoints: local
+#        className: traefik
+#        hosts:
+#          - host: calibre.stephenbarre.ca
+#            paths:
+#              - path: /
+#                service:
+#                  identifier: app
+#                  port: https
 
     persistence:
       config:
