@@ -6,7 +6,7 @@ metadata:
 
 spec:
   entryPoints:
-    - local
+    - localsecure
   routes:
   - match: Host(`calibre.stephenbarre.ca`)
     kind: Rule
