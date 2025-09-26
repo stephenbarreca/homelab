@@ -113,15 +113,15 @@ spec:
             - mountPath: /data
               name: data
 
-    tlsOptions:
-      labels: {}
-      sniStrict: false
-      preferServerCipherSuites: true
-
-    tlsStore:
-      default:
-        defaultCertificate:
-          secretName: stephenbarre-ca-tls
+#    tlsOptions:
+#      labels: {}
+#      sniStrict: false
+#      preferServerCipherSuites: true
+#
+#    tlsStore:
+#      default:
+#        defaultCertificate:
+#          secretName: stephenbarre-ca-tls
 
     service:
       single: true
