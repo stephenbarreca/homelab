@@ -52,7 +52,8 @@ spec:
               # -- HTTP Basic auth password, abc is default. If unset there will be no auth
               PASSWORD: ""
               TITLE: Calibre
-              CUSTOM_PORT: &port 8080
+              CUSTOM_PORT: &port_http 8080
+              CUSTOM_HTTPS_PORT: &port_https 8181
               FM_HOME: &config-dir "/config"
             probes:
               liveness:
@@ -75,11 +76,14 @@ spec:
     service:
       app:
         annotation:
-          traefik.ingress.kubernetes.io/service.serverstransport: calibre-transport@kubernetescrd
+          traefik.ingress.kubernetes.io/service.serverstransport: calibretransport@file
+          traefik.ingress.kubernetes.io/service.serversscheme: https
         controller: calibre
         ports:
           http:
-            port: *port
+            port: *port_http
+          https:
+            port: *port_https
 
     ingress:
       app:
