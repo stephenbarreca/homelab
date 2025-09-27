@@ -85,7 +85,7 @@ spec:
 
     persistence:
       config:
-        existingClaim: calibre-config-2
+        existingClaim: calibre-config-3
         globalMounts:
           - path: *config-dir
       books:
