@@ -84,7 +84,7 @@ spec:
     persistence:
       config:
         type: persistentVolumeClaim
-        existingClaim: lazy-librarian
+        existingClaim: lazy-librarian-config
         globalMounts:
           - path: /config
       books:
