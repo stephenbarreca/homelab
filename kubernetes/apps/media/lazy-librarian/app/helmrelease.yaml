@@ -63,7 +63,7 @@ spec:
 
     service:
       app:
-        controller: calibre
+        controller: main
         ports:
           http:
             port: &port_http 5299
