@@ -36,7 +36,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: calibre-config-2
+  storageClassName: calibre-config
   resources:
     requests:
       storage: 100Gi
