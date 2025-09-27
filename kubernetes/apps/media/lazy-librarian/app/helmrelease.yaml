@@ -46,19 +46,15 @@ spec:
             probes:
               liveness:
                 enabled: true
-                type: HTTP
-                path: /
+#                type: HTTP
+#                path: /
               readiness:
                 enabled: true
-                type: HTTP
-                path: /
               startup:
                 enabled: true
-                type: HTTP
-                path: /
                 spec:
                   failureThreshold: 30
-                  periodSeconds: 5
+                  periodSeconds: 300
             resources:
               requests:
                 cpu: 14m
