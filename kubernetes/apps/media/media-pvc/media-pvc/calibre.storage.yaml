@@ -8,7 +8,7 @@ volumeBindingMode: Immediate
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: calibre-config
+  name: calibre-config-2
 spec:
   capacity:
     storage: 100Gi
@@ -31,12 +31,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: calibre-config
+  name: calibre-config-2
   namespace: default
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: calibre-config
+  storageClassName: calibre-config-2
   resources:
     requests:
       storage: 100Gi
