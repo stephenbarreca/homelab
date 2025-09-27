@@ -3,13 +3,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: calibre
+  name: lazy-librarian
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 3.7.3
+      version: 4.3.0
       interval: 30m
       sourceRef:
         kind: HelmRepository
@@ -18,13 +18,10 @@ spec:
 
   values:
     controllers:
-      calibre:
-        annotations:
-          reloader.stakater.com/auto: "true"
-
-        pod:
-          securityContext:
-            runAsUser: 0
+      main:
+#        pod:
+#          securityContext:
+#            runAsUser: 0
 #            runAsGroup: 568
 #            runAsNonRoot: false
 #            fsGroup: 568
@@ -33,8 +30,8 @@ spec:
         containers:
           app:
             image:
-              repository: linuxserver/calibre
-              tag: 8.9.0
+              repository: linuxserver/lazylibrarian
+              tag: version-e077f2b6
               pullPolicy: IfNotPresent
             env:
               # -- Set the container timezone
@@ -45,16 +42,7 @@ spec:
               PGID: "1001"
               # -- for umask setting of Calibre, default if left unset is 022.
               UMASK_SET: "022"
-              # -- Optionally pass cli start arguments to calibre.
-              #CLI_ARGS:
-              # -- HTTP Basic auth username, abc is default.
-              #CUSTOM_USER:
-              # -- HTTP Basic auth password, abc is default. If unset there will be no auth
-              PASSWORD: ""
-              TITLE: Calibre
-              CUSTOM_PORT: &port_http 8080
-              CUSTOM_HTTPS_PORT: &port_https 8181
-              FM_HOME: &config-dir "/config"
+              DOCKER_MODS: linuxserver/mods:universal-calibre|linuxserver/mods:lazylibrarian-ffmpeg
             probes:
               liveness:
                 enabled: true
@@ -73,22 +61,39 @@ spec:
                 cpu: 500m
                 memory: 4024M
 
-
     service:
       app:
         controller: calibre
         ports:
           http:
-            port: *port_http
-          https:
-            port: *port_https
+            port: &port_http 5299
+
+    ingress:
+      main:
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: local
+        className: traefik
+        hosts:
+          - host: lazy-librarian.stephenbarre.ca
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
 
     persistence:
       config:
-        existingClaim: calibre-config
+        type: persistentVolumeClaim
+        existingClaim: lazy-librarian
         globalMounts:
-          - path: *config-dir
+          - path: /config
       books:
+        type: persistentVolumeClaim
         existingClaim: books
         globalMounts:
           - path: /books
+            subpath: books
+            readyOnly: False
+          - path: /downloads
+            subpath: downloads
+            readyOnly: False
