@@ -9,6 +9,7 @@ resources:
   - plex-config.storage.yaml
   - prowlarr.storage.yaml
   - radarr.storage.yaml
+  - lazy-librarian.storage.yaml
   - sabnzbd.storage.yaml
   - sonarr.storage.yaml
   - tautulli.storage.yaml
