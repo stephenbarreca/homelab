@@ -118,6 +118,10 @@ spec:
         existingClaim: tv
         globalMounts:
           - path: /data/tv
+      books:
+        existingClaim: books
+        globalMounts:
+          - path: /data/books
       temp:
         type: emptyDir
         medium: Memory
