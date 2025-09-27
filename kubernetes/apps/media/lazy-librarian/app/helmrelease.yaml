@@ -43,6 +43,7 @@ spec:
               # -- for umask setting of Calibre, default if left unset is 022.
               UMASK_SET: "022"
 #              DOCKER_MODS: linuxserver/mods:universal-calibre|linuxserver/mods:lazylibrarian-ffmpeg
+            DOCKER_MODS: linuxserver/mods:universal-calibre
             probes:
               liveness:
                 enabled: true
