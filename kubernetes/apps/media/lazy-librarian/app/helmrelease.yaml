@@ -92,8 +92,8 @@ spec:
         existingClaim: books
         globalMounts:
           - path: /books
-            subpath: books
-            readyOnly: False
+            subPath: books
+            readOnly: False
           - path: /downloads
-            subpath: downloads
-            readyOnly: False
+            subPath: downloads
+            readOnly: False
