@@ -100,6 +100,6 @@ spec:
             subPath: downloads
             readOnly: False
       calibre:
-        existingClaim: calibre-config-2
+        existingClaim: calibre-config-3
         globalMounts:
           - path: /calibre
