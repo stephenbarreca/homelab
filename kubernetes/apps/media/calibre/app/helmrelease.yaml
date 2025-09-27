@@ -40,9 +40,9 @@ spec:
               # -- Set the container timezone
               TZ: America/New_York
               # -- Specify the user ID the application will run as
-              PUID: "1001"
+              PUID: "1000"
               # -- Specify the group ID the application will run as
-              PGID: "1001"
+              PGID: "1000"
               # -- for umask setting of Calibre, default if left unset is 022.
               UMASK_SET: "022"
               # -- Optionally pass cli start arguments to calibre.
@@ -72,7 +72,9 @@ spec:
               limits:
                 cpu: 500m
                 memory: 4024M
-
+#            securityContext:
+#              runAsUser: 568
+#              runAsGroup: 568
 
     service:
       app:
