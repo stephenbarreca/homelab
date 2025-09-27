@@ -42,7 +42,7 @@ spec:
               PGID: "1001"
               # -- for umask setting of Calibre, default if left unset is 022.
               UMASK_SET: "022"
-              DOCKER_MODS: linuxserver/mods:universal-calibre|linuxserver/mods:lazylibrarian-ffmpeg
+#              DOCKER_MODS: linuxserver/mods:universal-calibre|linuxserver/mods:lazylibrarian-ffmpeg
             probes:
               liveness:
                 enabled: true
@@ -99,3 +99,7 @@ spec:
           - path: /downloads
             subPath: downloads
             readOnly: False
+      calibre:
+        existingClaim: calibre-config
+        globalMounts:
+          - path: /calibre
