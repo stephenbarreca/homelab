@@ -82,7 +82,8 @@ spec:
             port: *port_http
           https:
             port: *port_https
-          webserver: 8081
+          webserver:
+            port: 8081
 
     persistence:
       config:
