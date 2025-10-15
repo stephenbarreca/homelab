@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: linuxserver/lazylibrarian
-              tag: version-e077f2b6
+              tag: version-4a8281e9
               pullPolicy: IfNotPresent
             env:
               # -- Set the container timezone
