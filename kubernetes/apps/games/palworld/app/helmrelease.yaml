@@ -116,7 +116,7 @@ spec:
       #
       image:
         repository: thijsvanloef/palworld-server-docker
-        tag: v1.2.3
+        tag: v2.3.0
         imagePullPolicy: IfNotPresent
         imagePullSecrets: [ ]
 
