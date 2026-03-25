@@ -6,3 +6,5 @@ resources:
   - pvc-backblaze-config.yaml
   - pvc-backup-movies.yaml
   - helmrelease.yaml
+  - role-deployment-restart.yaml
+  - cronjob-restart.yaml

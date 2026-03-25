@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: deployment-restart
+spec:
+  concurrencyPolicy: Forbid
+  schedule: '0 0,6,12,18 * * *' # every 6 hours starting at midnight
+  jobTemplate:
+    spec:
+      backoffLimit: 2 # this has very low chance of failing, as all this does
+                      # is prompt kubernetes to schedule new replica set for
+                      # the deployment
+      activeDeadlineSeconds: 600 # timeout, makes most sense with
+                                 # "waiting for rollout" variant specified below
+      template:
+        spec:
+          serviceAccountName: deployment-restart # name of the service account
+          restartPolicy: Never
+          containers:
+            - name: kubectl
+              image: bitnami/kubectl
+              command:
+                - 'kubectl'
+                - 'rollout'
+                - 'restart'
+                - 'deployment/backblaze'
