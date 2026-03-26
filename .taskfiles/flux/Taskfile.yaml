@@ -7,7 +7,7 @@ vars:
   PROMETHEUS_OPERATOR_VERSION: 0.87.1
 
 tasks:
-  bootstrap:
+  bootstrap-legacy:
     desc: Bootstrap Flux into a Kubernetes cluster
     # prompt: Bootstrap Flux into the '{{.cluster}}' cluster... continue?
     cmds:
@@ -33,6 +33,14 @@ tasks:
     requires:
       vars:
         - GITHUB_TOKEN
+
+  install:
+    cmds:
+      - helmfile -f "{{.KUBERNETES_DIR}}/bootstrap/helmfile.d/01-apps.yaml" sync --hide-note
+
+    requires:
+      vars:
+        -
 
   apply:
     desc: Apply a Flux Kustomization resource for a cluster
