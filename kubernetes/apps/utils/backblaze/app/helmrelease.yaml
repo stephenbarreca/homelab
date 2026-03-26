@@ -100,3 +100,7 @@ spec:
         existingClaim: backup-movies
         globalMounts:
           - path: /drive_m
+      backup-documents:
+        existingClaim: backup-documents
+        globalMounts:
+          - path: /drive_d
