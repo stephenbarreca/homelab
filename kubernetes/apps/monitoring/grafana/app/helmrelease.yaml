@@ -69,7 +69,8 @@ spec:
       default:
 
         cert-manager:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
+          gnetId: 20842
+          revision: 3
           datasource: Prometheus
 
         external-dns:
@@ -79,7 +80,7 @@ spec:
 
         node-exporter-full:
           gnetId: 1860
-          revision: 36
+          revision: 42
           datasource: Prometheus
 
       flux:
@@ -96,35 +97,31 @@ spec:
       kubernetes:
         k8s-system-api-server:
           gnetId: 15761
-          revision: 16
+          revision: 21
           datasource: Prometheus
-        k8s-views-global:
+        kubernetes-coredns:
+          gnetId: 15762
+          revision: 22
+          datasource: Prometheus
+        k8s-global:
           gnetId: 15757
-          revision: 37
+          revision: 43
           datasource: Prometheus
-        k8s-views-nodes:
+        k8s-nodes:
           gnetId: 15759
-          revision: 29
+          revision: 40
           datasource: Prometheus
-        k8s-views-namespaces:
+        k8s-namespaces:
           gnetId: 15758
-          revision: 34
+          revision: 46
           datasource: Prometheus
-        k8s-views-pods:
+        k8s-pods:
           gnetId: 15760
-          revision: 26
+          revision: 39
           datasource: Prometheus
         k8s-volumes:
           gnetId: 11454
           revision: 14
-          datasource: Prometheus
-
-      nginx:
-        nginx:
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
-          datasource: Prometheus
-        nginx-request-handling-performance:
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
           datasource: Prometheus
 
     datasources:
