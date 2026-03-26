@@ -36,7 +36,7 @@ tasks:
 
   install:
     cmds:
-      - helmfile -f "{{.KUBERNETES_DIR}}/bootstrap/helmfile.d/01-apps.yaml" sync --hide-note
+      - helmfile -f "{{.KUBERNETES_DIR}}/bootstrap/helmfile.d/01-apps.yaml" sync
 
     requires:
       vars:
