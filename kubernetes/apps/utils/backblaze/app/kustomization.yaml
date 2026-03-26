@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - pvc-backblaze-config.yaml
   - pvc-backup-movies.yaml
+  - pvc-backup-documents.yaml
   - helmrelease.yaml
   - role-deployment-restart.yaml
   - cronjob-restart.yaml
