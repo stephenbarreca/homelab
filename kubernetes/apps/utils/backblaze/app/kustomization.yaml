@@ -7,5 +7,5 @@ resources:
   - pvc-backup-movies.yaml
   - pvc-backup-documents.yaml
   - helmrelease.yaml
-  - role-deployment-restart.yaml
-  - cronjob-restart.yaml
+#  - role-deployment-restart.yaml
+#  - cronjob-restart.yaml
