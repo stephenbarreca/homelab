@@ -34,13 +34,10 @@ tasks:
       vars:
         - GITHUB_TOKEN
 
-  install:
+  install-charts:
     cmds:
       - helmfile -f "{{.KUBERNETES_DIR}}/bootstrap/helmfile.d/01-apps.yaml" sync
 
-    requires:
-      vars:
-        -
 
   apply:
     desc: Apply a Flux Kustomization resource for a cluster
