@@ -2,30 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: flux-system
 resources:
-#  - gotk-components.yaml
-#  - gotk-sync.yaml
   - ./repositories
   - ./vars
   - ./flux-operator/ks.yaml
   - ./flux-instance/ks.yaml
-#patches:
-#  - patch: |-
-#      apiVersion: kustomize.toolkit.fluxcd.io/v1
-#      kind: Kustomization
-#      metadata:
-#        name: not-used
-#        namespace: not-used
-#      spec:
-#        decryption:
-#          provider: sops
-#          secretRef:
-#            name: sops-age
-#        postBuild:
-#          substituteFrom:
-#            - kind: ConfigMap
-#              name: cluster-settings
-#            - kind: Secret
-#              name: cluster-secrets
-#    target:
-#      group: kustomize.toolkit.fluxcd.io
-#      kind: Kustomization
