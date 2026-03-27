@@ -32,15 +32,13 @@ spec:
         egress.home.arpa/kubedns: allow # TODO: Remove when clusterNetworkPolicy is in place
 
     webhook:
-      enabled: true
       podLabels:
         egress.home.arpa/apiserver: allow
         egress.home.arpa/kubedns: allow # TODO: Remove when clusterNetworkPolicy is in place
 
-    extraArgs:
-      - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
-      - --dns01-recursive-nameservers-only
-      - --enable-certificate-owner-ref
+    dns01RecursiveNameservers: 1.1.1.1:53,9.9.9.9:53
+    dns01RecursiveNameserversOnly: true
+    enableCertificateOwnerRef: true
 
     replicaCount: 1
 
