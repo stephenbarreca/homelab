@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: traefik
-      version: 37.3.0
+      version: 39.0.6
       sourceRef:
         kind: HelmRepository
         name: traefik
@@ -29,30 +29,32 @@ spec:
           default: true
         exposedPort: 8080
         protocol: TCP
-        redirections:
-          entrypoint:
-            to: websecure
-            scheme: https
-            permanent: true
-#        redirectTo:
-#          port: websecure
+        http:
+          redirections:
+            entrypoint:
+              to: websecure
+              scheme: https
+              permanent: true
+  #        redirectTo:
+  #          port: websecure
       websecure:
         port: 8443
         expose:
           default: true
         exposedPort: 4443
         protocol: TCP
-        tls:
-          enabled: true
-          # this is the name of a TLSOption definition
-          certResolver: "letsencrypt"
-          domains:
-            - main: "stephenbarre.ca"
-              sans:
-                - "*.stephenbarre.ca"
-            - main: "autumnbarre.ca"
-              sans:
-                - "*.autumnbarre.ca"
+        http:
+          tls:
+            enabled: true
+            # this is the name of a TLSOption definition
+            certResolver: "letsencrypt"
+            domains:
+              - main: "stephenbarre.ca"
+                sans:
+                  - "*.stephenbarre.ca"
+              - main: "autumnbarre.ca"
+                sans:
+                  - "*.autumnbarre.ca"
       local:
         port: 7000
         expose:
@@ -66,17 +68,18 @@ spec:
           default: true
         exposedPort: 443
         protocol: TCP
-        tls:
-          enabled: true
-          # this is the name of a TLSOption definition
-          certResolver: "letsencrypt"
-          domains:
-            - main: "stephenbarre.ca"
-              sans:
-                - "*.stephenbarre.ca"
-            - main: "autumnbarre.ca"
-              sans:
-                - "*.autumnbarre.ca"
+        http:
+          tls:
+            enabled: true
+            # this is the name of a TLSOption definition
+            certResolver: "letsencrypt"
+            domains:
+              - main: "stephenbarre.ca"
+                sans:
+                  - "*.stephenbarre.ca"
+              - main: "autumnbarre.ca"
+                sans:
+                  - "*.autumnbarre.ca"
 
       metrics:
         port: 9100
