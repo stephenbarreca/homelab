@@ -27,7 +27,7 @@ spec:
         url: https://github.com/stephenbarreca/homelab.git
         ref: refs/heads/main
         path: kubernetes/flux/cluster
-        interval: 1h
+        interval: 10m
       commonMetadata:
         labels:
           app.kubernetes.io/name: flux
