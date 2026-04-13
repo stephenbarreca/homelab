@@ -9,11 +9,11 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.7.3
+      version: 4.6.2
       interval: 30m
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: bjw-s-labs
         namespace: flux-system
 
   values:
@@ -26,7 +26,7 @@ spec:
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
-            runAsNonRoot: false
+            runAsNonRoot: true
             fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
 
@@ -36,6 +36,7 @@ spec:
               repository: ghcr.io/prophetse7en/clonarr
               tag: v1.9.0
               pullPolicy: IfNotPresent
+            command: ["clonarr"]
             env:
               PUID: 1000
               PGID: 1000
