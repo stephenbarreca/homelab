@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - books.storage.yaml
   - calibre.storage.yaml
+  - clonarr.storage.yaml
   - movies.storage.yaml
   - plex-config.storage.yaml
   - prowlarr.storage.yaml
