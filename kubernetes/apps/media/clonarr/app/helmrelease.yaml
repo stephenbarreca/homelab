@@ -48,7 +48,7 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /ping
+                    path: /api/trash/status
                     port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
@@ -59,7 +59,7 @@ spec:
                 enabled: true
                 spec:
                   httpGet:
-                    path: /ping
+                    path: /api/trash/status
                     port: *port
                   failureThreshold: 30
                   periodSeconds: 5
