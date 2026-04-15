@@ -104,3 +104,7 @@ spec:
         existingClaim: backup-documents
         globalMounts:
           - path: /drive_d
+      backup-tv:
+        existingClaim: backup-tv
+        globalMounts:
+          - path: /drive_t
