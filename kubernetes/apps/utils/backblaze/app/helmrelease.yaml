@@ -64,7 +64,7 @@ spec:
                 memory: 6Gi
               limits:
                 cpu: 2
-                memory: 6Gi
+                memory: 16Gi
 #            securityContext:
 #              allowPrivilegeEscalation: false
 #              readOnlyRootFilesystem: false
