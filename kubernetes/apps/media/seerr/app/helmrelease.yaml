@@ -15,7 +15,8 @@ spec:
         existingClaim: seerr-config
 
     extraEnv:
-      TZ: America/New_York
+      - name: TZ
+        value: America/New_York
 
     ingress:
       enabled: true
