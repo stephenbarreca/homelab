@@ -22,3 +22,4 @@ resources:
   - ./sonarr/ks.yaml
   - ./clonarr/ks.yaml
   - ./seerr/ks.yaml
+  - ./pulsarr/ks.yaml

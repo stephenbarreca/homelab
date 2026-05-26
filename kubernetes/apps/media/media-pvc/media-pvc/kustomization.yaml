@@ -11,6 +11,7 @@ resources:
   - prowlarr.storage.yaml
   - radarr.storage.yaml
   - lazy-librarian.storage.yaml
+  - pulsarr.storage.yaml
   - sabnzbd.storage.yaml
   - seerr.storage.yaml
   - sonarr.storage.yaml

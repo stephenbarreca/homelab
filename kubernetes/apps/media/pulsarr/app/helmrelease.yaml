@@ -1,0 +1,76 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pulsarr
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: pulsarr
+  interval: 30m
+  values:
+    controllers:
+      pulsarr:
+        pod:
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+        containers:
+          app:
+            image:
+              repository: lakker/pulsarr
+              tag: 0.5.8
+            env:
+              TZ: America/Los_Angeles
+              PUID: 1000
+              GUID: 1000
+              listenPort: &httpPort 3003
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limit:
+                cpu: 1000m
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+    persistence:
+      data:
+        existingClaim: pulsarr
+        advancedMounts:
+          pulsarr:
+            app:
+              - path: /app/data
+
+    service:
+      app:
+        ports:
+          http:
+            port: *httpPort
+
+    ingress:
+      app:
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: local
+        className: traefik
+        hosts:
+          - host: pulsarr.stephenbarre.ca
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+
