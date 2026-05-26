@@ -2,11 +2,34 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "packageRules": [
     {
-      "matchManagers": ["github-actions"],
-      "automerge": true,
-      "automergeType": "branch",
-      "matchUpdateTypes": ["minor", "patch", "digest"],
-      "ignoreTests": true
-    }
-  ]
+      description: "Auto merge container digests",
+      matchDatasources: [
+        "docker"
+      ],
+      automerge: true,
+      matchUpdateTypes: [
+        "digest"
+      ],
+      matchPackagePrefixes: [
+        "ghcr.io/home-operations",
+        "ghcr.io/onedr0p",
+        "ghcr.io/bjw-s",
+        "ghcr.io/bjw-s-labs",
+      ],
+    },
+    {
+      description: "Auto merge minors and patches",
+      matchDatasources: [
+        "docker"
+      ],
+      automerge: true,
+      matchUpdateTypes: [
+        "minor",
+        "patch"
+      ],
+      matchPackageNames: [
+        "/kube-prometheus-stack/"
+      ],
+    },
+  ],
 }

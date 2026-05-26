@@ -6,6 +6,7 @@
       matchDatasources: ["docker"],
       matchPackageNames: [
         "ghcr.io/onedr0p/plex",
+        "lscr.io/linuxserver/plex",
         "ghcr.io/onedr0p/qbittorrent",
       ],
       versioning: "loose",
