@@ -25,7 +25,9 @@ spec:
       ingressClassName: traefik
       hosts:
         - host: seerr.stephenbarre.ca
-
+          paths:
+            - path: /
+              pathType: Prefix
     resources:
        limits:
          cpu: 100m
