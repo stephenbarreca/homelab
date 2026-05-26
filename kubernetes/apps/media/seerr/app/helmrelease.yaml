@@ -26,11 +26,6 @@ spec:
         - ingressClassName: traefik
           hosts:
             - host: seerr.stephenbarre.ca
-              paths:
-                - path: /
-                  service:
-                    identifier: app
-                    port: http
 
     resources:
        limits:
