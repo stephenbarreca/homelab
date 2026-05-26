@@ -10,6 +10,7 @@ spec:
     name: seerr
   interval: 30m
   values:
+    fullnameOverride: seerr
     config:
       persistence:
         existingClaim: seerr-config
