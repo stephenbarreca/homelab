@@ -1,0 +1,43 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: seerr-config
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: seerr-config
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: seerr-config
+  local:
+    path: /data/local/seerr
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k8s
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: seerr-config
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: seerr-config
+  resources:
+    requests:
+      storage: 5Gi
+---
