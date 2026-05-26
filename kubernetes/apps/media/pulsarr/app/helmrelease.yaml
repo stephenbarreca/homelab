@@ -49,7 +49,7 @@ spec:
                   - ALL
     persistence:
       data:
-        existingClaim: pulsarr
+        existingClaim: pulsarr-config
         advancedMounts:
           pulsarr:
             app:
