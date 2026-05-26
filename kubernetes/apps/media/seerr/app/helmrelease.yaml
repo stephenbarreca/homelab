@@ -22,10 +22,9 @@ spec:
       enabled: true
       annotations:
         traefik.ingress.kubernetes.io/router.entrypoints: local
+      ingressClassName: traefik
       hosts:
-        - ingressClassName: traefik
-          hosts:
-            - host: seerr.stephenbarre.ca
+        - host: seerr.stephenbarre.ca
 
     resources:
        limits:
