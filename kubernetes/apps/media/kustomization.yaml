@@ -13,7 +13,7 @@ resources:
   - ./qbittorrent/ks.yaml
   - ./plex/ks.yaml
   - ./plex-image-cleanup/ks.yaml
-  - ./plex-meta-manager/ks.yaml
+  - ./kometa/ks.yaml
   - ./sabnzbd/ks.yaml
   - ./tautulli/ks.yaml
   # *Arr

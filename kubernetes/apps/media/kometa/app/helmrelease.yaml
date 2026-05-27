@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: plex-meta-manager
+  name: kometa
 spec:
   chart:
     spec:
@@ -17,7 +17,7 @@ spec:
   interval: 30m
   values:
     controllers:
-      plex-meta-manager-debug: &controller
+      kometa-debug: &controller
         enabled: false
         annotations:
           reloader.stakater.com/auto: "true"
@@ -84,6 +84,7 @@ spec:
                   secretKeyRef:
                     name: trakt-client-secret
                     key: pin
+            probes: 
               liveness:
                 enabled: false
               readiness:
@@ -102,7 +103,7 @@ spec:
               capabilities:
                 drop:
                   - ALL
-      plex-meta-manager:
+      kometa:
         <<: *controller
         enabled: true
         type: cronjob
@@ -120,7 +121,7 @@ spec:
         existingClaim: plex-meta-manager-config
       config-file:
         type: configMap
-        name: plex-meta-manager-configmap
+        name: kometa-configmap
         globalMounts:
           - path: /config/config.yml
             subPath: config.yml

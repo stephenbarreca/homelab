@@ -10,7 +10,7 @@ resources:
   - trakt-secret.sops.yaml
   - helmrelease.yaml
 configMapGenerator:
-  - name: plex-meta-manager-configmap
+  - name: kometa-configmap
     files:
       - ./config/config.yml
       - ./config/movies_collections.yml
