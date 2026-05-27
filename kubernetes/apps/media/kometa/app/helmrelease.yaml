@@ -18,7 +18,7 @@ spec:
   values:
     controllers:
       kometa-debug: &controller
-        enabled: false
+        enabled: true
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
