@@ -273,7 +273,7 @@ radarr:
   root_folder_path: /data/movies/movies
   monitor: true
   availability: released
-  quality_profile: 1080p Preferred
+  quality_profile: HD 1080p
   tag:
   search: false
   radarr_path:
