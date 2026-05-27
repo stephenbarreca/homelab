@@ -314,3 +314,11 @@ trakt:
   client_id: <<TRAKT_CLIENT_ID>>
   client_secret: <<TRAKT_CLIENT_SECRET>>
   pin: <<TRAKT_CLIENT_PIN>>
+  force_refresh: false
+  authorization:
+    access_token: <<TRAKT_CLIENT_ACCESS_TOKEN>>
+    token_type: Bearer
+    expires_in: 604800
+    refresh_token: <<TRAKT_CLIENT_REFRESH_TOKEN>>
+    scope: public
+    created_at: 1779898080
