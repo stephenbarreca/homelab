@@ -99,7 +99,7 @@ spec:
                 memory: 2048Mi
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
+              readOnlyRootFilesystem: false
               capabilities:
                 drop:
                   - ALL
