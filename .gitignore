@@ -5,3 +5,4 @@
 gitea/data/
 snap/
 gitea/postgres/postgresql-db/
+sops_key.txt
