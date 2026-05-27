@@ -37,8 +37,11 @@ collections:
 
   Top Rated TV:
     template: { name: Chart, num: 4 }
-    imdb_list:
-      url: https://www.imdb.com/search/title/?title_type=tv_series,tv_miniseries&num_votes=20000,&sort=user_rating,desc
+    imdb_search:
+      type: tv_series, tv_miniseries
+      votes.gte: 20000
+      sort_by: user_rating.desc
+      #url: https://www.imdb.com/search/title/?title_type=tv_series,tv_miniseries&num_votes=20000,&sort=user_rating,desc
       limit: 100
     tmdb_top_rated: 100
     cache_builders: 30
