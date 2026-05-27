@@ -140,7 +140,6 @@ libraries:
 
     overlay_files:
       - file: config/movies_overlays.yml
-      - default: editions
       - default: ribbon
         template_variables:
           use_oscars: true
