@@ -140,7 +140,8 @@ libraries:
 
     overlay_files:
       - file: config/movies_overlays.yml
-      - pmm: ribbon
+      - default: editions
+      - default: ribbon
         template_variables:
           use_oscars: true
           use_oscars_director: true
@@ -164,6 +165,7 @@ libraries:
           use_razzie: false
     operations:
       - schedule: weekly(tuesday)
+        plex_bulk_edit_batch_size: 100
         mass_user_rating_update: mdb_letterboxd
 #      - assets_for_all: true
     remove_overlays: false
