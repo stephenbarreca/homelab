@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: lakker/pulsarr
-              tag: 0.15.5
+              tag: 1.1.6
             env:
               TZ: America/Los_Angeles
               PUID: 1000
