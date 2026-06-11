@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/prophetse7en/clonarr
-              tag: v3.0.0
+              tag: v3.2.1
               pullPolicy: IfNotPresent
             command: ["clonarr"]
             env:
