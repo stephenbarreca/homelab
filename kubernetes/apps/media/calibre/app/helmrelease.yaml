@@ -50,7 +50,7 @@ spec:
               # -- HTTP Basic auth username, abc is default.
               #CUSTOM_USER:
               # -- HTTP Basic auth password, abc is default. If unset there will be no auth
-              PASSWORD: ""
+              # PASSWORD: ""
               TITLE: Calibre
               CUSTOM_PORT: &port_http 8080
               CUSTOM_HTTPS_PORT: &port_https 8181
