@@ -9,6 +9,7 @@ resources:
   - ./media-pvc/ks.yaml
   # Flux-Kustomizations
   - ./calibre/ks.yaml
+  - ./calibre-web-automated/ks.yaml
   - ./lazy-librarian/ks.yaml
   - ./qbittorrent/ks.yaml
   - ./plex/ks.yaml

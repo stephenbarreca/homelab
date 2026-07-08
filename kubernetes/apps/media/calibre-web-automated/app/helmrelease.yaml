@@ -1,0 +1,96 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: calibre-web-automated
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 5.0.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controllers:
+      calibre-web-automated:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsUser: 0
+#            runAsGroup: 568
+#            runAsNonRoot: false
+#            fsGroup: 568
+#            fsGroupChangePolicy: "OnRootMismatch"
+
+        containers:
+          app:
+            image:
+              repository: crocodilestick/calibre-web-automated
+              tag: v4.0.6
+              pullPolicy: IfNotPresent
+            env:
+              # -- Set the container timezone
+              TZ: America/New_York
+              # -- Specify the user ID the application will run as
+              PUID: "1000"
+              # -- Specify the group ID the application will run as
+              PGID: "1000"
+              CWA_PORT_OVERRIDE: &port_http 8083
+            envFrom:
+              - secretRef:
+                  name: calibre-web-automated-secrets
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 50m
+                memory: 1024M
+              limits:
+                cpu: 2000m
+                memory: 4024M
+
+    service:
+      app:
+        controller: calibre-web-automated
+        ports:
+          http:
+            port: *port_http
+          webserver:
+            port: 8081
+
+    persistence:
+      config:
+        existingClaim: calibre-web-automated-config
+        globalMounts:
+          - path: /config
+      calibre:
+        existingClaim: calibre-config-3
+        globalMounts:
+          - path: /calibre-library
+            subPath: Library
+          - path: /config/.config/calibre/plugins
+            subPath: .config/calibre/plugins
+          - path: /config/.config/calibre/customize.py.json
+            subPath: .config/calibre/customize.py.json
+      books:
+        existingClaim: books
+        globalMounts:
+          - path: /books
+          - path: /cwa-book-ingest
+            subPath: book_ingest
