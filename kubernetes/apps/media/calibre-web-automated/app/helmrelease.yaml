@@ -13,7 +13,7 @@ spec:
       interval: 30m
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: bjw-s-labs
         namespace: flux-system
 
   values:
@@ -71,9 +71,24 @@ spec:
         ports:
           http:
             port: *port_http
-          webserver:
-            port: 8081
-
+    ingress:
+      app:
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: local
+        className: traefik
+        hosts:
+          - host: calibre-web-automated.stephenbarre.ca
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+          - host: books.stephenbarre.ca
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       config:
         existingClaim: calibre-web-automated-config
