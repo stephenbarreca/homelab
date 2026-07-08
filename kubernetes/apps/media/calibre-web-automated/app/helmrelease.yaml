@@ -46,7 +46,7 @@ spec:
               CWA_PORT_OVERRIDE: &port_http 8083
             envFrom:
               - secretRef:
-                  name: calibre-web-automated-secrets
+                  name: calibre-web-automated-secret
             probes:
               liveness:
                 enabled: true
