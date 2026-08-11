@@ -22,7 +22,6 @@ collections:
 
   Movies Trending Online:
     template: { name: Chart, num: 2 }
-    imdb_chart:
 #    tmdb_trending_daily: 25
     tmdb_trending_weekly: 25
     summary: Trending across the internet
