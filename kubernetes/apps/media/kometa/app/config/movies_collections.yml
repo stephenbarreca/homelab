@@ -22,13 +22,11 @@ collections:
 
   Movies Trending Online:
     template: { name: Chart, num: 2 }
-    trakt_chart:
-      chart: trending
-      limit: 25
-    tmdb_trending_daily: 25
+    imdb_chart:
+#    tmdb_trending_daily: 25
     tmdb_trending_weekly: 25
     summary: Trending across the internet
-    smart_label: release.desc
+    collection_order: custom
     visible_library: true
     visible_home: true
     visible_shared: true
@@ -36,10 +34,9 @@ collections:
 
   Popular Movies This Year:
     template: { name: Chart, num: 3 }
-    trakt_chart:
-      chart: watched
-      time_period: yearly
-      limit: 25
+    imdb_chart: popular_movies
+    filters:
+      release: 365
     collection_order: custom
     radarr_add: false
     visible_library: true

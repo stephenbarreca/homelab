@@ -16,10 +16,10 @@ overlays:
   TMDB-TRENDING:
     overlay:
       name: TMDB-TRENDING
-    trakt_chart:
-      chart: trending
-      limit: 25
-    tmdb_trending_daily: 25
+#    trakt_chart:
+#      chart: trending
+#      limit: 25
+#    tmdb_trending_daily: 25
     tmdb_trending_weekly: 25
     cache_builders: 1
 
