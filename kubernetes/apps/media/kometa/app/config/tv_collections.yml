@@ -30,6 +30,7 @@ collections:
 #    tmdb_trending_daily: 20
     tmdb_trending_weekly: 20
     summary: Trending across the internet
+    collection_order: custom
     visible_library: true
     visible_home: true
     visible_shared: true
@@ -49,6 +50,9 @@ collections:
 
   Popular TV This Year:
 #    trakt_watched_yearly: 250
+    imdb_chart: popular_shows
+    filters:
+      last_episode_aired: 365
     sort_title: "+++++++++1_3 Watched This Year"
     sync_mode: sync
     radarr_add: false
