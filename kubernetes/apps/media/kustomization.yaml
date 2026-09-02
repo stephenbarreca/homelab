@@ -11,7 +11,7 @@ resources:
   - ./calibre/ks.yaml
   - ./calibre-web-automated/ks.yaml
   - ./lazy-librarian/ks.yaml
-  - ./qbittorrent/ks.yaml
+#  - ./qbittorrent/ks.yaml
   - ./plex/ks.yaml
   - ./plex-image-cleanup/ks.yaml
   - ./kometa/ks.yaml
