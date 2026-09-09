@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: tessypowder/backblaze-personal-wine
-              tag: v1.13@sha256:35b3ea6c85cc850a3f2dfa7520f5ebd791217b19d7e3771531a115d8701c694b
+              tag: v2.1@sha256:0d669769db4d4736123aa1857d6e3dc31877f83a89beda3199fef126eee9726f
             env:
               TZ: America/New_York
               USER_ID: "0"
