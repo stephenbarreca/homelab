@@ -47,6 +47,7 @@ spec:
               SONARR__LOG__DBENABLED: "False"
               SONARR__LOG__LEVEL: info
               SONARR__SERVER__PORT: &port 8989
+              SONARR__SERVER__TRUSTEDNETWORKS: "10.0.0.0/8,192.168.1.0/24"
               SONARR__UPDATE__BRANCH: develop
             probes:
               liveness: &probes
