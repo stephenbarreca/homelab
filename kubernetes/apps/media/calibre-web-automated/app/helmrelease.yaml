@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: crocodilestick/calibre-web-automated
-              tag: v4.0.6
+              tag: v4.0.8
               pullPolicy: IfNotPresent
             env:
               # -- Set the container timezone
